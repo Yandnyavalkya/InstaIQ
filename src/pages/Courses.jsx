@@ -111,14 +111,29 @@ const coursesData = [
   },
 ];
 
-const categories = [
-  "All Courses",
-  "General",
-  "IT & Software",
-  "Photography",
-  "Programming Language",
-  "Technology",
-];
+// Extract actual categories from course data
+const extractCategories = (courses) => {
+  const categorySet = new Set();
+  courses.forEach(course => {
+    // Extract category from course title or add based on content
+    if (course.title.includes('PLACEMENT') || course.title.includes('APTITUDE')) {
+      categorySet.add('Placement & Aptitude');
+    } else if (course.title.includes('EXCEL') || course.title.includes('DATA')) {
+      categorySet.add('Data Analysis');
+    } else if (course.title.includes('MOCK TEST') || course.title.includes('ASSESSMENT')) {
+      categorySet.add('Mock Tests');
+    } else if (course.title.includes('TCS') || course.title.includes('COGNIZANT') || 
+               course.title.includes('ACCENTURE') || course.title.includes('WIPRO') || 
+               course.title.includes('INFOSYS') || course.title.includes('HCL')) {
+      categorySet.add('Company Specific');
+    } else {
+      categorySet.add('General');
+    }
+  });
+  return ['All Courses', ...Array.from(categorySet).sort()];
+};
+
+const categories = extractCategories(coursesData);
 
 const recentCourses = [
   {
@@ -176,13 +191,40 @@ const Courses = () => {
 
   // Filter courses by search and category (now based on fetched data)
   const filteredCourses = allFetchedCourses.filter(
-    (course) =>
-      course.title.toLowerCase().includes(search.toLowerCase()) &&
-      (selectedCategory === "All Courses" ||
-        // This category filtering logic is basic and assumes category is part of title.
-        // For robust category filtering, your backend would need a 'category' field on courses.
-        // For now, it will filter based on title containing the category name.
-        (selectedCategory !== "All Courses" && course.title.toLowerCase().includes(selectedCategory.toLowerCase())))
+    (course) => {
+      const matchesSearch = course.title.toLowerCase().includes(search.toLowerCase());
+      
+      if (selectedCategory === "All Courses") {
+        return matchesSearch;
+      }
+      
+      // Category-specific filtering logic
+      const matchesCategory = (() => {
+        switch (selectedCategory) {
+          case 'Placement & Aptitude':
+            return course.title.includes('PLACEMENT') || course.title.includes('APTITUDE');
+          case 'Data Analysis':
+            return course.title.includes('EXCEL') || course.title.includes('DATA');
+          case 'Mock Tests':
+            return course.title.includes('MOCK TEST') || course.title.includes('ASSESSMENT');
+          case 'Company Specific':
+            return course.title.includes('TCS') || course.title.includes('COGNIZANT') || 
+                   course.title.includes('ACCENTURE') || course.title.includes('WIPRO') || 
+                   course.title.includes('INFOSYS') || course.title.includes('HCL');
+          case 'General':
+            return !course.title.includes('PLACEMENT') && !course.title.includes('APTITUDE') &&
+                   !course.title.includes('EXCEL') && !course.title.includes('DATA') &&
+                   !course.title.includes('MOCK TEST') && !course.title.includes('ASSESSMENT') &&
+                   !course.title.includes('TCS') && !course.title.includes('COGNIZANT') &&
+                   !course.title.includes('ACCENTURE') && !course.title.includes('WIPRO') &&
+                   !course.title.includes('INFOSYS') && !course.title.includes('HCL');
+          default:
+            return true;
+        }
+      })();
+      
+      return matchesSearch && matchesCategory;
+    }
   );
 
   // Pagination logic
@@ -215,69 +257,67 @@ const Courses = () => {
         <div className="section-area section-sp1">
           <div className="container">
             <div className="row">
-              {/* Sidebar */}
-              <div className="col-lg-2 col-md-4 col-sm-12 m-b30">
-                <div className="widget courses-search-bx placeani">
-                  <div className="form-group">
-                    <div className="input-group">
-                      <label>Search Courses</label>
-                      <input
-                        name="dzName"
-                        type="text"
-                        required
-                        className="form-control"
-                        value={search}
-                        onChange={(e) => {
-                          setSearch(e.target.value);
-                          setPage(1); // Reset to first page on search
-                        }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <div className="widget widget_archive">
-                  <h5 className="widget-title style-1">All Courses</h5>
-                  <ul>
-                    {categories.map((cat) => (
-                      <li
-                        key={cat}
-                        className={selectedCategory === cat ? "active" : ""}
-                        style={{ cursor: "pointer", fontWeight: selectedCategory === cat ? "bold" : "normal" }}
-                        onClick={() => handleCategoryClick(cat)}
-                      >
-                        <span>{cat}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="widget">
-                  <a href="#">
-                    <img src="assets/images/adv/adv.jpg" alt="" />
-                  </a>
-                </div>
-                {/* Recent Courses widget - remains static for now */}
-                <div className="widget recent-posts-entry">
-                  <h5 className="widget-title style-1">Recent Courses</h5>
-                  <div className="widget-post-bx">
-                    {recentCourses.map((course, idx) => (
-                      <div className="widget-post clearfix" key={idx}>
-                        <div className="ttr-post-media">
-                          <img src={course.img} width="200" height="140" alt={course.title} />
-                        </div>
-                        <div className="ttr-post-info">
-                          <h6 className="post-title"><Link to="#">{course.title}</Link></h6>
-                          <ul className="media-post">
-                            <li><Link to="#"><i className="fa fa-user"></i>{course.provider}</Link></li>
-                            <li><Link to="#"><i className="fa fa-money"></i>{course.price}</Link></li>
-                          </ul>
+                             {/* Search and Filter Section */}
+               <div className="col-12 m-b30">
+                 <div className="row align-items-end">
+                                       <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                      <div className="widget courses-search-bx placeani">
+                        <div className="form-group">
+                          <div className="input-group">
+                            <label style={{ 
+                              position: 'absolute', 
+                              top: '-20px', 
+                              left: '0', 
+                              fontSize: '14px', 
+                              color: '#fff',
+                              zIndex: 1,
+                              backgroundColor: 'transparent'
+                            }}>
+                              Search Courses
+                            </label>
+                            <input
+                              name="dzName"
+                              type="text"
+                              className="form-control"
+                              placeholder="Search for courses..."
+                              value={search}
+                              onChange={(e) => {
+                                setSearch(e.target.value);
+                                setPage(1); // Reset to first page on search
+                              }}
+                              style={{
+                                backgroundColor: '#2a2a2a',
+                                border: '1px solid #444',
+                                color: '#fff',
+                                padding: '12px 15px',
+                                borderRadius: '8px'
+                              }}
+                            />
+                          </div>
                         </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+                    </div>
+                   <div className="col-lg-8 col-md-6 col-sm-12 mb-3">
+                     <div className="widget widget_archive">
+                       <h5 className="widget-title style-1">Filter by Category</h5>
+                       <div className="d-flex flex-wrap gap-2">
+                         {categories.map((cat) => (
+                           <button
+                             key={cat}
+                             className={`btn ${selectedCategory === cat ? "btn-primary" : "btn-outline-primary"} btn-sm`}
+                             onClick={() => handleCategoryClick(cat)}
+                             style={{ marginBottom: '5px' }}
+                           >
+                             {cat}
+                           </button>
+                         ))}
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
               {/* Course Grid */}
-              <div className="col-lg-10 col-md-8 col-sm-12">
+              <div className="col-12">
                 <div className="row">
                   {loading ? (
                     <div className="col-12 text-center text-muted">Loading courses...</div>

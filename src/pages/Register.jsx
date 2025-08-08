@@ -106,7 +106,7 @@ const Register = () => {
                         type="text"
                         required
                         className="form-control"
-                        placeholder="username or email"
+                        placeholder="Your Full Name"
                         value={formData.name}
                         onChange={handleChange}
                       />

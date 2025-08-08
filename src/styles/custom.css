@@ -206,3 +206,249 @@ button[type="submit"]:focus,
 .cours-bx .price del, .ttr-box .price del {
   color: #bbbbbb !important;
 }
+
+/* Courses page layout improvements */
+.widget.courses-search-bx .form-group {
+  margin-bottom: 0 !important;
+  position: relative !important;
+}
+
+.widget.courses-search-bx .input-group {
+  width: 100% !important;
+  position: relative !important;
+}
+
+.widget.courses-search-bx input.form-control {
+  width: 100% !important;
+  max-width: 100% !important;
+  background-color: #2a2a2a !important;
+  border: 1px solid #444 !important;
+  color: #fff !important;
+  padding: 12px 15px !important;
+  border-radius: 8px !important;
+}
+
+.widget.courses-search-bx input.form-control::placeholder {
+  color: #888 !important;
+  opacity: 1 !important;
+}
+
+.widget.courses-search-bx input.form-control:focus {
+  background-color: #333 !important;
+  border-color: #4c1864 !important;
+  box-shadow: 0 0 0 0.2rem rgba(76, 24, 100, 0.25) !important;
+  outline: none !important;
+}
+
+.widget.widget_archive .d-flex {
+  gap: 8px !important;
+}
+
+.widget.widget_archive .btn {
+  white-space: nowrap !important;
+  font-size: 12px !important;
+  padding: 6px 12px !important;
+}
+
+/* Ensure proper alignment */
+.row.align-items-end {
+  align-items: flex-end !important;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .widget.widget_archive .d-flex {
+    justify-content: flex-start !important;
+  }
+  
+  .widget.widget_archive .btn {
+    margin-bottom: 8px !important;
+  }
+}
+
+/* Login and Register Page Improvements */
+.account-head:after {
+  opacity: 0.8 !important;
+  background: linear-gradient(135deg, #4c1864 0%, #6a1b9a 50%, #8e24aa 100%) !important;
+  background: -webkit-linear-gradient(135deg, #4c1864 0%, #6a1b9a 50%, #8e24aa 100%) !important;
+  background: -moz-linear-gradient(135deg, #4c1864 0%, #6a1b9a 50%, #8e24aa 100%) !important;
+}
+
+.account-form {
+  background: #253248 !important; /* Match the website's dark blue background */
+  min-height: 100vh !important;
+  padding-top: 80px !important; /* Add top padding to avoid navbar overlap */
+}
+
+.account-form-inner {
+  background: #253248 !important; /* Match the website's dark blue background */
+  padding: 40px 0 !important;
+  margin-top: 20px !important; /* Additional margin for better spacing */
+}
+
+.account-container {
+  background: #1e1e1e !important; /* Match the card background from courses page */
+  border-radius: 20px !important;
+  padding: 40px !important;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
+  border: 1px solid #333 !important;
+}
+
+.account-container .heading-bx h2 {
+  color: #ffffff !important;
+  font-size: 2.5rem !important;
+  font-weight: 700 !important;
+  margin-bottom: 10px !important;
+}
+
+.account-container .heading-bx h2 span {
+  color: #4c1864 !important;
+  background: linear-gradient(45deg, #4c1864, #8e24aa) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.account-container .heading-bx p {
+  color: #bbbbbb !important;
+  font-size: 1.1rem !important;
+  margin-bottom: 30px !important;
+}
+
+.account-container .heading-bx p a {
+  color: #4c1864 !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.account-container .heading-bx p a:hover {
+  color: #8e24aa !important;
+  text-decoration: underline !important;
+}
+
+.account-container .form-control {
+  background: #1e1e1e !important; /* Match the card background */
+  border: 1px solid #444 !important;
+  color: #ffffff !important;
+  padding: 12px 15px !important;
+  border-radius: 8px !important;
+  font-size: 16px !important;
+  transition: all 0.3s ease !important;
+}
+
+.account-container .form-control:focus {
+  background: #1e1e1e !important;
+  border-color: #4c1864 !important;
+  box-shadow: 0 0 0 3px rgba(76, 24, 100, 0.2) !important;
+  outline: none !important;
+}
+
+.account-container .form-control::placeholder {
+  color: #888 !important;
+}
+
+.account-container .btn.button-md {
+  background-color: #4c1864 !important; /* Match the primary button color from courses page */
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+.account-container .btn.button-md:hover {
+  background-color: #3f189a !important; /* Match the hover color from courses page */
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+.account-container .btn.button-md:active {
+  background-color: #4d0a91 !important; /* Match the active color from courses page */
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.account-container .form-forget {
+  color: #bbbbbb !important;
+}
+
+.account-container .form-forget .custom-control-label {
+  color: #bbbbbb !important;
+  font-weight: 400 !important;
+}
+
+.account-container .form-forget a {
+  color: #4c1864 !important;
+  text-decoration: none !important;
+  font-weight: 600 !important;
+  transition: all 0.3s ease !important;
+}
+
+.account-container .form-forget a:hover {
+  color: #8e24aa !important;
+  text-decoration: underline !important;
+}
+
+.account-container .alert {
+  border-radius: 12px !important;
+  border: none !important;
+  padding: 15px 20px !important;
+  margin-bottom: 20px !important;
+  font-weight: 500 !important;
+}
+
+.account-container .alert-success {
+  background: rgba(76, 175, 80, 0.1) !important;
+  color: #4caf50 !important;
+  border-left: 4px solid #4caf50 !important;
+}
+
+.account-container .alert-danger {
+  background: rgba(244, 67, 54, 0.1) !important;
+  color: #f44336 !important;
+  border-left: 4px solid #f44336 !important;
+}
+
+.account-container .alert-info {
+  background: rgba(33, 150, 243, 0.1) !important;
+  color: #2196f3 !important;
+  border-left: 4px solid #2196f3 !important;
+}
+
+/* Custom checkbox styling */
+.account-container .custom-control-input:checked ~ .custom-control-label::before {
+  background-color: #4c1864 !important;
+  border-color: #4c1864 !important;
+}
+
+.account-container .custom-control-label::before {
+  border-color: #666 !important;
+  background-color: #333 !important;
+}
+
+/* Responsive design for login/register */
+@media (max-width: 768px) {
+  .account-head {
+    width: 100% !important;
+    min-width: 100% !important;
+    height: 200px !important;
+  }
+  
+  .account-form {
+    flex-direction: column !important;
+    padding-top: 100px !important; /* More padding on mobile for navbar */
+  }
+  
+  .account-container {
+    margin: 20px !important;
+    padding: 30px 20px !important;
+  }
+  
+  .account-container .heading-bx h2 {
+    font-size: 2rem !important;
+  }
+}
