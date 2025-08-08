@@ -7,6 +7,9 @@ import UserManagement from "./admin/UserManagement";
 import OrderManagement from "./admin/OrderManagement";
 import ContentManagement from "./admin/ContentManagement";
 import Settings from "./admin/Settings";
+import BackToTop from "../components/BackToTop";
+// Import FontAwesome for icons
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Dummy admin check (replace with real auth logic)
 const isAdmin = () => {
@@ -31,13 +34,13 @@ const AdminPanel = () => {
   };
 
   const menuItems = [
-    { path: "/admin", icon: "fa fa-dashboard", label: "Dashboard", component: AdminDashboard },
-    { path: "/admin/courses", icon: "fa fa-book", label: "Course Management", component: CourseManagement },
-    { path: "/admin/events", icon: "fa fa-calendar", label: "Event Management", component: EventManagement },
-    { path: "/admin/users", icon: "fa fa-users", label: "User Management", component: UserManagement },
-    { path: "/admin/orders", icon: "fa fa-shopping-cart", label: "Order Management", component: OrderManagement },
-    { path: "/admin/content", icon: "fa fa-file-text", label: "Content Management", component: ContentManagement },
-    { path: "/admin/settings", icon: "fa fa-cog", label: "Settings", component: Settings },
+    { path: "/admin", icon: "fas fa-tachometer-alt", label: "Dashboard", component: AdminDashboard },
+    { path: "/admin/courses", icon: "fas fa-book", label: "Course Management", component: CourseManagement },
+    { path: "/admin/events", icon: "fas fa-calendar-alt", label: "Event Management", component: EventManagement },
+    { path: "/admin/users", icon: "fas fa-users", label: "User Management", component: UserManagement },
+    { path: "/admin/orders", icon: "fas fa-shopping-cart", label: "Order Management", component: OrderManagement },
+    { path: "/admin/content", icon: "fas fa-file-alt", label: "Content Management", component: ContentManagement },
+    { path: "/admin/settings", icon: "fas fa-cog", label: "Settings", component: Settings },
   ];
 
   return (
@@ -64,7 +67,7 @@ const AdminPanel = () => {
             <h4 style={{ margin: 0, color: '#333' }}>Insta iQ Admin</h4>
           )}
           {sidebarCollapsed && (
-            <i className="fa fa-graduation-cap" style={{ fontSize: '24px', color: '#007bff' }}></i>
+            <i className="fas fa-graduation-cap" style={{ fontSize: '24px', color: '#007bff' }}></i>
           )}
         </div>
 
@@ -132,7 +135,7 @@ const AdminPanel = () => {
               fontSize: '14px'
             }}
           >
-            <i className="fa fa-sign-out" style={{ 
+            <i className="fas fa-sign-out-alt" style={{ 
               marginRight: sidebarCollapsed ? '0' : '10px',
               fontSize: '16px'
             }}></i>
@@ -167,7 +170,7 @@ const AdminPanel = () => {
                 color: '#666'
               }}
             >
-              <i className="fa fa-bars"></i>
+              <i className="fas fa-bars"></i>
             </button>
             <h4 style={{ margin: 0, color: '#333' }}>
               {menuItems.find(item => item.path === location.pathname)?.label || 'Dashboard'}
@@ -177,7 +180,7 @@ const AdminPanel = () => {
             <span style={{ marginRight: '15px', color: '#666' }}>
               Welcome, Admin
             </span>
-            <i className="fa fa-user-circle" style={{ fontSize: '24px', color: '#007bff' }}></i>
+            <i className="fas fa-user-circle" style={{ fontSize: '24px', color: '#007bff' }}></i>
           </div>
         </div>
 
@@ -185,17 +188,54 @@ const AdminPanel = () => {
         <div style={{ padding: '30px' }}>
           <Routes>
             <Route path="/" element={<AdminDashboard />} />
-            <Route path="/courses" element={<CourseManagement />} />
-            <Route path="/events" element={<EventManagement />} />
-            <Route path="/users" element={<UserManagement />} />
-            <Route path="/orders" element={<OrderManagement />} />
-            <Route path="/content" element={<ContentManagement />} />
-            <Route path="/settings" element={<Settings />} />
+            <Route path="courses" element={<CourseManagement />} />
+            <Route path="events" element={<EventManagement />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="orders" element={<OrderManagement />} />
+            <Route path="content" element={<ContentManagement />} />
+            <Route path="settings" element={<Settings />} />
           </Routes>
         </div>
+        
+        {/* Admin Footer */}
+        <footer style={{ 
+          background: '#fff', 
+          padding: '15px 30px',
+          borderTop: '1px solid #eee',
+          marginTop: '20px',
+          textAlign: 'center',
+          fontSize: '14px',
+          color: '#666'
+        }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <div>
+              © {new Date().getFullYear()} Insta iQ Admin Panel. All rights reserved.
+            </div>
+            <div>
+              <a href="https://instaiq.in" target="_blank" rel="noopener noreferrer" style={{ 
+                color: '#007bff', 
+                textDecoration: 'none',
+                marginLeft: '15px'
+              }}>
+                <i className="fas fa-globe" style={{ marginRight: '5px' }}></i>
+                Website
+              </a>
+              <a href="mailto:support@instaiq.in" style={{ 
+                color: '#007bff', 
+                textDecoration: 'none',
+                marginLeft: '15px'
+              }}>
+                <i className="fas fa-envelope" style={{ marginRight: '5px' }}></i>
+                Support
+              </a>
+            </div>
+          </div>
+        </footer>
       </div>
+      {/* Back to Top button for admin panel */}
+      <BackToTop />
     </div>
   );
 };
 
-export default AdminPanel; 
+export default AdminPanel;

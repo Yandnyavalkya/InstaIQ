@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useAdmin } from "../context/AdminContext";
 
 // Define your backend base URL from environment variables using import.meta.env
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -90,6 +91,7 @@ const popularCoursesData = [
 ];
 
 const Home = () => {
+  const { courses: adminCourses, events: adminEvents } = useAdmin();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -105,33 +107,30 @@ const Home = () => {
     }
   }, []); // Run once on mount
 
-  // Fetch courses from the backend when the component mounts
+  // Use courses and events from AdminContext for real-time updates
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(`${API_BASE_URL}/courses`);
-        const fetchedCourses = response.data.map(course => ({
+    setLoading(true);
+    if (adminCourses && adminCourses.length > 0) {
+      // Map admin courses to display format and limit to 3 for homepage
+      const mappedCourses = adminCourses
+        .filter(course => course.status === 'active')
+        .slice(0, 3) // Limit to only 3 courses for homepage
+        .map(course => ({
           _id: course._id,
           img: course.imageUrl,
           title: course.title,
-          provider: "Insta Education",
-          price: `₹${course.price.toFixed(2)}`,
+          provider: course.instructor || "Insta Education",
+          price: course.price === 0 ? "Free" : `₹${course.price.toLocaleString()}`,
           oldPrice: null,
-          badge: course.price === 0 ? "FREE" : null,
+          badge: course.price === 0 ? "FREE" : "Included in Membership",
         }));
-        setCourses(fetchedCourses);
-      } catch (err) {
-        console.error("Error fetching courses:", err);
-        setCourses(popularCoursesData);
-        setError(null); // Don't show error if using fallback
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+      setCourses(mappedCourses);
+    } else {
+      // Fallback to static data, limit to 3 courses
+      setCourses(popularCoursesData.slice(0, 3));
+    }
+    setLoading(false);
+  }, [adminCourses]);
 
   const homeBtnStyle = {
     borderRadius: 10,
@@ -236,12 +235,12 @@ const Home = () => {
                 <div className="col-md-4 col-sm-6 mb-4" key={course._id}>
                   <div className="cours-bx d-flex flex-column h-100" style={{
                     minHeight: 340,
-                    background: '#ffe6b3',
+                    background: '#1e1e1e !important',
                     borderRadius: 12,
                     boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
                     overflow: 'hidden'
                   }}>
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#1e1e1e' }}>
                       <div className="action-box" style={{ position: 'relative' }}>
                         <img src={course.img} alt={course.title} style={{ width: '100%', height: 150, objectFit: 'cover' }} />
                         {course.badge && (
@@ -260,18 +259,18 @@ const Home = () => {
                           </span>
                         )}
                       </div>
-                      <div className="info-bx text-center" style={{ padding: '12px', flexGrow: 1 }}>
-                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                          <Link to={`/course-details/${course._id}`}>{course.title}</Link>
+                      <div className="info-bx text-center" style={{ padding: '12px', flexGrow: 1, background: '#1e1e1e !important' }}>
+                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                          <Link to={`/course-details/${course._id}`} style={{ color: '#fff' }}>{course.title}</Link>
                         </h5>
-                        <span style={{ color: '#444', fontSize: 15 }}>{course.provider}</span>
+                        <span style={{ color: '#bbb', fontSize: 15 }}>{course.provider}</span>
                       </div>
-                      <div className="price" style={{ margin: '0 12px 12px 12px', textAlign: 'center', fontWeight: 700, fontSize: 22, color: '#222' }}>
+                      <div className="price" style={{ margin: '0 12px 12px 12px', textAlign: 'center', fontWeight: 700, fontSize: 22, color: '#fff', background: '#1e1e1e !important' }}>
                         {course.oldPrice && <del style={{ color: '#888', marginRight: 8, fontSize: 16 }}>{course.oldPrice}</del>}
                         <span>{course.price}</span>
                       </div>
                     </div>
-                    <div className="d-flex flex-column align-items-center" style={{ padding: '0 12px 12px 12px', background: 'transparent' }}>
+                    <div className="d-flex flex-column align-items-center" style={{ padding: '0 12px 12px 12px', background: '#1e1e1e !important' }}>
                       <Link to={`/course-details/${course._id}`} className="btn" style={{ ...homeBtnStyle, width: '100%', margin: 0, borderRadius: 10, textAlign: 'center' }}>Read More</Link>
                     </div>
                   </div>
@@ -279,15 +278,15 @@ const Home = () => {
               ))
             )}
           </div>
-          <div className="text-center" style={{ marginTop: 30 }}>
+          <div className="text-center" style={{ marginTop: 40 }}>
             <Link to="/courses" className="btn" style={homeBtnStyle}>View All Courses</Link>
           </div>
         </div>
       </section>
 
       {/* Online Courses Search Section */}
-      <section className="section-area section-sp1 ovpr-dark bg-fix online-cours" style={{ backgroundImage: "url(assets/images/background/bg1.png)", backgroundSize: "cover" }}>
-        <div className="container">
+      <section className="section-area section-sp1 bg-fix online-cours" style={{ backgroundImage: "url(assets/images/background/bg1.png)", backgroundSize: "cover", position: "relative" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="row">
             <div className="col-md-12 text-center text-white">
               <h2>Master Placement Aptitude</h2>
@@ -343,33 +342,33 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            {allEvents.map((event, idx) => (
+            {(adminEvents && adminEvents.length > 0 ? adminEvents.filter(e => e.status === 'upcoming').slice(0, 3) : allEvents).map((event, idx) => (
               <div className="col-md-4 col-sm-6" key={idx}>
-                <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#ffe6b3', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
+                <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#1e1e1e !important', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
                   <div className="action-box" style={{ position: 'relative' }}>
                     <img src={event.img} alt={event.title} style={{ width: '100%', height: 150, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12, display: 'block' }} />
                   </div>
-                  <div className="info-bx text-center" style={{ padding: 12 }}>
+                  <div className="info-bx text-center" style={{ padding: 12, background: '#1e1e1e !important' }}>
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
                       <div className="event-time" style={{ background: '#2563eb', color: '#fff', borderRadius: 8, padding: '8px 16px', marginRight: 10, minWidth: 60 }}>
                         <div className="event-date" style={{ fontSize: 24, fontWeight: 700 }}>{event.date}</div>
                         <div className="event-month" style={{ fontSize: 14 }}>{event.month}</div>
                       </div>
                       <div style={{ textAlign: 'left' }}>
-                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6 }}>{event.title}</h5>
-                        <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#444' }}>
+                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, color: '#fff' }}>{event.title}</h5>
+                        <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#bbb' }}>
                           <li style={{ display: 'inline', marginRight: 10 }}><i className="fa fa-clock-o"></i> {event.time}</li>
                           <li style={{ display: 'inline' }}><i className="fa fa-map-marker"></i> {event.location}</li>
                         </ul>
                       </div>
                     </div>
-                    <p style={{ color: '#444', fontSize: 15, marginTop: 8 }}>{event.desc}</p>
+                                            <p style={{ color: '#bbb', fontSize: 15, marginTop: 8 }}>{event.description || event.desc}</p>
                   </div>
                 </div>
               </div>
             ))}
           </div>
-          <div className="text-center">
+          <div className="text-center" style={{ marginTop: 40 }}>
             <Link to="/events" className="btn" style={homeBtnStyle}>View All Events</Link>
           </div>
         </div>

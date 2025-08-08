@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useAdmin } from "../../context/AdminContext";
+import ImageUpload from "../../components/ImageUpload";
 
 const EventManagement = () => {
-  const [events, setEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { events, loading, addEvent, updateEvent, deleteEvent } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
@@ -11,71 +12,24 @@ const EventManagement = () => {
     title: "",
     description: "",
     date: "",
+    month: "",
     time: "",
     location: "",
     capacity: "",
     price: "",
     category: "",
-    image: "",
+    img: "",
     status: "upcoming"
   });
 
-  // Sample event data
-  const sampleEvents = [
-    {
-      id: 1,
-      title: "AI in Career Guidance Workshop",
-      description: "An AI-driven system that recommends tailored study plans, practice tests, and resources based on user performance, role preferences, and career goals.",
-      date: "2024-02-15",
-      time: "09:00",
-      location: "Nagpur, India",
-      capacity: 100,
-      price: "₹1,500",
-      category: "Workshop",
-      image: "assets/images/event/1.png",
-      status: "upcoming",
-      registrations: 75,
-      createdAt: "2024-01-01"
-    },
-    {
-      id: 2,
-      title: "Resume Building Bootcamp",
-      description: "An online tool to create professional resumes and is a hands-on workshop where participants learn how to create job-winning resumes tailored for campus placements.",
-      date: "2024-02-21",
-      time: "11:00",
-      location: "Nagpur, India",
-      capacity: 50,
-      price: "₹800",
-      category: "Bootcamp",
-      image: "assets/images/event/2.png",
-      status: "upcoming",
-      registrations: 42,
-      createdAt: "2024-01-05"
-    },
-    {
-      id: 3,
-      title: "Aptitude Mastery Workshop",
-      description: "Specialized training modules focused on quantitative aptitude, logical reasoning, critical thinking and verbal ability to excel in campus placement tests.",
-      date: "2024-01-29",
-      time: "09:00",
-      location: "Nagpur, India",
-      capacity: 80,
-      price: "₹1,200",
-      category: "Training",
-      image: "assets/images/event/3.png",
-      status: "completed",
-      registrations: 80,
-      createdAt: "2024-01-10"
-    }
-  ];
-
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setEvents(sampleEvents);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  // Helper function to parse date into day and month
+  const parseDateToEvent = (dateString) => {
+    const date = new Date(dateString);
+    return {
+      date: date.getDate().toString(),
+      month: date.toLocaleString('default', { month: 'long' })
+    };
+  };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -87,33 +41,38 @@ const EventManagement = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    // Parse date into day and month format for display
+    const { date: day, month } = parseDateToEvent(formData.date);
+    
+    const eventData = {
+      ...formData,
+      date: day,
+      month: month,
+      capacity: parseInt(formData.capacity) || 0
+    };
+    
     if (editingEvent) {
       // Update existing event
-      setEvents(prev => prev.map(event => 
-        event.id === editingEvent.id ? { ...event, ...formData } : event
-      ));
+      updateEvent(editingEvent._id, eventData);
       setEditingEvent(null);
     } else {
       // Add new event
-      const newEvent = {
-        id: Date.now(),
-        ...formData,
-        registrations: 0,
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      setEvents(prev => [...prev, newEvent]);
+      addEvent(eventData);
     }
+    
     setShowAddModal(false);
     setFormData({
       title: "",
       description: "",
       date: "",
+      month: "",
       time: "",
       location: "",
       capacity: "",
       price: "",
       category: "",
-      image: "",
+      img: "",
       status: "upcoming"
     });
   };
@@ -126,14 +85,12 @@ const EventManagement = () => {
 
   const handleDelete = (eventId) => {
     if (window.confirm("Are you sure you want to delete this event?")) {
-      setEvents(prev => prev.filter(event => event.id !== eventId));
+      deleteEvent(eventId);
     }
   };
 
   const handleStatusChange = (eventId, newStatus) => {
-    setEvents(prev => prev.map(event => 
-      event.id === eventId ? { ...event, status: newStatus } : event
-    ));
+    updateEvent(eventId, { status: newStatus });
   };
 
   const filteredEvents = events.filter(event => {
@@ -260,7 +217,7 @@ const EventManagement = () => {
         gap: '20px'
       }}>
         {filteredEvents.map((event) => (
-          <div key={event.id} style={{
+          <div key={event._id} style={{
             background: '#fff',
             borderRadius: '10px',
             padding: '20px',
@@ -283,7 +240,7 @@ const EventManagement = () => {
                 </span>
               </div>
               <img
-                src={event.image}
+                src={event.img}
                 alt={event.title}
                 style={{
                   width: '60px',
@@ -303,12 +260,7 @@ const EventManagement = () => {
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
                 <i className="fa fa-calendar" style={{ color: '#007bff', marginRight: '8px', width: '16px' }}></i>
                 <span style={{ fontSize: '14px', color: '#333' }}>
-                  {new Date(event.date).toLocaleDateString('en-US', { 
-                    weekday: 'long', 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
+                  {event.date} {event.month}
                 </span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -349,7 +301,7 @@ const EventManagement = () => {
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(event.id)}
+                onClick={() => handleDelete(event._id)}
                 style={{
                   background: '#dc3545',
                   color: 'white',
@@ -370,7 +322,7 @@ const EventManagement = () => {
             <div style={{ marginTop: '10px' }}>
               <select
                 value={event.status}
-                onChange={(e) => handleStatusChange(event.id, e.target.value)}
+                onChange={(e) => handleStatusChange(event._id, e.target.value)}
                 style={{
                   width: '100%',
                   padding: '8px',
@@ -430,7 +382,7 @@ const EventManagement = () => {
                     capacity: "",
                     price: "",
                     category: "",
-                    image: "",
+                    img: "",
                     status: "upcoming"
                   });
                 }}
@@ -620,22 +572,10 @@ const EventManagement = () => {
                 </div>
 
                 <div style={{ gridColumn: '1 / -1' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', color: '#666', fontSize: '14px' }}>
-                    Image URL
-                  </label>
-                  <input
-                    type="text"
-                    name="image"
-                    value={formData.image}
-                    onChange={handleInputChange}
-                    placeholder="Enter image URL"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '5px',
-                      fontSize: '14px'
-                    }}
+                  <ImageUpload
+                    currentImage={formData.img}
+                    onImageSelect={(imageUrl) => setFormData(prev => ({ ...prev, img: imageUrl }))}
+                    placeholder="Upload event cover image"
                   />
                 </div>
 

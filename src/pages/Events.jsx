@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useAdmin } from "../context/AdminContext";
 
 const eventsData = [
   {
@@ -71,11 +72,16 @@ const filterTypes = [
 ];
 
 const Events = () => {
+  const { events: adminEvents } = useAdmin();
   const [filter, setFilter] = useState("all");
+  
+  // Use admin events if available, otherwise fallback to static events
+  const eventsToDisplay = adminEvents && adminEvents.length > 0 ? adminEvents : eventsData;
+  
   const filteredEvents =
     filter === "all"
-      ? eventsData
-      : eventsData.filter((event) => event.type === filter);
+      ? eventsToDisplay
+      : eventsToDisplay.filter((event) => event.status === filter || event.type === filter);
 
   return (
     <div className="page-content bg-white">
@@ -117,25 +123,25 @@ const Events = () => {
                     className={`action-card col-lg-4 col-md-6 col-sm-12 ${event.type}`}
                     style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}
                   >
-                    <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#ffe6b3', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
+                    <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#1e1e1e !important', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
                       <div className="action-box" style={{ position: 'relative' }}>
                         <img src={event.img} alt={event.title} style={{ width: '100%', height: 150, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12, display: 'block' }} />
                       </div>
-                      <div className="info-bx text-center" style={{ padding: 12 }}>
+                      <div className="info-bx text-center" style={{ padding: 12, background: '#1e1e1e !important' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
                           <div className="event-time" style={{ background: '#2563eb', color: '#fff', borderRadius: 8, padding: '8px 16px', marginRight: 10, minWidth: 60 }}>
                             <div className="event-date" style={{ fontSize: 24, fontWeight: 700 }}>{event.date}</div>
                             <div className="event-month" style={{ fontSize: 14 }}>{event.month}</div>
                           </div>
                           <div style={{ textAlign: 'left' }}>
-                            <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6 }}>{event.title}</h5>
-                            <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#444' }}>
+                            <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, color: '#fff' }}>{event.title}</h5>
+                            <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#bbb' }}>
                               <li style={{ display: 'inline', marginRight: 10 }}><i className="fa fa-clock-o"></i> {event.time}</li>
                               <li style={{ display: 'inline' }}><i className="fa fa-map-marker"></i> {event.location}</li>
                             </ul>
                           </div>
                         </div>
-                        <p style={{ color: '#444', fontSize: 15, marginTop: 8 }}>{event.desc}</p>
+                        <p style={{ color: '#bbb', fontSize: 15, marginTop: 8 }}>{event.description || event.desc}</p>
                       </div>
                     </div>
                   </li>

@@ -1,5 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./styles/custom.css"; // Import custom CSS overrides
+import { AdminProvider } from "./context/AdminContext";
 // Import page components
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
@@ -23,40 +25,47 @@ import Events from "./pages/Events";
 import Profile from "./pages/profile"; // Import the Profile component
 import AdminPanel from "./pages/AdminPanel";
 import ForgetPassword from "./pages/ForgetPassword";
+// Import Outlet for nested routes
+import { Outlet } from "react-router-dom";
 
 // Main App component with routing
 function App() {
   return (
-    <Router>
-      {/* Layout wraps all pages with header/footer/navigation */}
-      <Layout>
+    <AdminProvider>
+      <Router>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/admin/*" element={<AdminPanel />} />
-          <Route path="/courses" element={<Courses />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/digital-products" element={<DigitalProducts />} />
-          <Route path="/membership" element={<Membership />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/blog-details1" element={<BlogDetails1 />} />
-          <Route path="/blog-details2" element={<BlogDetails2 />} />
-          <Route path="/blog-details3" element={<BlogDetails3 />} />
-          <Route path="/course-details/:id" element={<CourseDetails />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/events" element={<Events />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/forget-password" element={<ForgetPassword />} />
-          <Route path="/profile" element={<Profile />} /> {/* Added the Profile route */}
+        {/* Admin Panel route without Layout wrapper */}
+        <Route path="/admin/*" element={<AdminPanel />} />
+        
+        {/* All other routes wrapped with Layout */}
+        <Route path="/" element={<Layout><Outlet /></Layout>}>
+          <Route index element={<Home />} />
+          <Route path="courses" element={<Courses />} />
+          <Route path="blog" element={<Blog />} />
+          <Route path="about" element={<About />} />
+          <Route path="digital-products" element={<DigitalProducts />} />
+          <Route path="membership" element={<Membership />} />
+          <Route path="login" element={<Login />} />
+          <Route path="cart" element={<Cart />} />
+          <Route path="register" element={<Register />} />
+          <Route path="contact" element={<Contact />} />
+          <Route path="blog-details1" element={<BlogDetails1 />} />
+          <Route path="blog-details2" element={<BlogDetails2 />} />
+          <Route path="blog-details3" element={<BlogDetails3 />} />
+          <Route path="course-details/:id" element={<CourseDetails />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="events" element={<Events />} />
+          <Route path="faq" element={<FAQ />} />
+          <Route path="forget-password" element={<ForgetPassword />} />
+          <Route path="profile" element={<Profile />} />
           {/* 404 Not Found route */}
           <Route path="*" element={<NotFound />} />
+        </Route>
         </Routes>
-      </Layout>
-    </Router>
+      </Router>
+    </AdminProvider>
   );
+
 }
 
 export default App;

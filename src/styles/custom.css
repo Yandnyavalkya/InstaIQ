@@ -1,0 +1,208 @@
+/* Custom styles to override defaults */
+/* Add dark tint overlay for better visibility */
+.section-area.online-cours:after,
+.section-area.section-sp1.online-cours:after,
+.section-area.bg-fix.online-cours:after,
+.ovpr-dark:after {
+  background: rgba(0, 0, 0, 0.6) !important; /* Semi-transparent dark background */
+  background-image: none !important;
+  opacity: 1 !important;
+}
+
+/* Target the specific orange gradient and remove it */
+.section-area.online-cours:after,
+.section-area.section-sp1.online-cours:after,
+.section-area.bg-fix.online-cours:after,
+.ovpr-dark:after {
+  background: transparent !important;
+  background-image: none !important;
+  opacity: 0 !important;
+}
+
+/* Card Hover Animation and Dark Theme Styling for All Cards */
+.cours-bx, .ttr-box, .portfolio-bx, .event-bx, .service-bx {
+  background-color: #1e1e1e !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Ensure all child elements also have dark background */
+.cours-bx > *, .cours-bx > * > * {
+  background-color: #1e1e1e !important;
+}
+
+/* Specifically target price and button areas */
+.cours-bx .price,
+.cours-bx .d-flex,
+.cours-bx .cours-more-info {
+  background-color: #1e1e1e !important;
+}
+
+.cours-bx:hover, .ttr-box:hover, .portfolio-bx:hover, .event-bx:hover, .service-bx:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Apply hover animation to all action boxes */
+.action-box {
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+/* Standardized Button Styling */
+.btn,
+button[type="submit"],
+.action-box .btn,
+.ttr-box .btn,
+.portfolio-bx .btn,
+.cours-bx .btn,
+.event-bx .btn,
+.service-bx .btn {
+  background-color: #4c1864 !important; /* Primary color from color-1.css */
+  color: #ffffff !important;
+  border-radius: 4px !important;
+  padding: 10px 20px !important;
+  font-weight: 500 !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2) !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Button hover effect */
+.btn:hover,
+button[type="submit"]:hover,
+.action-box .btn:hover,
+.ttr-box .btn:hover,
+.portfolio-bx .btn:hover,
+.cours-bx .btn:hover,
+.event-bx .btn:hover,
+.service-bx .btn:hover {
+  background-color: #3f189a !important; /* Slightly darker shade for hover */
+  transform: translateY(-3px) !important;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Button active/focus effect */
+.btn:active,
+.btn:focus,
+button[type="submit"]:active,
+button[type="submit"]:focus,
+.action-box .btn:active,
+.action-box .btn:focus,
+.ttr-box .btn:active,
+.ttr-box .btn:focus,
+.portfolio-bx .btn:active,
+.portfolio-bx .btn:focus,
+.cours-bx .btn:active,
+.cours-bx .btn:focus,
+.event-bx .btn:active,
+.event-bx .btn:focus,
+.service-bx .btn:active,
+.service-bx .btn:focus {
+  background-color: #4d0a91 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Special animation for action buttons in cards */
+.action-box .btn {
+  position: absolute !important;
+  bottom: 0 !important;
+  left: -50% !important;
+  transition: all 0.5s !important;
+}
+
+.cours-bx:hover .action-box .btn,
+.ttr-box:hover .action-box .btn,
+.portfolio-bx:hover .action-box .btn,
+.event-bx:hover .action-box .btn,
+.service-bx:hover .action-box .btn {
+  left: 0 !important;
+}
+
+/* Media effect for all cards */
+.media-effect {
+  position: relative !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+
+.media-effect img {
+  transition: all 0.25s !important;
+}
+
+.media-effect.zoom-slow img {
+  transition: all 10s !important;
+}
+
+.media-effect.zoom-slow:hover img {
+  transform: scale(1.2) !important;
+}
+
+/* Dark theme text colors */
+.cours-bx .info-bx, .ttr-box .info-bx, .portfolio-bx .info-bx, .event-bx .info-bx, .service-bx .info-bx {
+  background-color: #1e1e1e !important;
+  color: #ffffff !important;
+}
+
+/* Remove any borders that might show light background */
+.cours-bx .cours-more-info {
+  border: none !important;
+  background-color: #1e1e1e !important;
+}
+
+/* Force all divs within course cards to have dark background */
+.cours-bx div,
+.event-bx div {
+  background-color: #1e1e1e !important;
+}
+
+/* Override any inline styles that might be set */
+.popular-courses-bx .cours-bx,
+.popular-courses-bx .cours-bx *,
+.content-block .cours-bx,
+.content-block .cours-bx *,
+.section-area .cours-bx,
+.section-area .cours-bx *,
+.page-content .cours-bx,
+.page-content .cours-bx * {
+  background: #1e1e1e !important;
+  background-color: #1e1e1e !important;
+}
+
+/* Ensure card-body and all child elements in course cards have dark background */
+.cours-bx .card-body,
+.cours-bx .card-body * {
+  background: #1e1e1e !important;
+  background-color: #1e1e1e !important;
+}
+
+.cours-bx h5 a, .ttr-box h5 a, .portfolio-bx h5 a, .event-bx h5 a, .service-bx h5 a,
+.cours-bx h4 a, .ttr-box h4 a, .portfolio-bx h4 a, .event-bx h4 a, .service-bx h4 a {
+  color: #ffffff !important;
+}
+
+.cours-bx span, .ttr-box span, .portfolio-bx span, .event-bx span, .service-bx span {
+  color: #bbbbbb !important;
+}
+
+/* Portfolio box specific styling */
+.portfolio-bx .portfolio-info-bx {
+  background-color: #2563eb !important;
+}
+
+.portfolio-bx:hover .portfolio-info-bx {
+  bottom: 0 !important;
+}
+
+/* Price styling */
+.cours-bx .price, .ttr-box .price {
+  color: #ffffff !important;
+}
+
+.cours-bx .price del, .ttr-box .price del {
+  color: #bbbbbb !important;
+}

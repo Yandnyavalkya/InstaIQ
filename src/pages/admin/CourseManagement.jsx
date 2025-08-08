@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { useAdmin } from "../../context/AdminContext";
+import ImageUpload from "../../components/ImageUpload";
 
 const CourseManagement = () => {
-  const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { courses, loading, addCourse, updateCourse, deleteCourse } = useAdmin();
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState("all");
   const [showAddModal, setShowAddModal] = useState(false);
@@ -14,77 +15,11 @@ const CourseManagement = () => {
     duration: "",
     category: "",
     instructor: "",
-    image: "",
+    imageUrl: "",
     status: "active"
   });
 
-  // Sample course data
-  const sampleCourses = [
-    {
-      id: 1,
-      title: "ALL INDIA PLACEMENT APTITUDE TEST",
-      description: "Comprehensive aptitude test preparation for campus placements",
-      price: "Free",
-      duration: "3 months",
-      category: "Aptitude",
-      instructor: "Insta iQ",
-      image: "assets/images/courses/course1.jpg",
-      status: "active",
-      enrollments: 1250,
-      rating: 4.8,
-      createdAt: "2024-01-01"
-    },
-    {
-      id: 2,
-      title: "PLACEMENT APTITUDE COURSE",
-      description: "Complete course covering all aspects of placement aptitude",
-      price: "₹6,999",
-      duration: "6 months",
-      category: "Aptitude",
-      instructor: "Insta Education",
-      image: "assets/images/courses/course2.jpg",
-      status: "active",
-      enrollments: 890,
-      rating: 4.7,
-      createdAt: "2024-01-05"
-    },
-    {
-      id: 3,
-      title: "ADVANCE EXCEL & DATA ANALYSIS",
-      description: "Master Excel and data analysis for business intelligence",
-      price: "₹4,500",
-      duration: "4 months",
-      category: "Technical",
-      instructor: "Data Pro",
-      image: "assets/images/courses/course3.jpg",
-      status: "active",
-      enrollments: 650,
-      rating: 4.9,
-      createdAt: "2024-01-10"
-    },
-    {
-      id: 4,
-      title: "AI CAREER GUIDANCE WORKSHOP",
-      description: "AI-driven career guidance and counseling sessions",
-      price: "₹2,500",
-      duration: "2 months",
-      category: "Career Guidance",
-      instructor: "AI Mentor",
-      image: "assets/images/courses/course4.jpg",
-      status: "inactive",
-      enrollments: 320,
-      rating: 4.6,
-      createdAt: "2024-01-15"
-    }
-  ];
-
-  useEffect(() => {
-    // Simulate API call
-    setTimeout(() => {
-      setCourses(sampleCourses);
-      setLoading(false);
-    }, 1000);
-  }, []);
+  // No need for sample data or useEffect as data comes from context
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -94,25 +29,24 @@ const CourseManagement = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
+    // Convert price to number if it's not "Free"
+    const courseData = {
+      ...formData,
+      price: formData.price === "Free" || formData.price === "free" ? 0 : parseFloat(formData.price.replace(/[^\d.]/g, '')) || 0
+    };
+    
     if (editingCourse) {
       // Update existing course
-      setCourses(prev => prev.map(course => 
-        course.id === editingCourse.id ? { ...course, ...formData } : course
-      ));
+      await updateCourse(editingCourse._id, courseData);
       setEditingCourse(null);
     } else {
       // Add new course
-      const newCourse = {
-        id: Date.now(),
-        ...formData,
-        enrollments: 0,
-        rating: 0,
-        createdAt: new Date().toISOString().split('T')[0]
-      };
-      setCourses(prev => [...prev, newCourse]);
+      await addCourse(courseData);
     }
+    
     setShowAddModal(false);
     setFormData({
       title: "",
@@ -121,7 +55,7 @@ const CourseManagement = () => {
       duration: "",
       category: "",
       instructor: "",
-      image: "",
+      imageUrl: "",
       status: "active"
     });
   };
@@ -132,18 +66,18 @@ const CourseManagement = () => {
     setShowAddModal(true);
   };
 
-  const handleDelete = (courseId) => {
+  const handleDelete = async (courseId) => {
     if (window.confirm("Are you sure you want to delete this course?")) {
-      setCourses(prev => prev.filter(course => course.id !== courseId));
+      await deleteCourse(courseId);
     }
   };
 
-  const handleStatusToggle = (courseId) => {
-    setCourses(prev => prev.map(course => 
-      course.id === courseId 
-        ? { ...course, status: course.status === 'active' ? 'inactive' : 'active' }
-        : course
-    ));
+  const handleStatusToggle = async (courseId) => {
+    const course = courses.find(c => c._id === courseId);
+    if (course) {
+      const newStatus = course.status === 'active' ? 'inactive' : 'active';
+      await updateCourse(courseId, { status: newStatus });
+    }
   };
 
   const filteredCourses = courses.filter(course => {
@@ -274,11 +208,11 @@ const CourseManagement = () => {
             </thead>
             <tbody>
               {filteredCourses.map((course) => (
-                <tr key={course.id} style={{ borderBottom: '1px solid #f8f9fa' }}>
+                <tr key={course._id} style={{ borderBottom: '1px solid #f8f9fa' }}>
                   <td style={{ padding: '15px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <img
-                        src={course.image}
+                        src={course.imageUrl}
                         alt={course.title}
                         style={{
                           width: '50px',
@@ -299,14 +233,16 @@ const CourseManagement = () => {
                     </div>
                   </td>
                   <td style={{ padding: '15px 0', color: '#333' }}>{course.instructor}</td>
-                  <td style={{ padding: '15px 0', color: '#333', fontWeight: 'bold' }}>{course.price}</td>
-                  <td style={{ padding: '15px 0', color: '#333' }}>{course.enrollments}</td>
+                  <td style={{ padding: '15px 0', color: '#333', fontWeight: 'bold' }}>
+                    {course.price === 0 ? "Free" : `₹${course.price.toLocaleString()}`}
+                  </td>
+                  <td style={{ padding: '15px 0', color: '#333' }}>{course.enrollments || 0}</td>
                   <td style={{ padding: '15px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
                       <span style={{ color: '#ffc107', marginRight: '5px' }}>
                         <i className="fa fa-star"></i>
                       </span>
-                      <span style={{ color: '#333' }}>{course.rating}</span>
+                      <span style={{ color: '#333' }}>{course.rating || 0}</span>
                     </div>
                   </td>
                   <td style={{ padding: '15px 0' }}>
@@ -338,7 +274,7 @@ const CourseManagement = () => {
                         <i className="fa fa-edit"></i>
                       </button>
                       <button
-                        onClick={() => handleStatusToggle(course.id)}
+                        onClick={() => handleStatusToggle(course._id)}
                         style={{
                           background: course.status === 'active' ? '#ffc107' : '#28a745',
                           color: 'white',
@@ -352,7 +288,7 @@ const CourseManagement = () => {
                         <i className={`fa fa-${course.status === 'active' ? 'pause' : 'play'}`}></i>
                       </button>
                       <button
-                        onClick={() => handleDelete(course.id)}
+                        onClick={() => handleDelete(course._id)}
                         style={{
                           background: '#dc3545',
                           color: 'white',
@@ -412,7 +348,7 @@ const CourseManagement = () => {
                     duration: "",
                     category: "",
                     instructor: "",
-                    image: "",
+                    imageUrl: "",
                     status: "active"
                   });
                 }}
@@ -560,22 +496,10 @@ const CourseManagement = () => {
                 </div>
 
                 <div style={{ gridColumn: '1 / -1' }}>
-                  <label style={{ display: 'block', marginBottom: '8px', color: '#666', fontSize: '14px' }}>
-                    Image URL
-                  </label>
-                  <input
-                    type="text"
-                    name="image"
-                    value={formData.image}
-                    onChange={handleInputChange}
-                    placeholder="Enter image URL"
-                    style={{
-                      width: '100%',
-                      padding: '10px',
-                      border: '1px solid #ddd',
-                      borderRadius: '5px',
-                      fontSize: '14px'
-                    }}
+                  <ImageUpload
+                    currentImage={formData.imageUrl}
+                    onImageSelect={(imageUrl) => setFormData(prev => ({ ...prev, imageUrl }))}
+                    placeholder="Upload course cover image"
                   />
                 </div>
 

@@ -1,23 +1,23 @@
 import React, { useState, useEffect } from "react";
+import { useAdmin } from "../../context/AdminContext";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
+  const { courses, events, loading, getStats } = useAdmin();
   const [stats, setStats] = useState({
     totalUsers: 1250,
-    totalCourses: 45,
-    totalEvents: 12,
-    totalRevenue: 125000,
     recentOrders: [],
     recentUsers: []
   });
 
-  const [loading, setLoading] = useState(true);
-
   useEffect(() => {
-    // Simulate loading data
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }, []);
+    // Get real stats from admin context
+    const realStats = getStats();
+    setStats(prev => ({
+      ...prev,
+      ...realStats
+    }));
+  }, [courses, events, getStats]);
 
   const statCards = [
     {
@@ -30,36 +30,39 @@ const AdminDashboard = () => {
     },
     {
       title: "Total Courses",
-      value: stats.totalCourses,
+      value: stats.totalCourses || 0,
       icon: "fa fa-book",
       color: "#28a745",
-      change: "+5%",
+      change: `${stats.activeCourses || 0} active`,
       changeType: "positive"
     },
     {
       title: "Total Events",
-      value: stats.totalEvents,
+      value: stats.totalEvents || 0,
       icon: "fa fa-calendar",
       color: "#ffc107",
-      change: "+8%",
+      change: `${stats.upcomingEvents || 0} upcoming`,
       changeType: "positive"
     },
     {
       title: "Total Revenue",
-      value: `₹${stats.totalRevenue.toLocaleString()}`,
+      value: `₹${(stats.totalRevenue || 0).toLocaleString()}`,
       icon: "fa fa-money",
       color: "#dc3545",
-      change: "+15%",
+      change: `${stats.totalEnrollments || 0} enrollments`,
       changeType: "positive"
     }
   ];
 
-  const recentOrders = [
-    { id: 1, user: "John Doe", course: "Advanced Excel", amount: "₹4,500", status: "Completed", date: "2024-01-15" },
-    { id: 2, user: "Jane Smith", course: "Placement Aptitude", amount: "₹6,999", status: "Pending", date: "2024-01-14" },
-    { id: 3, user: "Mike Johnson", course: "Data Analysis", amount: "₹3,999", status: "Completed", date: "2024-01-13" },
-    { id: 4, user: "Sarah Wilson", course: "AI Career Guidance", amount: "₹2,500", status: "Processing", date: "2024-01-12" }
-  ];
+  // Generate recent orders from course data
+  const recentOrders = courses.slice(0, 4).map((course, index) => ({
+    id: course._id,
+    user: ["John Doe", "Jane Smith", "Mike Johnson", "Sarah Wilson"][index],
+    course: course.title.substring(0, 20) + "...",
+    amount: course.price === 0 ? "Free" : `₹${course.price.toLocaleString()}`,
+    status: ["Completed", "Pending", "Completed", "Processing"][index],
+    date: course.createdAt
+  }));
 
   const recentUsers = [
     { id: 1, name: "Alice Brown", email: "alice@example.com", joinDate: "2024-01-15", status: "Active" },
@@ -275,22 +278,23 @@ const AdminDashboard = () => {
       }}>
         <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>Quick Actions</h3>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
-          <button style={{
-            background: '#28a745',
-            color: 'white',
-            border: 'none',
-            padding: '15px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
+                      <Link to="/admin/course-management" style={{
+              background: '#28a745',
+              color: 'white',
+              border: 'none',
+              padding: '15px',
+              borderRadius: '8px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textDecoration: 'none'
+            }}>
             <i className="fa fa-plus" style={{ marginRight: '8px' }}></i>
             Add New Course
-          </button>
-          <button style={{
+          </Link>
+          <Link to="/admin/event-management" style={{
             background: '#ffc107',
             color: 'white',
             border: 'none',
@@ -300,11 +304,12 @@ const AdminDashboard = () => {
             fontSize: '14px',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'center'
+            justifyContent: 'center',
+            textDecoration: 'none'
           }}>
             <i className="fa fa-calendar-plus" style={{ marginRight: '8px' }}></i>
             Create Event
-          </button>
+          </Link>
           <button style={{
             background: '#17a2b8',
             color: 'white',
