@@ -63,12 +63,6 @@ const Header = () => {
             </div>
             <div className="topbar-right">
               <ul>
-                <li>
-                  <select className="header-lang-bx">
-                    <option data-icon="flag flag-uk">English UK</option>
-                    <option data-icon="flag flag-us">English US</option>
-                  </select>
-                </li>
                 {isLoggedIn ? (
                   <>
                     <li><Link to="/profile">Hi, {userName}</Link></li> {/* Link to user profile */}

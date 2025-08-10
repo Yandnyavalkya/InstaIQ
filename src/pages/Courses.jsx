@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios"; // Import Axios
 import { useAdmin } from "../context/AdminContext";
+import { useAppContext } from "../context/AppContext";
 
 // Define your backend base URL from environment variables using import.meta.env
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
@@ -9,9 +10,9 @@ console.log("Backend URL (Courses Page):", import.meta.env.VITE_BACKEND_URL); //
 
 // Original static data (will be replaced by fetched data for main courses)
 // Keeping it commented out for reference, but the component will use fetched data.
-const coursesData = [
-  {
-    img: "assets/images/courses/course1.jpg",
+ const coursesData = [
+   {
+     img: "/assets/images/courses/course1.jpg",
     title: "ALL INDIA PLACEMENT APTITUDE TEST",
     rating: 5.0,
     ratingsCount: 1,
@@ -21,8 +22,8 @@ const coursesData = [
     membership: false,
     badge: "FREE",
   },
-  {
-    img: "assets/images/courses/course2.jpg",
+     {
+     img: "/assets/images/courses/course2.jpg",
     title: "PLACEMENT APTITUDE COURSE",
     rating: null,
     ratingsCount: null,
@@ -32,8 +33,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course3.jpg",
+     {
+     img: "/assets/images/courses/course3.jpg",
     title: "ADVANCE EXCEL & DATA ANALYSIS",
     rating: null,
     ratingsCount: null,
@@ -43,8 +44,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course4.jpg",
+     {
+     img: "/assets/images/courses/course4.jpg",
     title: "TCS NQT - MOCK TEST",
     rating: 5.0,
     ratingsCount: 1,
@@ -54,8 +55,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course5.jpg",
+     {
+     img: "/assets/images/courses/course5.jpg",
     title: "COGNIZANT ASSESSMENT COURSE",
     rating: null,
     ratingsCount: null,
@@ -65,8 +66,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course6.jpg",
+     {
+     img: "/assets/images/courses/course6.jpg",
     title: "ACCENTURE MOCK TEST",
     rating: null,
     ratingsCount: null,
@@ -76,8 +77,8 @@ const coursesData = [
     membership: false,
     badge: null,
   },
-  {
-    img: "assets/images/courses/course7.jpg",
+     {
+     img: "/assets/images/courses/course7.jpg",
     title: "WIPRO MOCK TEST",
     rating: null,
     ratingsCount: null,
@@ -87,8 +88,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course8.jpg",
+     {
+     img: "/assets/images/courses/course8.jpg",
     title: "INFOSYS MOCK TEST",
     rating: null,
     ratingsCount: null,
@@ -98,8 +99,8 @@ const coursesData = [
     membership: true,
     badge: "Included in Membership",
   },
-  {
-    img: "assets/images/courses/course9.jpg",
+     {
+     img: "/assets/images/courses/course9.jpg",
     title: "HCL MOCK TEST",
     rating: null,
     ratingsCount: null,
@@ -117,11 +118,11 @@ const extractCategories = (courses) => {
   courses.forEach(course => {
     // Extract category from course title or add based on content
     if (course.title.includes('PLACEMENT') || course.title.includes('APTITUDE')) {
-      categorySet.add('Placement & Aptitude');
+      categorySet.add('Aptitude');
     } else if (course.title.includes('EXCEL') || course.title.includes('DATA')) {
       categorySet.add('Data Analysis');
     } else if (course.title.includes('MOCK TEST') || course.title.includes('ASSESSMENT')) {
-      categorySet.add('Mock Tests');
+      categorySet.add('Assessment');
     } else if (course.title.includes('TCS') || course.title.includes('COGNIZANT') || 
                course.title.includes('ACCENTURE') || course.title.includes('WIPRO') || 
                course.title.includes('INFOSYS') || course.title.includes('HCL')) {
@@ -135,16 +136,16 @@ const extractCategories = (courses) => {
 
 const categories = extractCategories(coursesData);
 
-const recentCourses = [
-  {
-    img: "assets/images/blog/recent-blog/pic1.jpg",
+ const recentCourses = [
+   {
+     img: "/assets/images/blog/recent-blog/pic1.jpg",
     title: "Introduction InstaIQ",
     price: "₹120",
     oldPrice: "₹190",
     provider: "Insta iQ",
   },
-  {
-    img: "assets/images/blog/recent-blog/pic3.jpg",
+     {
+     img: "/assets/images/blog/recent-blog/pic3.jpg",
     title: "English For Tomorrow",
     price: "Free",
     oldPrice: null,
@@ -156,6 +157,7 @@ const COURSES_PER_PAGE = 6;
 
 const Courses = () => {
   const { courses: adminCourses } = useAdmin();
+  const { dispatch } = useAppContext();
   const [allFetchedCourses, setAllFetchedCourses] = useState([]); // Stores all courses from API
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -167,24 +169,31 @@ const Courses = () => {
   // Use courses from AdminContext for real-time updates
   useEffect(() => {
     setLoading(true);
+    console.log("Courses page - Admin courses:", adminCourses);
     if (adminCourses && adminCourses.length > 0) {
       // Map admin courses to display format
       const mappedCourses = adminCourses.map(course => ({
         _id: course._id,
         img: course.imageUrl,
+        imageUrl: course.imageUrl, // Keep both for compatibility
         title: course.title,
-        provider: course.instructor || "Insta Education",
+        provider: "Insta Education",
         price: course.price === 0 ? "Free" : `₹${course.price.toLocaleString()}`,
         oldPrice: null,
         membership: course.price > 0,
         badge: course.price === 0 ? "FREE" : "Included in Membership",
         rating: course.rating,
         ratingsCount: course.enrollments,
+        description: course.description,
       }));
       setAllFetchedCourses(mappedCourses);
     } else {
       // Fallback to static data
-      setAllFetchedCourses(coursesData.map((course, idx) => ({ ...course, _id: idx })));
+      setAllFetchedCourses(coursesData.map((course, idx) => ({ 
+        ...course, 
+        _id: idx,
+        imageUrl: course.img // Add imageUrl for consistency
+      })));
     }
     setLoading(false);
   }, [adminCourses]); // Re-run when admin courses change
@@ -201,11 +210,11 @@ const Courses = () => {
       // Category-specific filtering logic
       const matchesCategory = (() => {
         switch (selectedCategory) {
-          case 'Placement & Aptitude':
+          case 'Aptitude':
             return course.title.includes('PLACEMENT') || course.title.includes('APTITUDE');
           case 'Data Analysis':
             return course.title.includes('EXCEL') || course.title.includes('DATA');
-          case 'Mock Tests':
+          case 'Assessment':
             return course.title.includes('MOCK TEST') || course.title.includes('ASSESSMENT');
           case 'Company Specific':
             return course.title.includes('TCS') || course.title.includes('COGNIZANT') || 
@@ -337,12 +346,15 @@ const Courses = () => {
                         }}>
                           <div style={{ background: '#1e1e1e' }}>
                             <div style={{ position: "relative" }}>
-                              <img
-                                src={course.img}
-                                alt={course.title}
-                                className="card-img-top"
-                                style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16, height: 180, objectFit: "cover" }}
-                              />
+                                                             <img
+                                 src={course.imageUrl || course.img || "/assets/images/courses/course1.jpg"}
+                                 alt={course.title}
+                                 className="card-img-top"
+                                 style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16, height: 180, objectFit: "cover" }}
+                                 onError={(e) => {
+                                   e.target.src = "/assets/images/courses/course1.jpg";
+                                 }}
+                               />
                               {course.membership && (
                                 <span style={{ position: "absolute", top: 12, left: 12, background: "#e67e22", color: "#fff", borderRadius: 6, padding: "2px 10px", fontSize: 13 }}>
                                   {course.badge}
@@ -375,11 +387,23 @@ const Courses = () => {
                               </div>
                             </div>
                           </div>
-                          <div style={{ marginTop: "auto", padding: '0 16px 16px 16px', background: '#1e1e1e !important' }}>
-                            <Link to={`/course-details/${course._id}`} className="btn btn-primary w-100" style={{ borderRadius: 8 }}>
-                              Read More
-                            </Link>
-                          </div>
+                                                     <div style={{ marginTop: "auto", padding: '0 16px 16px 16px', background: '#1e1e1e !important' }}>
+                                                           <Link to={`/course-details/${course._id}`} className="btn w-100" style={{ 
+                                borderRadius: 10,
+                                minWidth: 120,
+                                minHeight: 40,
+                                fontWeight: 600,
+                                border: 'none',
+                                background: '#2563eb',
+                                color: '#fff',
+                                transition: 'background 0.2s',
+                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
+                                display: 'inline-block',
+                                textTransform: 'none'
+                              }}>
+                                Buy Now
+                              </Link>
+                           </div>
                         </div>
                       </div>
                     ))

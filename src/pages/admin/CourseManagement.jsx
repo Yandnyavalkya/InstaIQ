@@ -14,7 +14,7 @@ const CourseManagement = () => {
     price: "",
     duration: "",
     category: "",
-    instructor: "",
+    instructor: "Insta Education",
     imageUrl: "",
     status: "active"
   });
@@ -54,7 +54,7 @@ const CourseManagement = () => {
       price: "",
       duration: "",
       category: "",
-      instructor: "",
+      instructor: "Insta Education",
       imageUrl: "",
       status: "active"
     });
@@ -347,7 +347,7 @@ const CourseManagement = () => {
                     price: "",
                     duration: "",
                     category: "",
-                    instructor: "",
+                    instructor: "Insta Education",
                     imageUrl: "",
                     status: "active"
                   });
@@ -393,9 +393,10 @@ const CourseManagement = () => {
                   <input
                     type="text"
                     name="instructor"
-                    value={formData.instructor}
+                    value={formData.instructor || "Insta Education"}
                     onChange={handleInputChange}
                     required
+                    placeholder="Insta Education"
                     style={{
                       width: '100%',
                       padding: '10px',
@@ -467,10 +468,10 @@ const CourseManagement = () => {
                   >
                     <option value="">Select Category</option>
                     <option value="Aptitude">Aptitude</option>
-                    <option value="Technical">Technical</option>
-                    <option value="Career Guidance">Career Guidance</option>
-                    <option value="Soft Skills">Soft Skills</option>
-                    <option value="Programming">Programming</option>
+                    <option value="Assessment">Assessment</option>
+                    <option value="Data Analysis">Data Analysis</option>
+                    <option value="Company Specific">Company Specific</option>
+                    <option value="General">General</option>
                   </select>
                 </div>
 
@@ -552,7 +553,7 @@ const CourseManagement = () => {
                       price: "",
                       duration: "",
                       category: "",
-                      instructor: "",
+                      instructor: "Insta Education",
                       image: "",
                       status: "active"
                     });

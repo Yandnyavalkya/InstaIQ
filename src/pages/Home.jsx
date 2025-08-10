@@ -95,17 +95,6 @@ const Home = () => {
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // New state for login status
-
-  // Check login status on component mount
-  useEffect(() => {
-    const userInfo = localStorage.getItem('userInfo');
-    if (userInfo) {
-      setIsLoggedIn(true);
-    } else {
-      setIsLoggedIn(false);
-    }
-  }, []); // Run once on mount
 
   // Use courses and events from AdminContext for real-time updates
   useEffect(() => {
@@ -176,40 +165,105 @@ const Home = () => {
             </p>
             <div style={{ marginTop: 20 }}>
               <Link to="/courses" className="btn radius-xl" style={{ ...homeBtnStyle, marginRight: 10 }}>BROWSE COURSES</Link>
-              {isLoggedIn ? (
-                <Link to="/profile" className="btn radius-xl" style={homeBtnStyle}>PROFILE</Link>
-              ) : (
-                <Link to="/login" className="btn radius-xl" style={homeBtnStyle}>LOGIN</Link>
-              )}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Our Services */}
-      <section className="section-area content-inner service-info-bx" style={{ marginTop: 40 }}>
+      {/* Statistics Section */}
+      <section className="section-area section-sp1 bg-fix online-cours" style={{ backgroundImage: "url(assets/images/background/bg1.png)", backgroundSize: "cover", position: "relative" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
+          <div className="mw800 m-auto">
+            <div className="row">
+              <div className="col-md-3 col-sm-6">
+                <div className="cours-search-bx m-b30">
+                  <div className="icon-box">
+                    <h3><i className="ti-user"></i><span className="counter">65</span>K+</h3>
+                  </div>
+                  <span className="cours-search-text">Students Coached</span>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="cours-search-bx m-b30">
+                  <div className="icon-box">
+                    <h3><i className="ti-users"></i><span className="counter">17</span>+</h3>
+                  </div>
+                  <span className="cours-search-text">Client Served</span>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="cours-search-bx m-b30">
+                  <div className="icon-box">
+                    <h3><i className="ti-book"></i><span className="counter">10</span>K+</h3>
+                  </div>
+                  <span className="cours-search-text">Question Bank</span>
+                </div>
+              </div>
+              <div className="col-md-3 col-sm-6">
+                <div className="cours-search-bx m-b30">
+                  <div className="icon-box">
+                    <h3><i className="ti-layout-list-post"></i><span className="counter">1000</span>+</h3>
+                  </div>
+                  <span className="cours-search-text">Students Placed</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-12 text-center mt-5">
+              <Link to="/about" className="btn radius-xl" style={{ 
+                ...homeBtnStyle, 
+                background: '#8B5CF6', 
+                fontSize: '18px', 
+                padding: '15px 30px',
+                borderRadius: '25px',
+                boxShadow: '0 4px 15px rgba(139, 92, 246, 0.3)'
+              }}>
+                KNOW ABOUT US
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Upcoming Events */}
+      <section className="section-area section-sp2">
         <div className="container">
           <div className="row">
-            {[
-              { title: "Mock Tests & Practice", icon: "fa-file-text-o", img: serviceImages[0] },
-              { title: "Aptitude Training", icon: "fa-book", img: serviceImages[1] },
-              { title: "Career Guidance", icon: "fa-users", img: serviceImages[2] },
-            ].map((service, idx) => (
-              <div className="col-lg-4 col-md-4 col-sm-6" key={service.title}>
-                <div className="service-bx">
-                  <div className="action-box">
-                    <img src={service.img} alt={service.title} />
+            <div className="col-md-12 heading-bx left">
+              <h2 className="title-head">Upcoming <span>Events</span></h2>
+              <p style={{ color: '#fff', fontSize: 18, marginBottom: 24 }}>Upcoming Education Events To Feed Brain.</p>
+            </div>
+          </div>
+          <div className="row">
+            {(adminEvents && adminEvents.length > 0 ? adminEvents.filter(e => e.status === 'upcoming').slice(0, 3) : allEvents).map((event, idx) => (
+              <div className="col-md-4 col-sm-6" key={idx}>
+                <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#1e1e1e !important', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
+                  <div className="action-box" style={{ position: 'relative' }}>
+                    <img src={event.img} alt={event.title} style={{ width: '100%', height: 150, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12, display: 'block' }} />
                   </div>
-                  <div className="info-bx text-center">
-                    <div className="feature-box-sm radius bg-white">
-                      <i className={`fa ${service.icon} text-primary`}></i>
+                  <div className="info-bx text-center" style={{ padding: 12, background: '#1e1e1e !important' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
+                      <div className="event-time" style={{ background: '#2563eb', color: '#fff', borderRadius: 8, padding: '8px 16px', marginRight: 10, minWidth: 60 }}>
+                        <div className="event-date" style={{ fontSize: 24, fontWeight: 700 }}>{event.date}</div>
+                        <div className="event-month" style={{ fontSize: 14 }}>{event.month}</div>
+                      </div>
+                      <div style={{ textAlign: 'left' }}>
+                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, color: '#fff' }}>{event.title}</h5>
+                        <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#bbb' }}>
+                          <li style={{ display: 'inline', marginRight: 10 }}><i className="fa fa-clock-o"></i> {event.time}</li>
+                          <li style={{ display: 'inline' }}><i className="fa fa-map-marker"></i> {event.location}</li>
+                        </ul>
+                  </div>
                     </div>
-                    <h4><a href="#">{service.title}</a></h4>
-                    <a href="#" className="btn radius-xl">View More</a>
+                                            <p style={{ color: '#bbb', fontSize: 15, marginTop: 8 }}>{event.description || event.desc}</p>
                   </div>
                 </div>
               </div>
             ))}
+          </div>
+          <div className="text-center" style={{ marginTop: 40 }}>
+            <Link to="/events" className="btn" style={homeBtnStyle}>View All Events</Link>
           </div>
         </div>
       </section>
@@ -284,122 +338,121 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Online Courses Search Section */}
-      <section className="section-area section-sp1 bg-fix online-cours" style={{ backgroundImage: "url(assets/images/background/bg1.png)", backgroundSize: "cover", position: "relative" }}>
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <div className="row">
-            <div className="col-md-12 text-center text-white">
-              <h2>Master Placement Aptitude</h2>
-              <h5>Join thousands of students who cracked their dream jobs</h5>
-              <form className="cours-search" onSubmit={e => e.preventDefault()}>
-                <div className="input-group">
-                  <input type="text" className="form-control" placeholder="Search for aptitude courses, mock tests..." />
-                  <div className="input-group-append">
-                    <button className="btn" type="submit" style={homeBtnStyle}>Search</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-          </div>
-          <div className="mw800 m-auto">
-            <div className="row">
-              <div className="col-md-4 col-sm-6">
-                <div className="cours-search-bx m-b30">
-                  <div className="icon-box">
-                    <h3><i className="ti-user"></i><span className="counter">10</span>K+</h3>
-                  </div>
-                  <span className="cours-search-text">Students Placed</span>
-                </div>
-              </div>
-              <div className="col-md-4 col-sm-6">
-                <div className="cours-search-bx m-b30">
-                  <div className="icon-box">
-                    <h3><i className="ti-book"></i><span className="counter">9</span></h3>
-                  </div>
-                  <span className="cours-search-text">Specialized Courses</span>
-                </div>
-              </div>
-              <div className="col-md-4 col-sm-12">
-                <div className="cours-search-bx m-b30">
-                  <div className="icon-box">
-                    <h3><i className="ti-layout-list-post"></i><span className="counter">95</span>%</h3>
-                  </div>
-                  <span className="cours-search-text">Success Rate</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Upcoming Events */}
-      <section className="section-area section-sp2">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-12 text-center heading-bx">
-              <h2 className="title-head m-b0">Upcoming <span>Events</span></h2>
-              <p className="m-b0">Upcoming Education Events To Feed Brain. </p>
-            </div>
-          </div>
-          <div className="row">
-            {(adminEvents && adminEvents.length > 0 ? adminEvents.filter(e => e.status === 'upcoming').slice(0, 3) : allEvents).map((event, idx) => (
-              <div className="col-md-4 col-sm-6" key={idx}>
-                <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#1e1e1e !important', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
-                  <div className="action-box" style={{ position: 'relative' }}>
-                    <img src={event.img} alt={event.title} style={{ width: '100%', height: 150, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12, display: 'block' }} />
-                  </div>
-                  <div className="info-bx text-center" style={{ padding: 12, background: '#1e1e1e !important' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-                      <div className="event-time" style={{ background: '#2563eb', color: '#fff', borderRadius: 8, padding: '8px 16px', marginRight: 10, minWidth: 60 }}>
-                        <div className="event-date" style={{ fontSize: 24, fontWeight: 700 }}>{event.date}</div>
-                        <div className="event-month" style={{ fontSize: 14 }}>{event.month}</div>
-                      </div>
-                      <div style={{ textAlign: 'left' }}>
-                        <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, color: '#fff' }}>{event.title}</h5>
-                        <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#bbb' }}>
-                          <li style={{ display: 'inline', marginRight: 10 }}><i className="fa fa-clock-o"></i> {event.time}</li>
-                          <li style={{ display: 'inline' }}><i className="fa fa-map-marker"></i> {event.location}</li>
-                        </ul>
-                      </div>
-                    </div>
-                                            <p style={{ color: '#bbb', fontSize: 15, marginTop: 8 }}>{event.description || event.desc}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center" style={{ marginTop: 40 }}>
-            <Link to="/events" className="btn" style={homeBtnStyle}>View All Events</Link>
-          </div>
-        </div>
-      </section>
-
       {/* Testimonials */}
       <section className="section-area section-sp2 bg-fix ovbl-dark" style={{ backgroundImage: "url(assets/images/background/bg1.jpg)", backgroundSize: "cover" }}>
         <div className="container">
           <div className="row">
             <div className="col-md-12 text-white heading-bx left">
               <h2 className="title-head text-uppercase">what people <span>say</span></h2>
-              <p>It is a long established fact that a reader will be distracted by the readable content of a page</p>
+              <p>Hear from our clients and students about their experience with InstaIQ</p>
+                  </div>
+                </div>
+          <div className="row">
+            {/* Client Feedback Carousel */}
+            <div className="col-md-6">
+              <div className="testimonial-section">
+                <h3 className="text-white text-center mb-4" style={{ fontSize: '24px', fontWeight: '600' }}>Client Feedback</h3>
+                <div className="testimonial-carousel">
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic1.jpg" alt="Client" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Sarah Johnson</h5>
+                      <p className="text-muted">- HR Manager, TechCorp</p>
+          </div>
+                    <div className="testimonial-content">
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "InstaIQ has transformed our hiring process. The quality of candidates we receive now is exceptional. Their aptitude training programs are industry-leading."
+                      </p>
+                </div>
+              </div>
+                  
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic2.jpg" alt="Client" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+                    </div>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Michael Chen</h5>
+                      <p className="text-muted">- Director, Innovation Labs</p>
+                  </div>
+                    <div className="testimonial-content">
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "We've been partnering with InstaIQ for over 2 years. Their students consistently demonstrate strong problem-solving skills and technical aptitude."
+                      </p>
+                </div>
+              </div>
+                  
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic3.jpg" alt="Client" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+                    </div>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Emily Rodriguez</h5>
+                      <p className="text-muted">- CEO, StartupXYZ</p>
+                  </div>
+                    <div className="testimonial-content">
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "The candidates from InstaIQ are well-prepared and ready to contribute from day one. Their training methodology is truly effective."
+                      </p>
+                </div>
+              </div>
             </div>
           </div>
-          <div className="row">
-            {testimonialImages.map((img, idx) => (
-              <div className="col-md-6" key={idx}>
-                <div className="testimonial-bx">
-                  <div className="testimonial-thumb">
-                    <img src={img} alt="Testimonial" />
+        </div>
+            
+            {/* Student Feedback Carousel */}
+            <div className="col-md-6">
+              <div className="testimonial-section">
+                <h3 className="text-white text-center mb-4" style={{ fontSize: '24px', fontWeight: '600' }}>Student Feedback</h3>
+                <div className="testimonial-carousel">
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic4.jpg" alt="Student" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Rahul Sharma</h5>
+                      <p className="text-muted">- Placed at Google</p>
+          </div>
+                    <div className="testimonial-content">
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "InstaIQ's mock tests and practice questions were exactly what I needed. The structured approach helped me crack my dream job at Google!"
+                      </p>
+                      </div>
+                    </div>
+                  
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic5.jpg" alt="Student" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
                   </div>
-                  <div className="testimonial-info">
-                    <h5 className="name">Peter Packer</h5>
-                    <p>-Art Director</p>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Priya Patel</h5>
+                      <p className="text-muted">- Placed at Microsoft</p>
+                </div>
+                    <div className="testimonial-content">
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "The aptitude training at InstaIQ is world-class. The instructors are amazing and the question bank is comprehensive. Highly recommended!"
+                      </p>
+          </div>
+        </div>
+                  
+                  <div className="testimonial-bx" style={{ background: 'rgba(30, 30, 30, 0.9)', borderRadius: '12px', padding: '25px', margin: '10px', border: '1px solid #333' }}>
+                    <div className="testimonial-thumb text-center mb-3">
+                      <img src="assets/images/testimonials/pic6.jpg" alt="Student" style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }} />
+            </div>
+                    <div className="testimonial-info text-center mb-3">
+                      <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600' }}>Amit Kumar</h5>
+                      <p className="text-muted">- Placed at Amazon</p>
                   </div>
                   <div className="testimonial-content">
-                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type...</p>
+                      <p className="text-white" style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                        "From struggling with aptitude tests to acing them - InstaIQ made it possible. The personalized guidance and practice material are excellent."
+                      </p>
+                    </div>
+                  </div>
                   </div>
                 </div>
               </div>
-            ))}
           </div>
         </div>
       </section>

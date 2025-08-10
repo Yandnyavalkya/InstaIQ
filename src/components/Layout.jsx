@@ -1,21 +1,29 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import Header from "./Header";
+import { Link, useLocation } from "react-router-dom";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 import BackToTop from "./BackToTop";
 
-// Layout component wraps all pages with header and footer
+// Layout component wraps all pages with navbar and footer
 const Layout = ({ children }) => {
+  const location = useLocation();
+  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+
   return (
     <>
-      {/* Header on every page */}
-      <Header />
+      {/* Navbar on every page */}
+      <Navbar />
       {/* Main content */}
-      <main>{children}</main>
+      <main style={{ 
+        paddingTop: isAuthPage ? '0' : '70px',
+        marginTop: isAuthPage ? '0' : '0'
+      }}>
+        {children}
+      </main>
       {/* Footer on every page */}
-      <Footer />
+      {!isAuthPage && <Footer />}
       {/* Back to Top button on every page */}
-      <BackToTop />
+      {!isAuthPage && <BackToTop />}
     </>
   );
 };

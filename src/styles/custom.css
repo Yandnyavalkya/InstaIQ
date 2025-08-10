@@ -1,4 +1,33 @@
 /* Custom styles to override defaults */
+
+/* Force dark navbar styling */
+.header.rs-nav,
+.header.rs-nav *,
+.sticky-header,
+.sticky-header *,
+.menu-bar,
+.menu-bar *,
+.container.clearfix {
+  background-color: #1e1e1e !important;
+  background: #1e1e1e !important;
+}
+
+/* Ensure navbar links are white */
+.header.rs-nav a,
+.header.rs-nav .nav.navbar-nav a,
+.header.rs-nav .nav.navbar-nav li a,
+.header.rs-nav .secondary-menu a,
+.header.rs-nav .secondary-menu button {
+  color: #ffffff !important;
+}
+
+/* Ensure search icon is white */
+.header.rs-nav .fa-search,
+.header.rs-nav .search-btn button,
+.header.rs-nav .btn-link {
+  color: #ffffff !important;
+}
+
 /* Add dark tint overlay for better visibility */
 .section-area.online-cours:after,
 .section-area.section-sp1.online-cours:after,
@@ -277,13 +306,26 @@ button[type="submit"]:focus,
 .account-form {
   background: #253248 !important; /* Match the website's dark blue background */
   min-height: 100vh !important;
-  padding-top: 80px !important; /* Add top padding to avoid navbar overlap */
+  padding-top: 0 !important; /* Remove top padding to eliminate gap */
+  margin-top: 0 !important; /* Remove top margin */
+}
+
+/* Remove any dark parts under navbar */
+.page-wraper {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Ensure proper spacing for all pages */
+.page-content {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
 }
 
 .account-form-inner {
   background: #253248 !important; /* Match the website's dark blue background */
-  padding: 40px 0 !important;
-  margin-top: 20px !important; /* Additional margin for better spacing */
+  padding: 0 !important; /* Remove padding to eliminate gap */
+  margin-top: 0 !important; /* Remove margin to eliminate gap */
 }
 
 .account-container {
@@ -440,7 +482,8 @@ button[type="submit"]:focus,
   
   .account-form {
     flex-direction: column !important;
-    padding-top: 100px !important; /* More padding on mobile for navbar */
+    padding-top: 0 !important; /* Remove padding on mobile too */
+    margin-top: 0 !important;
   }
   
   .account-container {
@@ -451,4 +494,126 @@ button[type="submit"]:focus,
   .account-container .heading-bx h2 {
     font-size: 2rem !important;
   }
+}
+
+/* Additional fixes for login/register pages */
+.account-form {
+  display: flex !important;
+  align-items: stretch !important;
+  min-height: calc(100vh - 70px) !important; /* Subtract navbar height */
+}
+
+.account-head {
+  flex: 0 0 40% !important;
+  position: relative !important;
+  background-size: cover !important;
+  background-position: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.account-form-inner {
+  flex: 0 0 60% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 40px !important;
+}
+
+/* Ensure no dark rectangle appears */
+main {
+  background: transparent !important;
+}
+
+/* Remove any default margins/padding that might cause gaps */
+body {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+html {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Checkout page styles */
+.checkout-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.checkout-progress {
+  margin-bottom: 40px;
+}
+
+.checkout-step {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.checkout-step-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.checkout-step-active {
+  background-color: #4c1864;
+  color: white;
+}
+
+.checkout-step-inactive {
+  background-color: #f0f0f0;
+  color: #666;
+}
+
+.checkout-step-line {
+  flex: 1;
+  height: 2px;
+  margin: 0 10px;
+}
+
+.checkout-step-line-active {
+  background-color: #4c1864;
+}
+
+.checkout-step-line-inactive {
+  background-color: #f0f0f0;
+}
+
+.checkout-form-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.checkout-form-input-error {
+  border-color: #dc3545;
+}
+
+.checkout-button {
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #4c1864 0%, #6a1b9a 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.checkout-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
