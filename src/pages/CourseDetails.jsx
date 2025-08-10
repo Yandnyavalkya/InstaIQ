@@ -307,7 +307,7 @@ const CourseDetails = () => {
                   </div>
                   <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 16 }}>
                     {course.oldPrice && <span style={{ textDecoration: "line-through", color: "#888", marginRight: 8 }}>{course.oldPrice}</span>}
-                    {course.price === 0 ? "Free" : course.price}
+                    {course.price === 0 ? "Free" : `₹${course.price}`}
                   </div>
                   <p>{course.description}</p>
                   {course.details && (
@@ -318,6 +318,95 @@ const CourseDetails = () => {
                     </ul>
                   )}
                   {added && <div style={{ color: 'green', marginTop: 10 }}>Added to cart!</div>}
+                  
+                  {/* Reviews Section */}
+                  <div style={{ marginTop: 40 }}>
+                    <h3 style={{ color: '#fff', marginBottom: 20 }}>Student Reviews</h3>
+                    {course.rating ? (
+                      <div>
+                        {/* Overall Rating */}
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: 20 }}>
+                          <div style={{ display: 'flex', alignItems: 'center', marginRight: 15 }}>
+                            {Array.from({ length: 5 }).map((_, i) => (
+                              <i key={i} className={`fa fa-star${i < course.rating ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2 }}></i>
+                            ))}
+                            <span style={{ marginLeft: 8, color: '#fff', fontSize: 18, fontWeight: 600 }}>{course.rating}</span>
+                          </div>
+                          <span style={{ color: '#bbb' }}>Based on {course.ratingsCount || course.enrollments || 0} reviews</span>
+                        </div>
+                        
+                        {/* Sample Reviews */}
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+                          {/* Review 1 */}
+                          <div style={{ background: '#2a2a2a', padding: 20, borderRadius: 8, border: '1px solid #333' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+                              <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#4c1864', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12 }}>
+                                <span style={{ color: '#fff', fontWeight: 600 }}>R</span>
+                              </div>
+                              <div>
+                                <div style={{ color: '#fff', fontWeight: 600 }}>Rahul Sharma</div>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <i key={i} className={`fa fa-star${i < 5 ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2, fontSize: 12 }}></i>
+                                  ))}
+                                  <span style={{ marginLeft: 5, color: '#bbb', fontSize: 12 }}>2 days ago</span>
+                                </div>
+                              </div>
+                            </div>
+                            <p style={{ color: '#bbb', lineHeight: 1.6 }}>
+                              "Excellent course! The content is well-structured and the practice questions are very helpful. I feel much more confident about my placement preparation now."
+                            </p>
+                          </div>
+                          
+                          {/* Review 2 */}
+                          <div style={{ background: '#2a2a2a', padding: 20, borderRadius: 8, border: '1px solid #333' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+                              <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#4c1864', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12 }}>
+                                <span style={{ color: '#fff', fontWeight: 600 }}>P</span>
+                              </div>
+                              <div>
+                                <div style={{ color: '#fff', fontWeight: 600 }}>Priya Patel</div>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <i key={i} className={`fa fa-star${i < 4 ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2, fontSize: 12 }}></i>
+                                  ))}
+                                  <span style={{ marginLeft: 5, color: '#bbb', fontSize: 12 }}>1 week ago</span>
+                                </div>
+                              </div>
+                            </div>
+                            <p style={{ color: '#bbb', lineHeight: 1.6 }}>
+                              "Great value for money. The instructors are knowledgeable and the material is up-to-date. Highly recommended for anyone preparing for placements."
+                            </p>
+                          </div>
+                          
+                          {/* Review 3 */}
+                          <div style={{ background: '#2a2a2a', padding: 20, borderRadius: 8, border: '1px solid #333' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
+                              <div style={{ width: 40, height: 40, borderRadius: '50%', background: '#4c1864', display: 'flex', alignItems: 'center', justifyContent: 'center', marginRight: 12 }}>
+                                <span style={{ color: '#fff', fontWeight: 600 }}>A</span>
+                              </div>
+                              <div>
+                                <div style={{ color: '#fff', fontWeight: 600 }}>Amit Kumar</div>
+                                <div style={{ display: 'flex', alignItems: 'center' }}>
+                                  {Array.from({ length: 5 }).map((_, i) => (
+                                    <i key={i} className={`fa fa-star${i < 5 ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2, fontSize: 12 }}></i>
+                                  ))}
+                                  <span style={{ marginLeft: 5, color: '#bbb', fontSize: 12 }}>2 weeks ago</span>
+                                </div>
+                              </div>
+                            </div>
+                            <p style={{ color: '#bbb', lineHeight: 1.6 }}>
+                              "The mock tests are very realistic and helped me understand the actual exam pattern. The detailed solutions are a great learning resource."
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ) : (
+                      <div style={{ background: '#2a2a2a', padding: 20, borderRadius: 8, border: '1px solid #333', textAlign: 'center' }}>
+                        <p style={{ color: '#bbb' }}>No reviews yet. Be the first to review this course!</p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
               <div className="col-lg-4 col-md-12 col-sm-12">
@@ -326,7 +415,7 @@ const CourseDetails = () => {
                     <h5 className="widget-title">Course Info</h5>
                     <ul>
                       <li>Provider: <span>{course.instructor || course.provider || "Insta Education"}</span></li>
-                      <li>Price: <span>{course.price === 0 ? "Free" : course.price}</span></li>
+                      <li>Price: <span>{course.price === 0 ? "Free" : `₹${course.price}`}</span></li>
                       {course.oldPrice && <li>Old Price: <span>{course.oldPrice}</span></li>}
                       {course.badge && <li>Badge: <span>{course.badge}</span></li>}
                       {course.rating && <li>Rating: <span>{course.rating} ({course.enrollments || course.ratingsCount || 0} ratings)</span></li>}
@@ -340,7 +429,7 @@ const CourseDetails = () => {
                        fontSize: '16px',
                        fontWeight: '600'
                      }}>
-                       Buy Now for {course.price === 0 ? "Free" : course.price}
+                       Buy Now for {course.price === 0 ? "Free" : `₹${course.price}`}
                      </button>
                    </div>
                 </div>

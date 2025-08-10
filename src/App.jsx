@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./styles/custom.css"; // Import custom CSS overrides
 import { AdminProvider } from "./context/AdminContext";
+import ScrollToTop from "./components/ScrollToTop";
 // Import page components
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
@@ -25,6 +26,7 @@ import Events from "./pages/Events";
 import Profile from "./pages/profile"; // Import the Profile component
 import AdminPanel from "./pages/AdminPanel";
 import ForgetPassword from "./pages/ForgetPassword";
+import Search from "./pages/Search";
 // Import Outlet for nested routes
 import { Outlet } from "react-router-dom";
 
@@ -33,6 +35,7 @@ function App() {
   return (
     <AdminProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
         {/* Admin Panel route without Layout wrapper */}
         <Route path="/admin/*" element={<AdminPanel />} />
@@ -58,6 +61,7 @@ function App() {
           <Route path="faq" element={<FAQ />} />
           <Route path="forget-password" element={<ForgetPassword />} />
           <Route path="profile" element={<Profile />} />
+          <Route path="search" element={<Search />} />
           {/* 404 Not Found route */}
           <Route path="*" element={<NotFound />} />
         </Route>

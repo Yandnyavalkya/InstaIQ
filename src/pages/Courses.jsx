@@ -341,8 +341,9 @@ const Courses = () => {
                           minHeight: 350,
                           background: '#1e1e1e !important',
                           borderRadius: 12,
-                          boxShadow: '0 2px 12px rgba(0,0,0,0.07)',
-                          overflow: 'hidden' // Ensure border-radius clips image
+                          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+                          overflow: 'hidden', // Ensure border-radius clips image
+                          border: '1px solid #333'
                         }}>
                           <div style={{ background: '#1e1e1e' }}>
                             <div style={{ position: "relative" }}>
@@ -370,17 +371,19 @@ const Courses = () => {
                               <h5 className="card-title" style={{ fontWeight: 500, fontSize: 18, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
                                 <Link to={`/course-details/${course._id}`} style={{ color: '#fff' }}>{course.title}</Link> {/* Use _id for Link */}
                               </h5>
-                              <div style={{ color: "#bbb", fontSize: 15 }}>{course.provider}</div>
-                              {course.rating && ( // Display rating if available
-                                <div className="rating-bx" style={{ marginTop: 8 }}>
-                                  <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    {Array.from({ length: 5 }).map((_, i) => (
-                                      <li key={i}><i className={`fa fa-star${i < course.rating ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2 }}></i></li>
-                                    ))}
-                                    <li style={{ marginLeft: 5, fontSize: 14, color: '#bbb' }}>({course.ratingsCount})</li>
-                                  </ul>
-                                </div>
-                              )}
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: "#bbb", fontSize: 15 }}>
+                                <span>{course.provider}</span>
+                                {course.rating && (
+                                  <div className="rating-bx" style={{ display: 'flex', alignItems: 'center' }}>
+                                    <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', alignItems: 'center' }}>
+                                      {Array.from({ length: 5 }).map((_, i) => (
+                                        <li key={i}><i className={`fa fa-star${i < course.rating ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2, fontSize: 12 }}></i></li>
+                                      ))}
+                                      <li style={{ marginLeft: 5, fontSize: 12, color: '#bbb' }}>({course.ratingsCount})</li>
+                                    </ul>
+                                  </div>
+                                )}
+                              </div>
                               <div style={{ fontWeight: 600, fontSize: 18, marginTop: 8, color: '#fff' }}>
                                 {course.oldPrice && <span style={{ textDecoration: "line-through", color: "#888", marginRight: 8 }}>{course.oldPrice}</span>}
                                 {course.price}

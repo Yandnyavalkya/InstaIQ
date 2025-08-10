@@ -12,6 +12,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
+    mobile: "",
     password: "",
   });
   const [loading, setLoading] = useState(false);
@@ -55,6 +56,7 @@ const Register = () => {
       setFormData({ // Clear form fields on success
         name: "",
         email: "",
+        mobile: "",
         password: "",
       });
       // The useEffect hook will handle the redirection after the message
@@ -124,6 +126,23 @@ const Register = () => {
                         placeholder="Your Email Address"
                         value={formData.email}
                         onChange={handleChange}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-12">
+                  <div className="form-group">
+                    <div className="input-group">
+                      <input
+                        name="mobile"
+                        type="tel"
+                        required
+                        className="form-control"
+                        placeholder="Your Mobile Number"
+                        value={formData.mobile}
+                        onChange={handleChange}
+                        pattern="[0-9]{10}"
+                        title="Please enter a valid 10-digit mobile number"
                       />
                     </div>
                   </div>

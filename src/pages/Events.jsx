@@ -4,10 +4,10 @@ import { useAdmin } from "../context/AdminContext";
 const eventsData = [
   {
     img: "assets/images/event/1.png",
-    type: "happening",
+    type: "upcoming",
     date: "15",
     month: "July",
-    title: "AI in Career Guidance Workshop",
+    title: "Webinar on Generative AI",
     time: "9:00am 10:00am",
     location: "Nagpur , India",
     desc: "An AI-driven system that recommends tailored study plans, practice tests, and resources based on user performance, role preferences , and career goals."
@@ -34,7 +34,7 @@ const eventsData = [
   },
   {
     img: "assets/images/event/4.png",
-    type: "happening",
+    type: "ongoing",
     date: "9",
     month: "September",
     title: "Job Matching and Placement Portal",
@@ -44,7 +44,7 @@ const eventsData = [
   },
   {
     img: "assets/images/event/5.png",
-    type: "expired",
+    type: "completed",
     date: "2",
     month: "October",
     title: "Interview Preparation",
@@ -54,21 +54,21 @@ const eventsData = [
   },
   {
     img: "assets/images/event/6.png",
-    type: "happening",
+    type: "ongoing",
     date: "29",
     month: "October",
-    title: "Quiz for Practice",
+    title: "Communication Assessment",
     time: "7:00am 8:00am",
     location: "Nagpur , India",
-    desc: "A dedicated quiz module offering bite-sized practice questions on aptitude, logical reasoning ,coding and verbal skills, designed to be engaging,time-efficient, and progressively challenging for daily practice."
+    desc: "A dedicated assessment module offering comprehensive evaluation of communication skills, verbal ability, and presentation techniques, designed to be engaging, time-efficient, and progressively challenging for daily practice."
   }
 ];
 
 const filterTypes = [
   { label: "All", value: "all" },
-  { label: "Happening", value: "happening" },
+  { label: "Completed", value: "completed" },
+  { label: "Ongoing", value: "ongoing" },
   { label: "Upcoming", value: "upcoming" },
-  { label: "Expired", value: "expired" },
 ];
 
 const Events = () => {
@@ -81,7 +81,11 @@ const Events = () => {
   const filteredEvents =
     filter === "all"
       ? eventsToDisplay
-      : eventsToDisplay.filter((event) => event.status === filter || event.type === filter);
+      : eventsToDisplay.filter((event) => {
+          // Handle both admin events (with status) and static events (with type)
+          const eventStatus = event.status || event.type;
+          return eventStatus === filter;
+        });
 
   return (
     <div className="page-content bg-white">

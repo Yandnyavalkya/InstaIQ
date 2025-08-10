@@ -9,10 +9,16 @@ console.log("Backend URL (Login Page):", import.meta.env.VITE_BACKEND_URL); // L
 const Login = () => {
   const navigate = useNavigate(); // Hook for navigation
 
+  const [loginMethod, setLoginMethod] = useState('email'); // 'email' or 'mobile'
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  const [mobileData, setMobileData] = useState({
+    mobile: "",
+    otp: "",
+  });
+  const [otpSent, setOtpSent] = useState(false);
   const [loading, setLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState(null); // For general success messages
   const [errorMessage, setErrorMessage] = useState(null); // For login errors
@@ -36,6 +42,11 @@ const Login = () => {
   // Handle input changes
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  // Handle mobile data changes
+  const handleMobileChange = (e) => {
+    setMobileData({ ...mobileData, [e.target.name]: e.target.value });
   };
 
   // Handle form submission
@@ -73,6 +84,61 @@ const Login = () => {
     }
   };
 
+  // Handle OTP send
+  const handleSendOTP = async () => {
+    if (!mobileData.mobile || mobileData.mobile.length !== 10) {
+      setErrorMessage("Please enter a valid 10-digit mobile number");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      // Simulate OTP sending (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      setOtpSent(true);
+      setSuccessMessage("OTP sent to your mobile number!");
+    } catch (error) {
+      setErrorMessage("Failed to send OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Handle mobile OTP login
+  const handleMobileLogin = async (e) => {
+    e.preventDefault();
+    
+    if (!mobileData.otp || mobileData.otp.length !== 6) {
+      setErrorMessage("Please enter a valid 6-digit OTP");
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage(null);
+
+    try {
+      // Simulate OTP verification (replace with actual API call)
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // For demo purposes, simulate successful login
+      localStorage.setItem('userInfo', JSON.stringify({
+        name: 'Mobile User',
+        email: 'user@instaiq.com',
+        mobile: mobileData.mobile,
+        role: 'user'
+      }));
+
+      setSuccessMessage("Login successful! Redirecting to home page...");
+      navigate('/');
+    } catch (error) {
+      setErrorMessage("Invalid OTP. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Handle admin login (for demo purposes)
   const handleAdminLogin = () => {
     localStorage.setItem('isAdmin', 'true');
@@ -99,19 +165,44 @@ const Login = () => {
           <div className="account-container">
             <div className="heading-bx left">
               <h2 className="title-head">
-                Login to your <span>InstaIQ Account</span> {/* Adjusted title */}
+                Login to your<br />
+                <span>InstaIQ Account</span>
               </h2>
               <p>
-                Don't have an account? <Link to="/register">Create one here</Link>
+                Don't have an account? <Link to="/register">Register Now</Link>
               </p>
             </div>
-            <form className="contact-bx" onSubmit={handleSubmit}> {/* Added onSubmit handler */}
-              {/* Message display area */}
-              {loading && <div className="alert alert-info">Logging in...</div>}
-              {successMessage && <div className="alert alert-success">{successMessage}</div>}
-              {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+            {/* Login Method Toggle */}
+            <div className="row mb-4">
+              <div className="col-12">
+                <div className="btn-group w-100" role="group">
+                  <button
+                    type="button"
+                    className={`btn ${loginMethod === 'email' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setLoginMethod('email')}
+                  >
+                    Email Login
+                  </button>
+                  <button
+                    type="button"
+                    className={`btn ${loginMethod === 'mobile' ? 'btn-primary' : 'btn-outline-primary'}`}
+                    onClick={() => setLoginMethod('mobile')}
+                  >
+                    Mobile OTP Login
+                  </button>
+                </div>
+              </div>
+            </div>
 
-              <div className="row placeani">
+            {/* Message display area */}
+            {loading && <div className="alert alert-info">Logging in...</div>}
+            {successMessage && <div className="alert alert-success">{successMessage}</div>}
+            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
+
+            {/* Email Login Form */}
+            {loginMethod === 'email' && (
+              <form className="contact-bx" onSubmit={handleSubmit}>
+                <div className="row placeani">
                 {/* Input for Email */}
                 <div className="col-lg-12">
                   <div className="form-group">
@@ -192,6 +283,106 @@ const Login = () => {
                 </div>
               </div>
             </form>
+            )}
+
+            {/* Mobile OTP Login Form */}
+            {loginMethod === 'mobile' && (
+              <form className="contact-bx" onSubmit={handleMobileLogin}>
+                <div className="row placeani">
+                  {/* Input for Mobile Number */}
+                  <div className="col-lg-12">
+                    <div className="form-group">
+                      <div className="input-group">
+                        <input
+                          name="mobile"
+                          type="tel"
+                          required
+                          className="form-control"
+                          placeholder="Your Mobile Number"
+                          value={mobileData.mobile}
+                          onChange={handleMobileChange}
+                          pattern="[0-9]{10}"
+                          title="Please enter a valid 10-digit mobile number"
+                          disabled={otpSent}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Send OTP Button */}
+                  {!otpSent && (
+                    <div className="col-lg-12">
+                      <button
+                        type="button"
+                        onClick={handleSendOTP}
+                        className="btn button-md"
+                        disabled={loading || !mobileData.mobile || mobileData.mobile.length !== 10}
+                        style={{
+                          background: '#28a745',
+                          border: 'none',
+                          width: '100%'
+                        }}
+                      >
+                        {loading ? "Sending OTP..." : "Send OTP"}
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Input for OTP */}
+                  {otpSent && (
+                    <>
+                      <div className="col-lg-12">
+                        <div className="form-group">
+                          <div className="input-group">
+                            <input
+                              name="otp"
+                              type="text"
+                              required
+                              className="form-control"
+                              placeholder="Enter 6-digit OTP"
+                              value={mobileData.otp}
+                              onChange={handleMobileChange}
+                              pattern="[0-9]{6}"
+                              title="Please enter a valid 6-digit OTP"
+                              maxLength="6"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div className="col-lg-12">
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setOtpSent(false);
+                            setMobileData({ mobile: mobileData.mobile, otp: "" });
+                          }}
+                          className="btn button-md"
+                          style={{
+                            background: '#6c757d',
+                            border: 'none',
+                            width: '100%',
+                            marginBottom: '10px'
+                          }}
+                        >
+                          Change Mobile Number
+                        </button>
+                      </div>
+                      <div className="col-lg-12 m-b30">
+                        <button
+                          name="submit"
+                          type="submit"
+                          value="Submit"
+                          className="btn button-md"
+                          disabled={loading || !mobileData.otp || mobileData.otp.length !== 6}
+                        >
+                          {loading ? "Verifying OTP..." : "Login with OTP"}
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
+              </form>
+            )}
           </div>
         </div>
       </div>

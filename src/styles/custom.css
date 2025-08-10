@@ -12,6 +12,14 @@
   background: #1e1e1e !important;
 }
 
+/* Ensure no gaps or dark rectangles under navbar */
+.header.rs-nav::after,
+.sticky-header::after,
+.menu-bar::after {
+  display: none !important;
+  content: none !important;
+}
+
 /* Ensure navbar links are white */
 .header.rs-nav a,
 .header.rs-nav .nav.navbar-nav a,
@@ -312,7 +320,7 @@ button[type="submit"]:focus,
 
 /* Remove any dark parts under navbar */
 .page-wraper {
-  padding-top: 0 !important;
+  padding-top: 72px !important; /* Exact navbar height to eliminate gap */
   margin-top: 0 !important;
 }
 
@@ -334,6 +342,8 @@ button[type="submit"]:focus,
   padding: 40px !important;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;
   border: 1px solid #333 !important;
+  max-width: 500px !important;
+  width: 100% !important;
 }
 
 .account-container .heading-bx h2 {
@@ -412,6 +422,38 @@ button[type="submit"]:focus,
   background-color: #4d0a91 !important; /* Match the active color from courses page */
   transform: translateY(-1px) !important;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Button group styling for login method toggle */
+.account-container .btn-group {
+  margin-bottom: 20px !important;
+}
+
+.account-container .btn-group .btn {
+  flex: 1 !important;
+  margin: 0 2px !important;
+  padding: 12px 16px !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  border-radius: 8px !important;
+  transition: all 0.3s ease !important;
+}
+
+.account-container .btn-group .btn-primary {
+  background-color: #4c1864 !important;
+  border-color: #4c1864 !important;
+  color: #ffffff !important;
+}
+
+.account-container .btn-group .btn-outline-primary {
+  background-color: transparent !important;
+  border-color: #4c1864 !important;
+  color: #4c1864 !important;
+}
+
+.account-container .btn-group .btn-outline-primary:hover {
+  background-color: #4c1864 !important;
+  color: #ffffff !important;
 }
 
 .account-container .form-forget {
@@ -500,7 +542,7 @@ button[type="submit"]:focus,
 .account-form {
   display: flex !important;
   align-items: stretch !important;
-  min-height: calc(100vh - 70px) !important; /* Subtract navbar height */
+  min-height: calc(100vh - 72px) !important; /* Subtract navbar height */
 }
 
 .account-head {
@@ -518,7 +560,7 @@ button[type="submit"]:focus,
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  padding: 40px !important;
+  padding: 60px 40px !important; /* Increased top/bottom padding for better spacing */
 }
 
 /* Ensure no dark rectangle appears */
