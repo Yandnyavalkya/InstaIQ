@@ -7,6 +7,23 @@ const OrderDetails = ({ orderData, onNext }) => {
   console.log("OrderDetails - Component mounted");
   console.log("OrderDetails - Cart state:", state.cart);
 
+  // Calculate actual cart total
+  const calculateCartTotal = () => {
+    if (!state.cart || state.cart.length === 0) return 0;
+    let total = 0;
+    state.cart.forEach(item => {
+      if (item.price && item.price !== "Free") {
+        // Extract numbers from price string (e.g., "₹1,999" -> 1999)
+        const priceStr = item.price.toString();
+        const price = parseInt(priceStr.replace(/[^\d]/g, "")) || 0;
+        total += price;
+      }
+    });
+    return total;
+  };
+
+  const cartTotal = calculateCartTotal();
+
   return (
     <div style={{ padding: "20px" }}>
       <h2>Order Details</h2>
@@ -64,7 +81,7 @@ const OrderDetails = ({ orderData, onNext }) => {
                 <strong>Total Items:</strong> {state.cart.length}
               </p>
               <p style={{ margin: "5px 0", color: "#4c1864", fontSize: "16px", fontWeight: "bold" }}>
-                <strong>Cart Total:</strong> ₹5,000
+                <strong>Cart Total:</strong> ₹{cartTotal.toLocaleString()}
               </p>
             </div>
           </div>
@@ -72,7 +89,7 @@ const OrderDetails = ({ orderData, onNext }) => {
           <button
             onClick={() => onNext({ 
               items: state.cart, 
-              cartTotal: 5000
+              cartTotal: cartTotal
             })}
             style={{
               padding: "15px 30px",

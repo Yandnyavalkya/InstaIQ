@@ -170,16 +170,16 @@ const BillingDetails = ({ orderData, onNext, onPrevious }) => {
                  <p style={{ margin: "8px 0", color: "#333", fontSize: "14px" }}>
                    <strong>Cart Total:</strong> ₹{orderData.cartTotal?.toLocaleString() || 0}
                  </p>
-                                   {promoApplied && (
+                                                     {promoApplied && (
                     <p style={{ margin: "8px 0", color: "#28a745", fontSize: "14px" }}>
-                      <strong>Discount (10%):</strong> -₹500
+                      <strong>Discount (10%):</strong> -₹{Math.round((orderData.cartTotal || 0) * 0.1).toLocaleString()}
                     </p>
                   )}
-                                     <p style={{ margin: "8px 0", color: "#4c1864", fontSize: "16px", fontWeight: "bold" }}>
-                     <strong>Final Total:</strong> ₹{promoApplied ? 
-                       (orderData.cartTotal - 500) : 
-                       orderData.cartTotal || 5000}
-                   </p>
+                  <p style={{ margin: "8px 0", color: "#4c1864", fontSize: "16px", fontWeight: "bold" }}>
+                    <strong>Final Total:</strong> ₹{promoApplied ? 
+                      (orderData.cartTotal - Math.round(orderData.cartTotal * 0.1)).toLocaleString() : 
+                      orderData.cartTotal?.toLocaleString() || 0}
+                  </p>
                </div>
              </div>
 
@@ -202,11 +202,11 @@ const BillingDetails = ({ orderData, onNext, onPrevious }) => {
                </button>
                                <button
                   onClick={() => {
-                    const discount = promoApplied ? 500 : 0;
-                    const finalTotal = (orderData.cartTotal || 5000) - discount;
+                    const discount = promoApplied ? Math.round(orderData.cartTotal * 0.1) : 0;
+                    const finalTotal = orderData.cartTotal - discount;
                     onNext({
                       billing: billingData,
-                      cartTotal: orderData.cartTotal || 5000,
+                      cartTotal: orderData.cartTotal,
                       discount: discount,
                       finalTotal: finalTotal,
                       promoCode: promoApplied ? promoCode : ""
