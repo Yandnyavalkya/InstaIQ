@@ -201,7 +201,12 @@ const Courses = () => {
   // Filter courses by search and category (now based on fetched data)
   const filteredCourses = allFetchedCourses.filter(
     (course) => {
-      const matchesSearch = course.title.toLowerCase().includes(search.toLowerCase());
+      // Enhanced search functionality - search in title, provider, description, and price
+      const searchTerm = search.toLowerCase();
+      const matchesSearch = course.title.toLowerCase().includes(searchTerm) ||
+                           (course.provider && course.provider.toLowerCase().includes(searchTerm)) ||
+                           (course.description && course.description.toLowerCase().includes(searchTerm)) ||
+                           (course.price && course.price.toLowerCase().includes(searchTerm));
       
       if (selectedCategory === "All Courses") {
         return matchesSearch;
@@ -249,7 +254,7 @@ const Courses = () => {
   };
 
   return (
-    <div className="page-content bg-white">
+    <div className="page-content">
       {/* Banner */}
       <div
         className="page-banner ovbl-dark"
@@ -261,29 +266,30 @@ const Courses = () => {
           </div>
         </div>
       </div>
+
+      {/* Breadcrumb */}
+      <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
+        <div className="container">
+          <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
+            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</Link></li>
+            <li style={{ color: '#bbbbbb' }}>Courses</li>
+          </ul>
+        </div>
+      </div>
       {/* Main Content */}
       <div className="content-block">
-        <div className="section-area section-sp1">
+        <div className="section-area section-sp1" style={{ backgroundColor: '#1e1e1e', padding: '80px 0' }}>
           <div className="container">
             <div className="row">
-                             {/* Search and Filter Section */}
-               <div className="col-12 m-b30">
-                 <div className="row align-items-end">
-                                       <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
-                      <div className="widget courses-search-bx placeani">
-                        <div className="form-group">
-                          <div className="input-group">
-                            <label style={{ 
-                              position: 'absolute', 
-                              top: '-20px', 
-                              left: '0', 
-                              fontSize: '14px', 
-                              color: '#fff',
-                              zIndex: 1,
-                              backgroundColor: 'transparent'
-                            }}>
-                              Search Courses
-                            </label>
+              {/* Search and Filter Section */}
+              <div className="col-12 m-b30">
+                <div className="row align-items-end">
+                  <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                    <div className="widget courses-search-bx placeani">
+                      <div className="form-group">
+                        <h5 className="widget-title style-1" style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: '600', marginBottom: '20px' }}>Search Courses</h5>
+                        <div className="input-group">
+                          <div style={{ position: 'relative', width: '100%' }}>
                             <input
                               name="dzName"
                               type="text"
@@ -295,36 +301,72 @@ const Courses = () => {
                                 setPage(1); // Reset to first page on search
                               }}
                               style={{
-                                backgroundColor: '#2a2a2a',
+                                backgroundColor: '#253248',
                                 border: '1px solid #444',
                                 color: '#fff',
-                                padding: '12px 15px',
-                                borderRadius: '8px'
+                                padding: '15px 50px 15px 20px',
+                                borderRadius: '12px',
+                                fontSize: '16px',
+                                boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                                width: '100%'
                               }}
                             />
+                            <i className="fa fa-search" style={{
+                              position: 'absolute',
+                              right: '20px',
+                              top: '50%',
+                              transform: 'translateY(-50%)',
+                              color: '#ffffff',
+                              fontSize: '16px',
+                              zIndex: 2
+                            }}></i>
                           </div>
                         </div>
                       </div>
                     </div>
-                   <div className="col-lg-8 col-md-6 col-sm-12 mb-3">
-                     <div className="widget widget_archive">
-                       <h5 className="widget-title style-1">Filter by Category</h5>
-                       <div className="d-flex flex-wrap gap-2">
-                         {categories.map((cat) => (
-                           <button
-                             key={cat}
-                             className={`btn ${selectedCategory === cat ? "btn-primary" : "btn-outline-primary"} btn-sm`}
-                             onClick={() => handleCategoryClick(cat)}
-                             style={{ marginBottom: '5px' }}
-                           >
-                             {cat}
-                           </button>
-                         ))}
-                       </div>
-                     </div>
-                   </div>
-                 </div>
-               </div>
+                  </div>
+                  <div className="col-lg-8 col-md-6 col-sm-12 mb-3">
+                    <div className="widget widget_archive">
+                      <h5 className="widget-title style-1" style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: '600', marginBottom: '20px' }}>Filter by Category</h5>
+                      <div className="d-flex flex-wrap gap-3">
+                        {categories.map((cat) => (
+                          <button
+                            key={cat}
+                            onClick={() => handleCategoryClick(cat)}
+                            style={{ 
+                              marginBottom: '10px',
+                              padding: '12px 24px',
+                              borderRadius: '25px',
+                              border: 'none',
+                              fontWeight: '600',
+                              fontSize: '14px',
+                              cursor: 'pointer',
+                              transition: 'all 0.3s ease',
+                              backgroundColor: selectedCategory === cat ? '#4c1864' : '#253248',
+                              color: selectedCategory === cat ? '#ffffff' : '#bbbbbb',
+                              boxShadow: selectedCategory === cat ? '0 4px 15px rgba(76, 24, 100, 0.3)' : '0 2px 8px rgba(0, 0, 0, 0.2)'
+                            }}
+                            onMouseEnter={(e) => {
+                              if (selectedCategory !== cat) {
+                                e.target.style.backgroundColor = '#3f189a';
+                                e.target.style.transform = 'translateY(-2px)';
+                              }
+                            }}
+                            onMouseLeave={(e) => {
+                              if (selectedCategory !== cat) {
+                                e.target.style.backgroundColor = '#253248';
+                                e.target.style.transform = 'translateY(0)';
+                              }
+                            }}
+                          >
+                            {cat}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               {/* Course Grid */}
               <div className="col-12">
                 <div className="row">
@@ -333,80 +375,178 @@ const Courses = () => {
                   ) : error ? (
                     <div className="col-12 text-center text-danger">{error}</div>
                   ) : paginatedCourses.length === 0 ? (
-                    <div className="col-12 text-center text-muted">No courses found matching your criteria.</div>
+                    <div className="col-12 text-center" style={{ color: '#bbbbbb', fontSize: '18px', padding: '40px 0' }}>
+                      {search ? `No courses found matching "${search}"` : 'No courses found matching your criteria.'}
+                    </div>
                   ) : (
                     paginatedCourses.map((course) => (
-                      <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={course._id}> {/* Use _id for key */}
+                      <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={course._id}>
                         <div className="cours-bx d-flex flex-column h-100" style={{
-                          minHeight: 350,
-                          background: '#1e1e1e !important',
-                          borderRadius: 12,
-                          boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-                          overflow: 'hidden', // Ensure border-radius clips image
-                          border: '1px solid #333'
+                          minHeight: 400,
+                          background: '#253248',
+                          borderRadius: '16px',
+                          boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
+                          overflow: 'hidden',
+                          border: '1px solid #444',
+                          transition: 'all 0.3s ease',
+                          cursor: 'pointer'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.transform = 'translateY(-8px)';
+                          e.currentTarget.style.boxShadow = '0 15px 35px rgba(0, 0, 0, 0.3)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
                         }}>
-                          <div style={{ background: '#1e1e1e' }}>
+                          <div style={{ background: '#253248' }}>
                             <div style={{ position: "relative" }}>
-                                                             <img
-                                 src={course.imageUrl || course.img || "/assets/images/courses/course1.jpg"}
-                                 alt={course.title}
-                                 className="card-img-top"
-                                 style={{ borderTopLeftRadius: 16, borderTopRightRadius: 16, height: 180, objectFit: "cover" }}
-                                 onError={(e) => {
-                                   e.target.src = "/assets/images/courses/course1.jpg";
-                                 }}
-                               />
+                              <img
+                                src={course.imageUrl || course.img || "/assets/images/courses/course1.jpg"}
+                                alt={course.title}
+                                className="card-img-top"
+                                style={{ 
+                                  borderTopLeftRadius: 16, 
+                                  borderTopRightRadius: 16, 
+                                  height: 200, 
+                                  objectFit: "cover",
+                                  width: '100%'
+                                }}
+                                onError={(e) => {
+                                  e.target.src = "/assets/images/courses/course1.jpg";
+                                }}
+                              />
                               {course.membership && (
-                                <span style={{ position: "absolute", top: 12, left: 12, background: "#e67e22", color: "#fff", borderRadius: 6, padding: "2px 10px", fontSize: 13 }}>
+                                <span style={{ 
+                                  position: "absolute", 
+                                  top: 15, 
+                                  left: 15, 
+                                  background: "#e67e22", 
+                                  color: "#fff", 
+                                  borderRadius: 8, 
+                                  padding: "6px 12px", 
+                                  fontSize: 12,
+                                  fontWeight: '600',
+                                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+                                }}>
                                   {course.badge}
                                 </span>
                               )}
                               {course.badge === "FREE" && (
-                                <span style={{ position: "absolute", top: 12, right: 12, background: "#27ae60", color: "#fff", borderRadius: 6, padding: "2px 10px", fontSize: 13 }}>
+                                <span style={{ 
+                                  position: "absolute", 
+                                  top: 15, 
+                                  right: 15, 
+                                  background: "#27ae60", 
+                                  color: "#fff", 
+                                  borderRadius: 8, 
+                                  padding: "6px 12px", 
+                                  fontSize: 12,
+                                  fontWeight: '600',
+                                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.3)'
+                                }}>
                                   {course.badge}
                                 </span>
                               )}
                             </div>
-                            <div className="card-body" style={{ padding: '16px', flexGrow: 1, background: '#1e1e1e !important' }}>
-                              <h5 className="card-title" style={{ fontWeight: 500, fontSize: 18, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                                <Link to={`/course-details/${course._id}`} style={{ color: '#fff' }}>{course.title}</Link> {/* Use _id for Link */}
+                            <div className="card-body" style={{ padding: '24px', flexGrow: 1, background: '#253248' }}>
+                              <h5 className="card-title" style={{ 
+                                fontWeight: 600, 
+                                fontSize: 18, 
+                                minHeight: '54px', 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'center', 
+                                color: '#fff',
+                                lineHeight: '1.4',
+                                marginBottom: '15px'
+                              }}>
+                                <Link to={`/course-details/${course._id}`} style={{ 
+                                  color: '#fff', 
+                                  textDecoration: 'none',
+                                  textAlign: 'center'
+                                }}>
+                                  {course.title}
+                                </Link>
                               </h5>
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: "#bbb", fontSize: 15 }}>
-                                <span>{course.provider}</span>
+                              <div style={{ 
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                justifyContent: 'space-between', 
+                                color: "#bbbbbb", 
+                                fontSize: 14,
+                                marginBottom: '15px'
+                              }}>
+                                <span style={{ fontWeight: '500' }}>{course.provider}</span>
                                 {course.rating && (
                                   <div className="rating-bx" style={{ display: 'flex', alignItems: 'center' }}>
                                     <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', display: 'flex', alignItems: 'center' }}>
                                       {Array.from({ length: 5 }).map((_, i) => (
-                                        <li key={i}><i className={`fa fa-star${i < course.rating ? '' : '-o'}`} style={{ color: '#f3b632', marginRight: 2, fontSize: 12 }}></i></li>
+                                        <li key={i}>
+                                          <i className={`fa fa-star${i < course.rating ? '' : '-o'}`} style={{ 
+                                            color: '#f3b632', 
+                                            marginRight: 2, 
+                                            fontSize: 14 
+                                          }}></i>
+                                        </li>
                                       ))}
-                                      <li style={{ marginLeft: 5, fontSize: 12, color: '#bbb' }}>({course.ratingsCount})</li>
+                                      <li style={{ marginLeft: 5, fontSize: 12, color: '#bbbbbb' }}>({course.ratingsCount})</li>
                                     </ul>
                                   </div>
                                 )}
                               </div>
-                              <div style={{ fontWeight: 600, fontSize: 18, marginTop: 8, color: '#fff' }}>
-                                {course.oldPrice && <span style={{ textDecoration: "line-through", color: "#888", marginRight: 8 }}>{course.oldPrice}</span>}
+                              <div style={{ 
+                                fontWeight: 700, 
+                                fontSize: 20, 
+                                color: '#fff',
+                                textAlign: 'center',
+                                marginBottom: '20px'
+                              }}>
+                                {course.oldPrice && (
+                                  <span style={{ 
+                                    textDecoration: "line-through", 
+                                    color: "#888", 
+                                    marginRight: 10,
+                                    fontSize: '16'
+                                  }}>
+                                    {course.oldPrice}
+                                  </span>
+                                )}
                                 {course.price}
                               </div>
                             </div>
                           </div>
-                                                     <div style={{ marginTop: "auto", padding: '0 16px 16px 16px', background: '#1e1e1e !important' }}>
-                                                           <Link to={`/course-details/${course._id}`} className="btn w-100" style={{ 
-                                borderRadius: 10,
-                                minWidth: 120,
-                                minHeight: 40,
-                                fontWeight: 600,
-                                border: 'none',
-                                background: '#2563eb',
-                                color: '#fff',
-                                transition: 'background 0.2s',
-                                boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
-                                display: 'inline-block',
-                                textTransform: 'none'
-                              }}>
-                                Buy Now
-                              </Link>
-                           </div>
+                          <div style={{ 
+                            marginTop: "auto", 
+                            padding: '0 24px 24px 24px', 
+                            background: '#253248' 
+                          }}>
+                            <Link to={`/course-details/${course._id}`} className="btn w-100" style={{ 
+                              borderRadius: 12,
+                              minHeight: 48,
+                              fontWeight: 600,
+                              border: 'none',
+                              background: '#4c1864',
+                              color: '#fff',
+                              transition: 'all 0.3s ease',
+                              boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)',
+                              display: 'inline-block',
+                              textTransform: 'none',
+                              fontSize: '16px'
+                            }}
+                            onMouseEnter={(e) => {
+                              e.target.style.backgroundColor = '#3f189a';
+                              e.target.style.transform = 'translateY(-2px)';
+                              e.target.style.boxShadow = '0 6px 20px rgba(76, 24, 100, 0.4)';
+                            }}
+                            onMouseLeave={(e) => {
+                              e.target.style.backgroundColor = '#4c1864';
+                              e.target.style.transform = 'translateY(0)';
+                              e.target.style.boxShadow = '0 4px 15px rgba(76, 24, 100, 0.3)';
+                            }}>
+                              Buy Now
+                            </Link>
+                          </div>
                         </div>
                       </div>
                     ))
@@ -414,20 +554,108 @@ const Courses = () => {
                   {/* Pagination (dynamic) */}
                   {totalPages > 1 && (
                     <div className="col-lg-12 m-b20">
-                      <div className="pagination-bx rounded-sm gray clearfix">
-                        <ul className="pagination">
-                          <li className={`previous${page === 1 ? " disabled" : ""}`}>
-                            <button onClick={() => setPage(page - 1)} disabled={page === 1} style={{ background: "none", border: "none" }}>
+                      <div className="pagination-bx" style={{ 
+                        display: 'flex', 
+                        justifyContent: 'center', 
+                        alignItems: 'center',
+                        marginTop: '40px'
+                      }}>
+                        <ul className="pagination" style={{ 
+                          display: 'flex', 
+                          listStyle: 'none', 
+                          padding: 0, 
+                          margin: 0,
+                          gap: '10px'
+                        }}>
+                          <li>
+                            <button 
+                              onClick={() => setPage(page - 1)} 
+                              disabled={page === 1} 
+                              style={{ 
+                                background: page === 1 ? '#444' : '#4c1864',
+                                border: 'none',
+                                color: '#fff',
+                                padding: '12px 20px',
+                                borderRadius: '8px',
+                                cursor: page === 1 ? 'not-allowed' : 'pointer',
+                                transition: 'all 0.3s ease',
+                                fontWeight: '600'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (page !== 1) {
+                                  e.target.style.backgroundColor = '#3f189a';
+                                  e.target.style.transform = 'translateY(-2px)';
+                                }
+                              }}
+                              onMouseLeave={(e) => {
+                                if (page !== 1) {
+                                  e.target.style.backgroundColor = '#4c1864';
+                                  e.target.style.transform = 'translateY(0)';
+                                }
+                              }}
+                            >
                               <i className="ti-arrow-left"></i> Prev
                             </button>
                           </li>
                           {Array.from({ length: totalPages }).map((_, i) => (
-                            <li key={i} className={page === i + 1 ? "active" : ""}>
-                              <button onClick={() => setPage(i + 1)} style={{ background: "none", border: "none" }}>{i + 1}</button>
+                            <li key={i}>
+                              <button 
+                                onClick={() => setPage(i + 1)} 
+                                style={{ 
+                                  background: page === i + 1 ? '#4c1864' : '#253248',
+                                  border: 'none',
+                                  color: '#fff',
+                                  padding: '12px 16px',
+                                  borderRadius: '8px',
+                                  cursor: 'pointer',
+                                  transition: 'all 0.3s ease',
+                                  fontWeight: '600',
+                                  minWidth: '40px'
+                                }}
+                                onMouseEnter={(e) => {
+                                  if (page !== i + 1) {
+                                    e.target.style.backgroundColor = '#3f189a';
+                                    e.target.style.transform = 'translateY(-2px)';
+                                  }
+                                }}
+                                onMouseLeave={(e) => {
+                                  if (page !== i + 1) {
+                                    e.target.style.backgroundColor = '#253248';
+                                    e.target.style.transform = 'translateY(0)';
+                                  }
+                                }}
+                              >
+                                {i + 1}
+                              </button>
                             </li>
                           ))}
-                          <li className={`next${page === totalPages ? " disabled" : ""}`}>
-                            <button onClick={() => setPage(page + 1)} disabled={page === totalPages} style={{ background: "none", border: "none" }}>
+                          <li>
+                            <button 
+                              onClick={() => setPage(page + 1)} 
+                              disabled={page === totalPages} 
+                              style={{ 
+                                background: page === totalPages ? '#444' : '#4c1864',
+                                border: 'none',
+                                color: '#fff',
+                                padding: '12px 20px',
+                                borderRadius: '8px',
+                                cursor: page === totalPages ? 'not-allowed' : 'pointer',
+                                transition: 'all 0.3s ease',
+                                fontWeight: '600'
+                              }}
+                              onMouseEnter={(e) => {
+                                if (page !== totalPages) {
+                                  e.target.style.backgroundColor = '#3f189a';
+                                  e.target.style.transform = 'translateY(-2px)';
+                                }
+                              }}
+                              onMouseLeave={(e) => {
+                                if (page !== totalPages) {
+                                  e.target.style.backgroundColor = '#4c1864';
+                                  e.target.style.transform = 'translateY(0)';
+                                }
+                              }}
+                            >
                               Next <i className="ti-arrow-right"></i>
                             </button>
                           </li>

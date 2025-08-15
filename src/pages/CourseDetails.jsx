@@ -224,12 +224,12 @@ const CourseDetails = () => {
 
   if (loading) {
     return (
-      <div className="page-content bg-white">
+      <div className="page-content" style={{ backgroundColor: '#1e1e1e' }}>
         <div className="container" style={{ padding: 80, textAlign: "center" }}>
-          <div className="spinner-border text-primary" role="status">
+          <div className="spinner-border" style={{ color: '#4c1864' }} role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
-          <p className="mt-3">Loading course details...</p>
+          <p className="mt-3" style={{ color: '#bbbbbb' }}>Loading course details...</p>
         </div>
       </div>
     );
@@ -237,11 +237,19 @@ const CourseDetails = () => {
 
   if (!course) {
     return (
-      <div className="page-content bg-white">
+      <div className="page-content" style={{ backgroundColor: '#1e1e1e' }}>
         <div className="container" style={{ padding: 80, textAlign: "center" }}>
-          <h2>Course Not Found</h2>
-          <p>The course you are looking for does not exist.</p>
-          <Link to="/courses" className="btn btn-primary">Back to Courses</Link>
+          <h2 style={{ color: '#ffffff' }}>Course Not Found</h2>
+          <p style={{ color: '#bbbbbb' }}>The course you are looking for does not exist.</p>
+          <Link to="/courses" className="btn" style={{
+            background: '#4c1864',
+            color: '#ffffff',
+            border: 'none',
+            padding: '12px 24px',
+            borderRadius: '8px',
+            textDecoration: 'none',
+            fontWeight: '600'
+          }}>Back to Courses</Link>
         </div>
       </div>
     );
@@ -263,7 +271,7 @@ const CourseDetails = () => {
   };
 
   return (
-    <div className="page-content bg-white">
+    <div className="page-content" style={{ backgroundColor: '#1e1e1e' }}>
       <div className="page-banner ovbl-dark" style={{ backgroundImage: "url(assets/images/banner/banner3.jpg)" }}>
         <div className="container">
           <div className="page-banner-entry">
@@ -271,8 +279,20 @@ const CourseDetails = () => {
           </div>
         </div>
       </div>
+      
+      {/* Breadcrumb */}
+      <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
+        <div className="container">
+          <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
+            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</Link></li>
+            <li><Link to="/courses" style={{ color: '#4c1864', textDecoration: 'none' }}>Courses</Link></li>
+            <li style={{ color: '#bbbbbb' }}>{course.title}</li>
+          </ul>
+        </div>
+      </div>
+      
       <div className="content-block">
-        <div className="section-area section-sp1">
+        <div className="section-area section-sp1" style={{ backgroundColor: '#1e1e1e', padding: '80px 0' }}>
           <div className="container">
             <div className="row">
               <div className="col-lg-8 col-md-12 col-sm-12">
@@ -301,27 +321,32 @@ const CourseDetails = () => {
                        console.log("Image loaded successfully:", e.target.src);
                      }}
                    />
-                  <h2>{course.title}</h2>
-                  <div style={{ color: "#888", fontSize: 15, marginBottom: 8 }}>
+                  <h2 style={{ color: '#ffffff', fontSize: '2.5rem', fontWeight: '700', marginBottom: '20px' }}>{course.title}</h2>
+                  <div style={{ color: "#bbbbbb", fontSize: 16, marginBottom: 12 }}>
                     {course.instructor || course.provider || "Insta Education"}
                   </div>
-                  <div style={{ fontWeight: 600, fontSize: 18, marginBottom: 16 }}>
-                    {course.oldPrice && <span style={{ textDecoration: "line-through", color: "#888", marginRight: 8 }}>{course.oldPrice}</span>}
-                    {course.price === 0 ? "Free" : `₹${course.price}`}
+                  <div style={{ fontWeight: 600, fontSize: 20, marginBottom: 20, color: '#ffffff' }}>
+                    {course.oldPrice && course.oldPrice > course.price && (
+                      <span style={{ textDecoration: "line-through", color: "#888", marginRight: 12 }}>{course.oldPrice}</span>
+                    )}
+                    <span style={{ color: '#ffffff', fontSize: '24px' }}>{course.price === 0 ? "Free" : `₹${course.price}`}</span>
                   </div>
-                  <p>{course.description}</p>
+                  <p style={{ color: '#bbbbbb', fontSize: '16px', lineHeight: '1.6', marginBottom: '24px' }}>{course.description}</p>
                   {course.details && (
-                    <ul>
-                      {course.details.map((item, i) => (
-                        <li key={i}>{item}</li>
-                      ))}
-                    </ul>
+                    <div style={{ marginBottom: '24px' }}>
+                      <h4 style={{ color: '#ffffff', fontSize: '18px', fontWeight: '600', marginBottom: '16px' }}>Course Highlights:</h4>
+                      <ul style={{ color: '#bbbbbb', fontSize: '15px', lineHeight: '1.6', margin: 0, paddingLeft: '20px' }}>
+                        {course.details.map((item, i) => (
+                          <li key={i} style={{ marginBottom: '8px' }}>{item}</li>
+                        ))}
+                      </ul>
+                    </div>
                   )}
-                  {added && <div style={{ color: 'green', marginTop: 10 }}>Added to cart!</div>}
+                  {added && <div style={{ color: '#4c1864', marginTop: 10, fontWeight: '600' }}>Added to cart!</div>}
                   
                   {/* Reviews Section */}
                   <div style={{ marginTop: 40 }}>
-                    <h3 style={{ color: '#fff', marginBottom: 20 }}>Student Reviews</h3>
+                    <h3 style={{ color: '#ffffff', marginBottom: 20, fontSize: '2rem', fontWeight: '700' }}>Student Reviews</h3>
                     {course.rating ? (
                       <div>
                         {/* Overall Rating */}
@@ -411,27 +436,64 @@ const CourseDetails = () => {
               </div>
               <div className="col-lg-4 col-md-12 col-sm-12">
                 <div className="course-sidebar">
-                  <div className="widget">
-                    <h5 className="widget-title">Course Info</h5>
-                    <ul>
-                      <li>Provider: <span>{course.instructor || course.provider || "Insta Education"}</span></li>
-                      <li>Price: <span>{course.price === 0 ? "Free" : `₹${course.price}`}</span></li>
-                      {course.oldPrice && <li>Old Price: <span>{course.oldPrice}</span></li>}
-                      {course.badge && <li>Badge: <span>{course.badge}</span></li>}
-                      {course.rating && <li>Rating: <span>{course.rating} ({course.enrollments || course.ratingsCount || 0} ratings)</span></li>}
+                  <div className="widget" style={{ backgroundColor: '#253248', padding: '30px', borderRadius: '16px', marginBottom: '30px', boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)', border: '1px solid #444' }}>
+                    <h5 className="widget-title" style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>Course Info</h5>
+                    <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
+                      <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #444' }}>
+                        <span style={{ color: '#bbbbbb', fontWeight: '500' }}>Provider:</span>
+                        <span style={{ color: '#ffffff', fontWeight: '600' }}>{course.instructor || course.provider || "Insta Education"}</span>
+                      </li>
+                      <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #444' }}>
+                        <span style={{ color: '#bbbbbb', fontWeight: '500' }}>Price:</span>
+                        <span style={{ color: '#ffffff', fontWeight: '700', fontSize: '18px' }}>{course.price === 0 ? "Free" : `₹${course.price}`}</span>
+                      </li>
+                      {course.oldPrice && course.oldPrice > course.price && (
+                        <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #444' }}>
+                          <span style={{ color: '#bbbbbb', fontWeight: '500' }}>Old Price:</span>
+                          <span style={{ color: '#888', textDecoration: 'line-through' }}>{course.oldPrice}</span>
+                        </li>
+                      )}
+                      {course.badge && (
+                        <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #444' }}>
+                          <span style={{ color: '#bbbbbb', fontWeight: '500' }}>Badge:</span>
+                          <span style={{ color: '#ffffff', fontWeight: '600' }}>{course.badge}</span>
+                        </li>
+                      )}
+                      {course.rating && (
+                        <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0' }}>
+                          <span style={{ color: '#bbbbbb', fontWeight: '500' }}>Rating:</span>
+                          <span style={{ color: '#ffffff', fontWeight: '600' }}>{course.rating} ({course.enrollments || course.ratingsCount || 0} ratings)</span>
+                        </li>
+                      )}
                     </ul>
                   </div>
-                                     <div className="widget">
-                     <button onClick={handleBuyNow} className="btn btn-block btn-primary" style={{
-                       background: 'linear-gradient(135deg, #4c1864 0%, #6a1b9a 100%)',
-                       border: 'none',
-                       padding: '12px 24px',
-                       fontSize: '16px',
-                       fontWeight: '600'
-                     }}>
-                       Buy Now for {course.price === 0 ? "Free" : `₹${course.price}`}
-                     </button>
-                   </div>
+                  <div className="widget">
+                    <button onClick={handleBuyNow} className="btn btn-block" style={{
+                      background: '#4c1864',
+                      color: '#ffffff',
+                      border: 'none',
+                      padding: '16px 24px',
+                      fontSize: '18px',
+                      fontWeight: '700',
+                      borderRadius: '12px',
+                      width: '100%',
+                      boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.background = '#3f189a';
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 6px 20px rgba(76, 24, 100, 0.4)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.background = '#4c1864';
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 4px 15px rgba(76, 24, 100, 0.3)';
+                    }}>
+                      Buy Now for {course.price === 0 ? "Free" : `₹${course.price}`}
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

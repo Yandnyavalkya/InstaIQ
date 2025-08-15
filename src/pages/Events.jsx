@@ -74,21 +74,28 @@ const filterTypes = [
 const Events = () => {
   const { events: adminEvents } = useAdmin();
   const [filter, setFilter] = useState("all");
+  const [search, setSearch] = useState("");
   
   // Use admin events if available, otherwise fallback to static events
   const eventsToDisplay = adminEvents && adminEvents.length > 0 ? adminEvents : eventsData;
   
-  const filteredEvents =
-    filter === "all"
-      ? eventsToDisplay
-      : eventsToDisplay.filter((event) => {
-          // Handle both admin events (with status) and static events (with type)
-          const eventStatus = event.status || event.type;
-          return eventStatus === filter;
-        });
+  const filteredEvents = eventsToDisplay.filter((event) => {
+    // Handle both admin events (with status) and static events (with type)
+    const eventStatus = event.status || event.type;
+    
+    // Search filter
+    const matchesSearch = event.title.toLowerCase().includes(search.toLowerCase()) ||
+                         event.desc.toLowerCase().includes(search.toLowerCase()) ||
+                         event.location.toLowerCase().includes(search.toLowerCase());
+    
+    // Status filter
+    const matchesStatus = filter === "all" || eventStatus === filter;
+    
+    return matchesSearch && matchesStatus;
+  });
 
   return (
-    <div className="page-content bg-white">
+    <div className="page-content">
       {/* Banner */}
       <div className="page-banner ovbl-dark" style={{ backgroundImage: "url(assets/images/banner/banner2.jpg)" }}>
         <div className="container">
@@ -97,60 +104,211 @@ const Events = () => {
           </div>
         </div>
       </div>
+
+      {/* Breadcrumb */}
+      <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
+        <div className="container">
+          <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
+            <li><a href="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</a></li>
+            <li style={{ color: '#bbbbbb' }}>Events</li>
+          </ul>
+        </div>
+      </div>
       {/* Breadcrumb removed as per user request */}
       {/* Events Section - matches event.html */}
       <div className="content-block">
-        <div className="section-area section-sp1 gallery-bx">
+        <div className="section-area section-sp1 gallery-bx" style={{ backgroundColor: '#1e1e1e', padding: '80px 0' }}>
           <div className="container">
-            {/* Centered filter buttons with homepage style */}
-            <div className="feature-filters clearfix m-b40" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-              <ul className="filters" data-toggle="buttons" style={{ display: 'flex', gap: 20 }}>
-                {filterTypes.map((type) => (
-                  <li
-                    key={type.value}
-                    data-filter={type.value === "all" ? "" : type.value}
-                    className={`btn${filter === type.value ? " active" : ""}`}
-                    onClick={() => setFilter(type.value)}
-                    style={{ cursor: "pointer", borderRadius: 10, minWidth: 120, minHeight: 40, fontWeight: 600, border: 'none', background: filter === type.value ? '#2563eb' : '#e5e7eb', color: filter === type.value ? '#fff' : '#222', transition: 'background 0.2s', boxShadow: '0 2px 8px rgba(0,0,0,0.04)', display: 'inline-block', textAlign: 'center' }}
-                  >
-                    <input type="radio" checked={filter === type.value} readOnly style={{ display: 'none' }} />
-                    <span>{type.label}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                         {/* Search and Filter Section */}
+             <div className="row m-b30">
+               <div className="col-12">
+                 <div className="row align-items-end">
+                                       <div className="col-lg-4 col-md-6 col-sm-12 mb-3">
+                      <div className="widget courses-search-bx placeani">
+                        <div className="form-group">
+                          <h5 className="widget-title style-1" style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: '600', marginBottom: '20px' }}>Search Events</h5>
+                          <div className="input-group">
+                                                       <div style={{ position: 'relative', width: '100%' }}>
+                              <input
+                                name="dzName"
+                                type="text"
+                                className="form-control"
+                                placeholder="Search for events..."
+                                value={search}
+                                onChange={(e) => setSearch(e.target.value)}
+                                style={{
+                                  backgroundColor: '#253248',
+                                  border: '1px solid #444',
+                                  color: '#fff',
+                                  padding: '15px 50px 15px 20px',
+                                  borderRadius: '12px',
+                                  fontSize: '16px',
+                                  boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)',
+                                  width: '100%'
+                                }}
+                              />
+                              <i className="fa fa-search" style={{
+                                position: 'absolute',
+                                right: '20px',
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                                color: '#ffffff',
+                                fontSize: '16px',
+                                zIndex: 2
+                              }}></i>
+                            </div>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                   <div className="col-lg-8 col-md-6 col-sm-12 mb-3">
+                     <div className="widget widget_archive">
+                       <h5 className="widget-title style-1" style={{ color: '#ffffff', fontSize: '1.3rem', fontWeight: '600', marginBottom: '20px' }}>Filter by Status</h5>
+                       <div className="d-flex flex-wrap gap-3">
+                         {filterTypes.map((type) => (
+                           <button
+                             key={type.value}
+                             onClick={() => setFilter(type.value)}
+                             style={{ 
+                               marginBottom: '10px',
+                               padding: '12px 24px',
+                               borderRadius: '25px',
+                               border: 'none',
+                               fontWeight: '600',
+                               fontSize: '14px',
+                               cursor: 'pointer',
+                               transition: 'all 0.3s ease',
+                               backgroundColor: filter === type.value ? '#4c1864' : '#253248',
+                               color: filter === type.value ? '#ffffff' : '#bbbbbb',
+                               boxShadow: filter === type.value ? '0 4px 15px rgba(76, 24, 100, 0.3)' : '0 2px 8px rgba(0, 0, 0, 0.2)'
+                             }}
+                             onMouseEnter={(e) => {
+                               if (filter !== type.value) {
+                                 e.target.style.backgroundColor = '#3f189a';
+                                 e.target.style.transform = 'translateY(-2px)';
+                               }
+                             }}
+                             onMouseLeave={(e) => {
+                               if (filter !== type.value) {
+                                 e.target.style.backgroundColor = '#253248';
+                                 e.target.style.transform = 'translateY(0)';
+                               }
+                             }}
+                           >
+                             {type.label}
+                           </button>
+                         ))}
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+               </div>
+             </div>
+            
+
             <div className="clearfix">
-              <ul id="masonry" className="ttr-gallery-listing magnific-image row" style={{ listStyle: 'none', padding: 0 }}>
-                {filteredEvents.map((event, idx) => (
+              {filteredEvents.length === 0 ? (
+                <div className="col-12 text-center" style={{ color: '#bbbbbb', fontSize: '18px', padding: '40px 0' }}>
+                  {search ? `No events found matching "${search}"` : 'No events found matching your criteria.'}
+                </div>
+              ) : (
+                <ul id="masonry" className="ttr-gallery-listing magnific-image row" style={{ listStyle: 'none', padding: 0 }}>
+                  {filteredEvents.map((event, idx) => (
                   <li
                     key={idx}
                     className={`action-card col-lg-4 col-md-6 col-sm-12 ${event.type}`}
                     style={{ display: 'flex', justifyContent: 'center', marginBottom: 30 }}
                   >
-                    <div className="event-bx d-flex flex-column h-100" style={{ minHeight: 340, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', background: '#1e1e1e !important', borderRadius: 12, boxShadow: '0 2px 12px rgba(0,0,0,0.07)', width: '100%' }}>
+                    <div className="event-bx d-flex flex-column h-100" style={{ 
+                      minHeight: 380, 
+                      display: 'flex', 
+                      flexDirection: 'column', 
+                      justifyContent: 'space-between', 
+                      background: '#2a2a2a', 
+                      borderRadius: 16, 
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)', 
+                      width: '100%',
+                      transition: 'all 0.3s ease',
+                      cursor: 'pointer',
+                      border: '1px solid #444'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+                      e.currentTarget.style.border = '1px solid #4c1864';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.border = '1px solid #444';
+                    }}>
                       <div className="action-box" style={{ position: 'relative' }}>
-                        <img src={event.img} alt={event.title} style={{ width: '100%', height: 150, objectFit: 'cover', borderTopLeftRadius: 12, borderTopRightRadius: 12, display: 'block' }} />
+                        <img src={event.img} alt={event.title} style={{ 
+                          width: '100%', 
+                          height: 180, 
+                          objectFit: 'cover', 
+                          borderTopLeftRadius: 16, 
+                          borderTopRightRadius: 16, 
+                          display: 'block' 
+                        }} />
                       </div>
-                      <div className="info-bx text-center" style={{ padding: 12, background: '#1e1e1e !important' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 8 }}>
-                          <div className="event-time" style={{ background: '#2563eb', color: '#fff', borderRadius: 8, padding: '8px 16px', marginRight: 10, minWidth: 60 }}>
-                            <div className="event-date" style={{ fontSize: 24, fontWeight: 700 }}>{event.date}</div>
-                            <div className="event-month" style={{ fontSize: 14 }}>{event.month}</div>
+                      <div className="info-bx text-center" style={{ padding: 24, background: '#2a2a2a' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 15 }}>
+                          <div className="event-time" style={{ 
+                            background: '#4c1864', 
+                            color: '#fff', 
+                            borderRadius: 12, 
+                            padding: '12px 20px', 
+                            marginRight: 15, 
+                            minWidth: 70,
+                            boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)'
+                          }}>
+                            <div className="event-date" style={{ fontSize: 26, fontWeight: 700, lineHeight: '1' }}>{event.date}</div>
+                            <div className="event-month" style={{ fontSize: 14, marginTop: '4px' }}>{event.month}</div>
                           </div>
-                          <div style={{ textAlign: 'left' }}>
-                            <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, color: '#fff' }}>{event.title}</h5>
-                            <ul className="media-post" style={{ padding: 0, margin: 0, listStyle: 'none', fontSize: 13, color: '#bbb' }}>
-                              <li style={{ display: 'inline', marginRight: 10 }}><i className="fa fa-clock-o"></i> {event.time}</li>
-                              <li style={{ display: 'inline' }}><i className="fa fa-map-marker"></i> {event.location}</li>
+                          <div style={{ textAlign: 'left', flex: 1 }}>
+                            <h5 style={{ 
+                              fontWeight: 600, 
+                              fontSize: 18, 
+                              marginBottom: 10, 
+                              color: '#fff',
+                              lineHeight: '1.3'
+                            }}>
+                              {event.title}
+                            </h5>
+                            <ul className="media-post" style={{ 
+                              padding: 0, 
+                              margin: 0, 
+                              listStyle: 'none', 
+                              fontSize: 13, 
+                              color: '#bbbbbb' 
+                            }}>
+                              <li style={{ marginBottom: '5px' }}>
+                                <i className="fa fa-clock-o" style={{ marginRight: '8px', color: '#4c1864' }}></i> 
+                                {event.time}
+                              </li>
+                              <li style={{ marginBottom: '5px' }}>
+                                <i className="fa fa-map-marker" style={{ marginRight: '8px', color: '#4c1864' }}></i> 
+                                {event.location}
+                              </li>
                             </ul>
                           </div>
                         </div>
-                        <p style={{ color: '#bbb', fontSize: 15, marginTop: 8 }}>{event.description || event.desc}</p>
+                        <p style={{ 
+                          color: '#bbbbbb', 
+                          fontSize: 14, 
+                          marginTop: 15,
+                          lineHeight: '1.5',
+                          textAlign: 'left'
+                        }}>
+                          {event.description || event.desc}
+                        </p>
                       </div>
                     </div>
                   </li>
                 ))}
               </ul>
+              )}
             </div>
           </div>
         </div>
