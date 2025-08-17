@@ -5,7 +5,7 @@ import CourseManagement from "./admin/CourseManagement";
 import EventManagement from "./admin/EventManagement";
 import UserManagement from "./admin/UserManagement";
 import OrderManagement from "./admin/OrderManagement";
-import ContentManagement from "./admin/ContentManagement";
+import AdminProfile from "./admin/AdminProfile";
 import Settings from "./admin/Settings";
 import BackToTop from "../components/BackToTop";
 // Import FontAwesome for icons
@@ -20,12 +20,27 @@ const AdminPanel = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [profileDropdownOpen, setProfileDropdownOpen] = useState(false);
 
   useEffect(() => {
     if (!isAdmin()) {
       navigate("/login");
     }
   }, [navigate]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (profileDropdownOpen && !event.target.closest('.profile-dropdown')) {
+        setProfileDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [profileDropdownOpen]);
 
   const handleLogout = () => {
     localStorage.removeItem("isAdmin");
@@ -39,7 +54,6 @@ const AdminPanel = () => {
     { path: "/admin/events", icon: "fas fa-calendar-alt", label: "Event Management", component: EventManagement },
     { path: "/admin/users", icon: "fas fa-users", label: "User Management", component: UserManagement },
     { path: "/admin/orders", icon: "fas fa-shopping-cart", label: "Order Management", component: OrderManagement },
-    { path: "/admin/content", icon: "fas fa-file-alt", label: "Content Management", component: ContentManagement },
     { path: "/admin/settings", icon: "fas fa-cog", label: "Settings", component: Settings },
   ];
 
@@ -176,11 +190,149 @@ const AdminPanel = () => {
               {menuItems.find(item => item.path === location.pathname)?.label || 'Dashboard'}
             </h4>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
             <span style={{ marginRight: '15px', color: '#666' }}>
               Welcome, Admin
             </span>
-            <i className="fas fa-user-circle" style={{ fontSize: '24px', color: '#007bff' }}></i>
+            <div style={{ position: 'relative' }} className="profile-dropdown">
+              <button
+                onClick={() => setProfileDropdownOpen(!profileDropdownOpen)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '5px',
+                  borderRadius: '50%',
+                  transition: 'background-color 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+              >
+                <i className="fas fa-user-circle" style={{ fontSize: '24px', color: '#007bff' }}></i>
+              </button>
+              
+              {/* Profile Dropdown Menu */}
+              {profileDropdownOpen && (
+                <div style={{
+                  position: 'absolute',
+                  top: '100%',
+                  right: '0',
+                  background: '#fff',
+                  border: '1px solid #eee',
+                  borderRadius: '8px',
+                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
+                  minWidth: '200px',
+                  zIndex: 1000,
+                  marginTop: '5px'
+                }}>
+                  {/* Profile Header */}
+                  <div style={{
+                    padding: '15px',
+                    borderBottom: '1px solid #eee',
+                    textAlign: 'center'
+                  }}>
+                    <div style={{
+                      width: '50px',
+                      height: '50px',
+                      borderRadius: '50%',
+                      background: '#007bff',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      margin: '0 auto 10px auto'
+                    }}>
+                      <i className="fas fa-user" style={{ color: 'white', fontSize: '20px' }}></i>
+                    </div>
+                    <div style={{ fontWeight: 'bold', color: '#333', marginBottom: '5px' }}>
+                      Admin User
+                    </div>
+                    <div style={{ fontSize: '12px', color: '#666' }}>
+                      admin@instaiq.in
+                    </div>
+                  </div>
+                  
+                  {/* Menu Items */}
+                  <div style={{ padding: '5px 0' }}>
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        navigate('/admin/profile');
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '10px 15px',
+                        background: 'none',
+                        border: 'none',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '14px',
+                        color: '#333',
+                        transition: 'background-color 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
+                      onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    >
+                      <i className="fas fa-user" style={{ marginRight: '10px', width: '16px' }}></i>
+                      My Profile
+                    </button>
+                    
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        navigate('/admin/settings');
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '10px 15px',
+                        background: 'none',
+                        border: 'none',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '14px',
+                        color: '#333',
+                        transition: 'background-color 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = '#f8f9fa'}
+                      onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    >
+                      <i className="fas fa-cog" style={{ marginRight: '10px', width: '16px' }}></i>
+                      Settings
+                    </button>
+                    
+                    <div style={{ borderTop: '1px solid #eee', margin: '5px 0' }}></div>
+                    
+                    <button
+                      onClick={() => {
+                        setProfileDropdownOpen(false);
+                        handleLogout();
+                      }}
+                      style={{
+                        width: '100%',
+                        padding: '10px 15px',
+                        background: 'none',
+                        border: 'none',
+                        textAlign: 'left',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        fontSize: '14px',
+                        color: '#dc3545',
+                        transition: 'background-color 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => e.target.style.backgroundColor = '#fff5f5'}
+                      onMouseLeave={(e) => e.target.style.backgroundColor = 'transparent'}
+                    >
+                      <i className="fas fa-sign-out-alt" style={{ marginRight: '10px', width: '16px' }}></i>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -192,7 +344,7 @@ const AdminPanel = () => {
             <Route path="events" element={<EventManagement />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="orders" element={<OrderManagement />} />
-            <Route path="content" element={<ContentManagement />} />
+            <Route path="profile" element={<AdminProfile />} />
             <Route path="settings" element={<Settings />} />
           </Routes>
         </div>

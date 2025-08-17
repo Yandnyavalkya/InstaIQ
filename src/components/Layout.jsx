@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import BackToTop from "./BackToTop";
+import FloatingChatbot from "./FloatingChatbot";
 
 // Layout component wraps all pages with navbar and footer
 const Layout = ({ children }) => {
@@ -24,6 +25,8 @@ const Layout = ({ children }) => {
       {!isAuthPage && <Footer />}
       {/* Back to Top button on every page */}
       {!isAuthPage && <BackToTop />}
+      {/* Floating Chatbot on every page */}
+      <FloatingChatbot />
     </>
   );
 };

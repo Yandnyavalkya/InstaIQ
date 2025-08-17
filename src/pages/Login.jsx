@@ -155,7 +155,7 @@ const Login = () => {
       <div className="account-form">
         <div
           className="account-head"
-          style={{ backgroundImage: "url(assets/images/background/bg2.jpg)" }}
+          style={{ backgroundImage: "url(assets/images/about/login.jpg)" }}
         >
           <a href="/">
             <img src="assets/images/logo-white-2.png" alt="InstaIQ Logo" />

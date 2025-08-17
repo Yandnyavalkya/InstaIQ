@@ -97,7 +97,7 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Add CSS for smooth transitions
+  // Add CSS for smooth transitions and hide arrow buttons
   useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
@@ -106,14 +106,164 @@ const Home = () => {
         border-radius: 16px !important;
         border: 1px solid #444 !important;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+        background-color: #253248 !important;
       }
       .testimonial-bx.sliding {
         transform: translateY(-20px) !important;
+      }
+      
+      /* Hide arrow buttons for testimonial carousels */
+      .client-testimonial-carousel .owl-nav,
+      .student-testimonial-carousel .owl-nav {
+        display: none !important;
+      }
+      
+      /* Ensure card background color */
+      .client-testimonial-carousel .testimonial-bx,
+      .student-testimonial-carousel .testimonial-bx {
+        background-color: #253248 !important;
       }
     `;
     document.head.appendChild(style);
     return () => document.head.removeChild(style);
   }, []);
+
+  // Initialize Owl Carousel for upcoming events and courses
+  useEffect(() => {
+    // Wait for DOM to be ready and jQuery to be available
+    const initCarousels = () => {
+      if (window.jQuery) {
+        // Initialize upcoming events carousel
+        if (window.jQuery('.upcoming-event-carousel').length > 0) {
+          window.jQuery('.upcoming-event-carousel').owlCarousel({
+            center: true,
+            autoplay: true,
+            items: 3,
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: true,
+            autoplaySpeed: 1000,
+            navSpeed: 1000,
+            paginationSpeed: 1000,
+            slideSpeed: 1000,
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            responsive: {
+              0: {
+                items: 1
+              },
+              650: {
+                items: 1.5
+              },
+              1024: {
+                items: 2
+              },
+              1200: {
+                items: 2
+              }
+            }
+          });
+        }
+
+        // Initialize courses carousel
+        if (window.jQuery('.courses-carousel').length > 0) {
+          window.jQuery('.courses-carousel').owlCarousel({
+            loop: true,
+            autoplay: true,
+            margin: 0,
+            nav: true,
+            dots: false,
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            responsive: {
+              0: {
+                items: 1
+              },
+              480: {
+                items: 2
+              },
+              1024: {
+                items: 3
+              },
+              1200: {
+                items: 3
+              }
+            }
+          });
+        }
+
+        // Initialize client testimonial carousel
+        if (window.jQuery('.client-testimonial-carousel').length > 0) {
+          window.jQuery('.client-testimonial-carousel').owlCarousel({
+            loop: true,
+            autoplay: true,
+            margin: 20,
+            nav: false,
+            dots: true,
+            autoplaySpeed: 3000,
+            navSpeed: 1000,
+            paginationSpeed: 1000,
+            slideSpeed: 1000,
+            responsive: {
+              0: {
+                items: 1
+              },
+              768: {
+                items: 1
+              }
+            }
+          });
+        }
+
+        // Initialize student testimonial carousel
+        if (window.jQuery('.student-testimonial-carousel').length > 0) {
+          window.jQuery('.student-testimonial-carousel').owlCarousel({
+            loop: true,
+            autoplay: true,
+            margin: 20,
+            nav: false,
+            dots: true,
+            autoplaySpeed: 3000,
+            navSpeed: 1000,
+            paginationSpeed: 1000,
+            slideSpeed: 1000,
+            responsive: {
+              0: {
+                items: 1
+              },
+              768: {
+                items: 1
+              }
+            }
+          });
+        }
+      }
+    };
+
+    // Try to initialize immediately
+    initCarousels();
+
+    // If not ready, wait a bit and try again
+    const timer = setTimeout(initCarousels, 1000);
+
+    return () => {
+      clearTimeout(timer);
+      // Destroy carousels on unmount
+      if (window.jQuery) {
+        if (window.jQuery('.upcoming-event-carousel').length > 0) {
+          window.jQuery('.upcoming-event-carousel').trigger('destroy.owl.carousel');
+        }
+        if (window.jQuery('.courses-carousel').length > 0) {
+          window.jQuery('.courses-carousel').trigger('destroy.owl.carousel');
+        }
+        if (window.jQuery('.client-testimonial-carousel').length > 0) {
+          window.jQuery('.client-testimonial-carousel').trigger('destroy.owl.carousel');
+        }
+        if (window.jQuery('.student-testimonial-carousel').length > 0) {
+          window.jQuery('.student-testimonial-carousel').trigger('destroy.owl.carousel');
+        }
+      }
+    };
+  }, [adminEvents, courses]); // Re-initialize when events or courses change
 
   // Scroll to top function
   const scrollToTop = () => {
@@ -128,11 +278,6 @@ const Home = () => {
     scrollToTop();
     navigate(path);
   };
-  
-  // Testimonial carousel states
-  const [clientCurrentIndex, setClientCurrentIndex] = useState(0);
-  const [studentCurrentIndex, setStudentCurrentIndex] = useState(0);
-  const [isAnimating, setIsAnimating] = useState(false);
   
   // Events carousel state
   const [eventsCurrentSlide, setEventsCurrentSlide] = useState(0);
@@ -230,66 +375,7 @@ const Home = () => {
      }
    ];
 
-  // Carousel navigation functions
-  const nextClient = () => {
-    setClientCurrentIndex((prevIndex) => 
-      prevIndex === clientTestimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevClient = () => {
-    setClientCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? clientTestimonials.length - 1 : prevIndex - 1
-    );
-  };
-
-  const nextStudent = () => {
-    setStudentCurrentIndex((prevIndex) => 
-      prevIndex === studentTestimonials.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevStudent = () => {
-    setStudentCurrentIndex((prevIndex) => 
-      prevIndex === 0 ? studentTestimonials.length - 1 : prevIndex - 1
-    );
-  };
-
-  // Auto-rotate carousels every 3 seconds with smooth transition
-  useEffect(() => {
-    const clientInterval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        nextClient();
-        setIsAnimating(false);
-      }, 300);
-    }, 3000);
-
-    const studentInterval = setInterval(() => {
-      setIsAnimating(true);
-      setTimeout(() => {
-        nextStudent();
-        setIsAnimating(false);
-      }, 300);
-    }, 3000);
-
-    return () => {
-      clearInterval(clientInterval);
-      clearInterval(studentInterval);
-    };
-  }, [clientCurrentIndex, studentCurrentIndex]);
-
-  // Apply sliding animation to all cards when isAnimating is true
-  useEffect(() => {
-    const allCards = document.querySelectorAll('.testimonial-bx');
-    allCards.forEach(card => {
-      if (isAnimating) {
-        card.classList.add('sliding');
-    } else {
-        card.classList.remove('sliding');
-    }
-    });
-  }, [isAnimating]);
+  
 
   // Use courses and events from AdminContext for real-time updates
   useEffect(() => {
@@ -563,112 +649,99 @@ const Home = () => {
             </div>
           </div>
           <div className="row">
-            <div className="upcoming-event-carousel" style={{ 
-              overflow: 'hidden', 
-              position: 'relative',
-              padding: '0 20px'
-            }}>
-              <div className="event-wrapper" style={{
-                display: 'flex',
-                gap: '30px',
-                transition: 'transform 0.5s ease'
-              }}>
-                {(adminEvents && adminEvents.length > 0 ? adminEvents.filter(e => e.status === 'upcoming').slice(0, 3) : allEvents).map((event, idx) => (
-                  <div className="event-item" key={idx} style={{ 
-                    minWidth: 'calc(33.33% - 20px)',
-                    flex: '0 0 calc(33.33% - 20px)'
+            <div className="upcoming-event-carousel owl-carousel owl-btn-center-lr owl-btn-1 col-12 p-lr0 m-b30">
+              {(adminEvents && adminEvents.length > 0 ? adminEvents.filter(e => e.status === 'upcoming') : allEvents).map((event, idx) => (
+                <div className="item" key={idx}>
+                  <div className="event-bx" style={{ 
+                    backgroundColor: '#253248', 
+                    borderRadius: '16px',
+                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                    transition: 'all 0.3s ease',
+                    height: '100%',
+                    overflow: 'hidden',
+                    cursor: 'pointer',
+                    border: '1px solid #444'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-8px)';
+                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+                    e.currentTarget.style.border = '1px solid #4c1864';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+                    e.currentTarget.style.border = '1px solid #444';
                   }}>
-                    <div className="event-bx" style={{ 
-                      backgroundColor: '#253248', 
-                      borderRadius: '16px',
-                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
-                      transition: 'all 0.3s ease',
-                      height: '100%',
-                      overflow: 'hidden',
-                      cursor: 'pointer',
-                      border: '1px solid #444'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
-                      e.currentTarget.style.border = '1px solid #4c1864';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-                      e.currentTarget.style.border = '1px solid #444';
-                    }}>
-                      <div className="action-box" style={{ position: 'relative' }}>
-                        <img 
-                          src={event.img} 
-                          alt={event.title} 
-                          style={{ 
-                            width: '100%', 
-                            height: '200px', 
-                            objectFit: 'cover',
-                            display: 'block'
-                          }} 
-                        />
+                    <div className="action-box" style={{ position: 'relative' }}>
+                      <img 
+                        src={event.img} 
+                        alt={event.title} 
+                        style={{ 
+                          width: '100%', 
+                          height: '200px', 
+                          objectFit: 'cover',
+                          display: 'block'
+                        }} 
+                      />
+                    </div>
+                    <div className="info-bx d-flex" style={{ padding: '20px' }}>
+                      <div style={{ marginRight: '15px' }}>
+                        <div className="event-time" style={{ 
+                          background: '#4c1864', 
+                          color: '#fff', 
+                          borderRadius: '12px', 
+                          padding: '15px 18px', 
+                          textAlign: 'center',
+                          minWidth: '75px',
+                          boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)'
+                        }}>
+                          <div className="event-date" style={{ fontSize: '24px', fontWeight: '700', lineHeight: '1' }}>{event.date}</div>
+                          <div className="event-month" style={{ fontSize: '14px', marginTop: '4px' }}>{event.month}</div>
+                        </div>
                       </div>
-                      <div className="info-bx d-flex" style={{ padding: '20px' }}>
-                        <div style={{ marginRight: '15px' }}>
-                          <div className="event-time" style={{ 
-                            background: '#4c1864', 
-                            color: '#fff', 
-                            borderRadius: '12px', 
-                            padding: '15px 18px', 
-                            textAlign: 'center',
-                            minWidth: '75px',
-                            boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)'
-                          }}>
-                            <div className="event-date" style={{ fontSize: '24px', fontWeight: '700', lineHeight: '1' }}>{event.date}</div>
-                            <div className="event-month" style={{ fontSize: '14px', marginTop: '4px' }}>{event.month}</div>
-                          </div>
-                        </div>
-                        <div className="event-info" style={{ flex: 1 }}>
-                          <h4 className="event-title" style={{ 
-                            fontWeight: '700', 
-                            fontSize: '18px', 
-                            marginBottom: '12px', 
-                            color: '#fff',
-                            lineHeight: '1.3'
-                          }}>
-                            <a href="#" style={{ color: '#fff', textDecoration: 'none', fontWeight: '700' }}>{event.title}</a>
-                          </h4>
-                                                      <ul className="media-post" style={{ 
-                              padding: 0, 
-                              margin: '0 0 15px 0', 
-                              listStyle: 'none', 
-                              fontSize: '14px', 
-                              color: '#bbbbbb' 
-                            }}>
-                              <li style={{ marginBottom: '8px' }}>
-                                <i className="fa fa-clock-o" style={{ marginRight: '10px', color: '#4c1864', fontSize: '16px' }}></i> 
-                                {event.time}
-                              </li>
-                              <li style={{ marginBottom: '8px' }}>
-                                <i className="fa fa-map-marker" style={{ marginRight: '10px', color: '#4c1864', fontSize: '16px' }}></i> 
-                                {event.location}
-                              </li>
-                            </ul>
-                          <p style={{ 
-                            color: '#bbbbbb', 
-                            fontSize: '14px', 
-                            lineHeight: '1.6',
-                            margin: 0,
-                            display: '-webkit-box',
-                            WebkitLineClamp: 3,
-                            WebkitBoxOrient: 'vertical',
-                            overflow: 'hidden'
-                          }}>
-                            {event.description || event.desc}
-                          </p>
-                        </div>
+                      <div className="event-info" style={{ flex: 1 }}>
+                        <h4 className="event-title" style={{ 
+                          fontWeight: '700', 
+                          fontSize: '18px', 
+                          marginBottom: '12px', 
+                          color: '#fff',
+                          lineHeight: '1.3'
+                        }}>
+                          <a href="#" style={{ color: '#fff', textDecoration: 'none', fontWeight: '700' }}>{event.title}</a>
+                        </h4>
+                        <ul className="media-post" style={{ 
+                          padding: 0, 
+                          margin: '0 0 15px 0', 
+                          listStyle: 'none', 
+                          fontSize: '14px', 
+                          color: '#bbbbbb' 
+                        }}>
+                          <li style={{ marginBottom: '8px' }}>
+                            <i className="fa fa-clock-o" style={{ marginRight: '10px', color: '#4c1864', fontSize: '16px' }}></i> 
+                            {event.time}
+                          </li>
+                          <li style={{ marginBottom: '8px' }}>
+                            <i className="fa fa-map-marker" style={{ marginRight: '10px', color: '#4c1864', fontSize: '16px' }}></i> 
+                            {event.location}
+                          </li>
+                        </ul>
+                        <p style={{ 
+                          color: '#bbbbbb', 
+                          fontSize: '14px', 
+                          lineHeight: '1.6',
+                          margin: 0,
+                          display: '-webkit-box',
+                          WebkitLineClamp: 3,
+                          WebkitBoxOrient: 'vertical',
+                          overflow: 'hidden'
+                        }}>
+                          {event.description || event.desc}
+                        </p>
                       </div>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
           </div>
           <div className="text-center" style={{ marginTop: '40px' }}>
@@ -696,83 +769,85 @@ const Home = () => {
             ) : courses.length === 0 ? (
               <p>No courses available at the moment.</p>
             ) : (
-              courses.map((course) => (
-                <div className="col-md-4 col-sm-6 mb-4" key={course._id}>
-                  <div className="cours-bx d-flex flex-column h-100" style={{
-                    minHeight: 340,
-                    background: '#253248 !important',
-                    borderRadius: 16,
-                    boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
-                    overflow: 'hidden',
-                    border: '1px solid #444',
-                    transition: 'all 0.3s ease'
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = 'translateY(-8px)';
-                    e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
-                    e.currentTarget.style.border = '1px solid #4c1864';
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
-                    e.currentTarget.style.border = '1px solid #444';
-                  }}>
-                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#253248' }}>
-                      <div className="action-box" style={{ position: 'relative' }}>
-                        <img src={course.img} alt={course.title} style={{ width: '100%', height: 150, objectFit: 'cover' }} />
-                        {course.badge && (
-                          <span style={{
-                            position: "absolute",
-                            top: 12,
-                            left: 12,
-                            background: course.badge === "FREE" ? "#27ae60" : "#e67e22",
-                            color: "#fff",
-                            borderRadius: 6,
-                            padding: "2px 10px",
-                            fontSize: 13,
-                            zIndex: 2
-                          }}>
-                            {course.badge}
-                          </span>
-                        )}
+              <div className="courses-carousel owl-carousel owl-btn-1 col-12 p-lr0">
+                {courses.map((course) => (
+                  <div className="item" key={course._id}>
+                    <div className="cours-bx d-flex flex-column h-100" style={{
+                      minHeight: 340,
+                      background: '#253248 !important',
+                      borderRadius: 16,
+                      boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)',
+                      overflow: 'hidden',
+                      border: '1px solid #444',
+                      transition: 'all 0.3s ease'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = 'translateY(-8px)';
+                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+                      e.currentTarget.style.border = '1px solid #4c1864';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = 'translateY(0)';
+                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.3)';
+                      e.currentTarget.style.border = '1px solid #444';
+                    }}>
+                      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', background: '#253248' }}>
+                        <div className="action-box" style={{ position: 'relative' }}>
+                          <img src={course.img} alt={course.title} style={{ width: '100%', height: 150, objectFit: 'cover' }} />
+                          {course.badge && (
+                            <span style={{
+                              position: "absolute",
+                              top: 12,
+                              left: 12,
+                              background: course.badge === "FREE" ? "#27ae60" : "#e67e22",
+                              color: "#fff",
+                              borderRadius: 6,
+                              padding: "2px 10px",
+                              fontSize: 13,
+                              zIndex: 2
+                            }}>
+                              {course.badge}
+                            </span>
+                          )}
+                        </div>
+                        <div className="info-bx text-center" style={{ padding: '12px', flexGrow: 1, background: '#253248 !important' }}>
+                          <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
+                            <button onClick={() => handleNavigation(`/course-details/${course._id}`)} style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit', fontWeight: 'inherit' }}>{course.title}</button>
+                          </h5>
+                          <span style={{ color: '#bbb', fontSize: 15 }}>{course.provider}</span>
+                        </div>
+                        <div className="price" style={{ margin: '0 12px 12px 12px', textAlign: 'center', fontWeight: 700, fontSize: 22, color: '#fff', background: '#253248 !important' }}>
+                          {course.oldPrice && <del style={{ color: '#888', marginRight: 8, fontSize: 16 }}>{course.oldPrice}</del>}
+                          <span>{course.price}</span>
+                        </div>
                       </div>
-                      <div className="info-bx text-center" style={{ padding: '12px', flexGrow: 1, background: '#253248 !important' }}>
-                                                 <h5 style={{ fontWeight: 600, fontSize: 18, marginBottom: 6, minHeight: '48px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                           <button onClick={() => handleNavigation(`/course-details/${course._id}`)} style={{ color: '#fff', background: 'none', border: 'none', cursor: 'pointer', fontSize: 'inherit', fontWeight: 'inherit' }}>{course.title}</button>
-                         </h5>
-                        <span style={{ color: '#bbb', fontSize: 15 }}>{course.provider}</span>
-                      </div>
-                      <div className="price" style={{ margin: '0 12px 12px 12px', textAlign: 'center', fontWeight: 700, fontSize: 22, color: '#fff', background: '#253248 !important' }}>
-                        {course.oldPrice && <del style={{ color: '#888', marginRight: 8, fontSize: 16 }}>{course.oldPrice}</del>}
-                        <span>{course.price}</span>
+                      <div className="d-flex flex-column align-items-center" style={{ padding: '0 12px 12px 12px', background: '#253248 !important' }}>
+                        <button onClick={() => handleNavigation(`/course-details/${course._id}`)} className="btn" style={{ 
+                          ...homeBtnStyle, 
+                          width: '100%', 
+                          margin: 0, 
+                          borderRadius: 12, 
+                          textAlign: 'center',
+                          background: '#4c1864',
+                          boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.target.style.background = '#3f189a';
+                          e.target.style.transform = 'translateY(-2px)';
+                          e.target.style.boxShadow = '0 6px 20px rgba(76, 24, 100, 0.4)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.target.style.background = '#4c1864';
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = '0 4px 15px rgba(76, 24, 100, 0.3)';
+                        }}>
+                          Buy Now
+                        </button>
                       </div>
                     </div>
-                                         <div className="d-flex flex-column align-items-center" style={{ padding: '0 12px 12px 12px', background: '#253248 !important' }}>
-                       <button onClick={() => handleNavigation(`/course-details/${course._id}`)} className="btn" style={{ 
-                         ...homeBtnStyle, 
-                         width: '100%', 
-                         margin: 0, 
-                         borderRadius: 12, 
-                         textAlign: 'center',
-                         background: '#4c1864',
-                         boxShadow: '0 4px 15px rgba(76, 24, 100, 0.3)'
-                       }}
-                       onMouseEnter={(e) => {
-                         e.target.style.background = '#3f189a';
-                         e.target.style.transform = 'translateY(-2px)';
-                         e.target.style.boxShadow = '0 6px 20px rgba(76, 24, 100, 0.4)';
-                       }}
-                       onMouseLeave={(e) => {
-                         e.target.style.background = '#4c1864';
-                         e.target.style.transform = 'translateY(0)';
-                         e.target.style.boxShadow = '0 4px 15px rgba(76, 24, 100, 0.3)';
-                       }}>
-                         Buy Now
-                       </button>
-                     </div>
                   </div>
-                </div>
-              ))
+                ))}
+              </div>
             )}
           </div>
           <div className="text-center" style={{ marginTop: 40 }}>
@@ -796,472 +871,108 @@ const Home = () => {
               <p style={{ color: '#bbbbbb', fontSize: '18px', marginBottom: '40px', lineHeight: '1.6' }}>Hear from our clients and students about their experience with InstaIQ</p>
             </div>
           </div>
-          <div className="row">
-            {/* Client Feedback Carousel */}
+                    <div className="row">
+            {/* Client Feedback Vertical Carousel */}
             <div className="col-md-6">
               <div className="testimonial-section">
-                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '0px' }}>Client Feedback</h3>
-                <div className="testimonial-carousel" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  
-                  {/* Testimonial Card Stack */}
-                  <div style={{ position: 'relative', width: '80%', height: '400px' }}>
-                    {/* Sixth Card (Bottom) */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(100px) scale(0.75)',
-                      zIndex: 1,
-                      opacity: 0.2
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[(clientCurrentIndex + 5) % clientTestimonials.length].image} 
-                          alt="Client" 
-                          style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '12px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[(clientCurrentIndex + 5) % clientTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '10px', color: '#ffffff' }}>- {clientTestimonials[(clientCurrentIndex + 5) % clientTestimonials.length].role}</p>
+                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '30px' }}>Client Feedback</h3>
+                <div className="client-testimonial-carousel owl-carousel col-12 p-lr0">
+                  {clientTestimonials.map((testimonial, idx) => (
+                    <div className="item" key={idx}>
+                      <div className="testimonial-bx" style={{ 
+                        backgroundColor: '#253248', 
+                        borderRadius: '16px', 
+                        padding: '25px', 
+                        border: '1px solid #444',
+                        height: '280px',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-8px)';
+                        e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+                        e.currentTarget.style.border = '1px solid #4c1864';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+                        e.currentTarget.style.border = '1px solid #444';
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                          <img 
+                            src={testimonial.image} 
+                            alt="Client" 
+                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
+                          />
+                          <div>
+                            <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
+                              {testimonial.name}
+                            </h5>
+                            <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {testimonial.role}</p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '10px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[(clientCurrentIndex + 5) % clientTestimonials.length].content}"
-                        </p>
+                        <div className="testimonial-content">
+                          <p style={{ fontSize: '14px', lineHeight: '1.6', textAlign: 'left', color: '#ffffff' }}>
+                            "{testimonial.content}"
+                          </p>
+                        </div>
                       </div>
                     </div>
-
-                    {/* Fifth Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(80px) scale(0.8)',
-                      zIndex: 2,
-                      opacity: 0.3
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[(clientCurrentIndex + 4) % clientTestimonials.length].image} 
-                          alt="Client" 
-                          style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '13px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[(clientCurrentIndex + 4) % clientTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '11px', color: '#ffffff' }}>- {clientTestimonials[(clientCurrentIndex + 4) % clientTestimonials.length].role}</p>
-                        </div>
-                      </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '11px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[(clientCurrentIndex + 4) % clientTestimonials.length].content}"
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Fourth Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(60px) scale(0.85)',
-                      zIndex: 3,
-                      opacity: 0.4
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[(clientCurrentIndex + 3) % clientTestimonials.length].image} 
-                          alt="Client" 
-                          style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '13px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[(clientCurrentIndex + 3) % clientTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '11px', color: '#ffffff' }}>- {clientTestimonials[(clientCurrentIndex + 3) % clientTestimonials.length].role}</p>
-                        </div>
-                      </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '11px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[(clientCurrentIndex + 3) % clientTestimonials.length].content}"
-                        </p>
-                  </div>
-                </div>
-
-                    {/* Third Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(40px) scale(0.9)',
-                      zIndex: 4,
-                      opacity: 0.5
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[(clientCurrentIndex + 2) % clientTestimonials.length].image} 
-                          alt="Client" 
-                          style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '14px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[(clientCurrentIndex + 2) % clientTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '12px', color: '#ffffff' }}>- {clientTestimonials[(clientCurrentIndex + 2) % clientTestimonials.length].role}</p>
-            </div>
-          </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '12px', lineHeight: '1.4', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[(clientCurrentIndex + 2) % clientTestimonials.length].content}"
-                        </p>
-                      </div>
-                  </div>
-
-                    {/* Second Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(20px) scale(0.95)',
-                      zIndex: 5,
-                      opacity: 0.7
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[(clientCurrentIndex + 1) % clientTestimonials.length].image} 
-                          alt="Client" 
-                          style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[(clientCurrentIndex + 1) % clientTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {clientTestimonials[(clientCurrentIndex + 1) % clientTestimonials.length].role}</p>
-                </div>
-              </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '13px', lineHeight: '1.5', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[(clientCurrentIndex + 1) % clientTestimonials.length].content}"
-                        </p>
-                      </div>
-                  </div>
-
-                    {/* Main Card (Current) */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '16px', 
-                      padding: '25px', 
-                      border: '1px solid #444',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      zIndex: 6,
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
-                      transform: 'translateY(0)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
-                      e.currentTarget.style.border = '1px solid #4c1864';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
-                      e.currentTarget.style.border = '1px solid #444';
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={clientTestimonials[clientCurrentIndex].image} 
-                          alt="Client" 
-                          style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {clientTestimonials[clientCurrentIndex].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {clientTestimonials[clientCurrentIndex].role}</p>
-                </div>
-              </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '14px', lineHeight: '1.6', textAlign: 'left', color: '#ffffff' }}>
-                          "{clientTestimonials[clientCurrentIndex].content}"
-                        </p>
-                  </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-            {/* Student Feedback Carousel */}
+            {/* Student Feedback Vertical Carousel */}
             <div className="col-md-6">
               <div className="testimonial-section">
-                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '0px' }}>Student Feedback</h3>
-                <div className="testimonial-carousel" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  
-                  {/* Testimonial Card Stack */}
-                  <div style={{ position: 'relative', width: '80%', height: '400px' }}>
-                    {/* Sixth Card (Bottom) */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(100px) scale(0.75)',
-                      zIndex: 1,
-                      opacity: 0.2
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[(studentCurrentIndex + 5) % studentTestimonials.length].image} 
-                          alt="Student" 
-                          style={{ width: '40px', height: '40px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '12px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[(studentCurrentIndex + 5) % studentTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '10px', color: '#ffffff' }}>- {studentTestimonials[(studentCurrentIndex + 5) % studentTestimonials.length].role}</p>
+                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '30px' }}>Student Feedback</h3>
+                <div className="student-testimonial-carousel owl-carousel col-12 p-lr0">
+                  {studentTestimonials.map((testimonial, idx) => (
+                    <div className="item" key={idx}>
+                      <div className="testimonial-bx" style={{ 
+                        backgroundColor: '#253248', 
+                        borderRadius: '16px', 
+                        padding: '25px', 
+                        border: '1px solid #444',
+                        height: '280px',
+                        boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
+                        transition: 'all 0.3s ease'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = 'translateY(-8px)';
+                        e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
+                        e.currentTarget.style.border = '1px solid #4c1864';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = 'translateY(0)';
+                        e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
+                        e.currentTarget.style.border = '1px solid #444';
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                          <img 
+                            src={testimonial.image} 
+                            alt="Student" 
+                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
+                          />
+                          <div>
+                            <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
+                              {testimonial.name}
+                            </h5>
+                            <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {testimonial.role}</p>
+                          </div>
+                        </div>
+                        <div className="testimonial-content">
+                          <p style={{ fontSize: '14px', lineHeight: '1.6', textAlign: 'left', color: '#ffffff' }}>
+                            "{testimonial.content}"
+                          </p>
                         </div>
                       </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '10px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[(studentCurrentIndex + 5) % studentTestimonials.length].content}"
-                        </p>
-                      </div>
                     </div>
-
-                    {/* Fifth Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(80px) scale(0.8)',
-                      zIndex: 2,
-                      opacity: 0.3
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[(studentCurrentIndex + 4) % studentTestimonials.length].image} 
-                          alt="Student" 
-                          style={{ width: '42px', height: '42px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '13px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[(studentCurrentIndex + 4) % studentTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '11px', color: '#ffffff' }}>- {studentTestimonials[(studentCurrentIndex + 4) % studentTestimonials.length].role}</p>
-            </div>
-          </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '11px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[(studentCurrentIndex + 4) % studentTestimonials.length].content}"
-                        </p>
-                  </div>
-                      </div>
-
-                    {/* Fourth Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(60px) scale(0.85)',
-                      zIndex: 3,
-                      opacity: 0.4
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[(studentCurrentIndex + 3) % studentTestimonials.length].image} 
-                          alt="Student" 
-                          style={{ width: '44px', height: '44px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '13px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[(studentCurrentIndex + 3) % studentTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '11px', color: '#ffffff' }}>- {studentTestimonials[(studentCurrentIndex + 3) % studentTestimonials.length].role}</p>
-                      </div>
-                    </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '11px', lineHeight: '1.3', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[(studentCurrentIndex + 3) % studentTestimonials.length].content}"
-                        </p>
-                  </div>
-                </div>
-
-                    {/* Third Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(40px) scale(0.9)',
-                      zIndex: 4,
-                      opacity: 0.5
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[(studentCurrentIndex + 2) % studentTestimonials.length].image} 
-                          alt="Student" 
-                          style={{ width: '45px', height: '45px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '14px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[(studentCurrentIndex + 2) % studentTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '12px', color: '#ffffff' }}>- {studentTestimonials[(studentCurrentIndex + 2) % studentTestimonials.length].role}</p>
-              </div>
-          </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '12px', lineHeight: '1.4', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[(studentCurrentIndex + 2) % studentTestimonials.length].content}"
-                        </p>
-          </div>
-        </div>
-
-                    {/* Second Card */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '12px', 
-                      padding: '25px', 
-                      border: '1px solid #333',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      transform: 'translateY(20px) scale(0.95)',
-                      zIndex: 5,
-                      opacity: 0.7
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[(studentCurrentIndex + 1) % studentTestimonials.length].image} 
-                          alt="Student" 
-                          style={{ width: '50px', height: '50px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '16px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[(studentCurrentIndex + 1) % studentTestimonials.length].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {studentTestimonials[(studentCurrentIndex + 1) % studentTestimonials.length].role}</p>
-                        </div>
-                      </div>
-                      <div className="testimonial-content">
-                        <p style={{ fontSize: '13px', lineHeight: '1.5', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[(studentCurrentIndex + 1) % studentTestimonials.length].content}"
-                        </p>
-            </div>
-          </div>
-
-                    {/* Main Card (Current) */}
-                    <div className="testimonial-bx" style={{ 
-                      background: '#253248', 
-                      borderRadius: '16px', 
-                      padding: '25px', 
-                      border: '1px solid #444',
-                      width: '100%',
-                      height: '280px',
-                      position: 'absolute',
-                      bottom: '0',
-                      left: '0',
-                      zIndex: 6,
-                      boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
-                      transform: 'translateY(0)',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateY(-8px)';
-                      e.currentTarget.style.boxShadow = '0 15px 40px rgba(0, 0, 0, 0.4)';
-                      e.currentTarget.style.border = '1px solid #4c1864';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateY(0)';
-                      e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
-                      e.currentTarget.style.border = '1px solid #444';
-                    }}>
-                      <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
-                        <img 
-                          src={studentTestimonials[studentCurrentIndex].image} 
-                          alt="Student" 
-                          style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
-                        />
-                        <div>
-                          <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
-                            {studentTestimonials[studentCurrentIndex].name}
-                          </h5>
-                          <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {studentTestimonials[studentCurrentIndex].role}</p>
-                  </div>
-                  </div>
-                  <div className="testimonial-content">
-                        <p style={{ fontSize: '14px', lineHeight: '1.6', textAlign: 'left', color: '#ffffff' }}>
-                          "{studentTestimonials[studentCurrentIndex].content}"
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                  </div>
+                  ))}
                 </div>
               </div>
+            </div>
           </div>
         </div>
       </section>

@@ -40,8 +40,24 @@ const FAQ = () => {
       {/* Banner */}
       <div className="page-banner ovbl-dark" style={{ backgroundImage: "url(assets/images/banner/banner1.jpg)" }}>
         <div className="container">
-          <div className="page-banner-entry">
-            <h1 className="text-white">Frequently Asked Questions</h1>
+          <div className="page-banner-entry text-center" style={{ padding: '80px 0' }}>
+            <h1 className="text-white" style={{ 
+              fontSize: '3.5rem', 
+              fontWeight: '700', 
+              marginBottom: '20px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+            }}>
+              Frequently Asked Questions
+            </h1>
+            <p style={{ 
+              color: '#e6b3ff', 
+              fontSize: '1.2rem', 
+              maxWidth: '600px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Find answers to common questions about our services and how we help students succeed
+            </p>
           </div>
         </div>
       </div>
@@ -50,8 +66,9 @@ const FAQ = () => {
       <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
         <div className="container">
           <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
-            <li><a href="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</a></li>
-            <li style={{ color: '#bbbbbb' }}>FAQ</li>
+            <li><a href="/" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Home</a></li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>FAQ</li>
           </ul>
         </div>
       </div>

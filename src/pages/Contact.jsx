@@ -61,8 +61,24 @@ const Contact = () => {
         style={{ backgroundImage: "url(assets/images/banner/banner3.jpg)" }}
       >
         <div className="container">
-          <div className="page-banner-entry">
-            <h1 className="text-white">Contact Us</h1>
+          <div className="page-banner-entry text-center" style={{ padding: '80px 0' }}>
+            <h1 className="text-white" style={{ 
+              fontSize: '3.5rem', 
+              fontWeight: '700', 
+              marginBottom: '20px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+            }}>
+              Contact Us
+            </h1>
+            <p style={{ 
+              color: '#e6b3ff', 
+              fontSize: '1.2rem', 
+              maxWidth: '600px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Get in touch with us for any questions, support, or collaboration opportunities
+            </p>
           </div>
         </div>
       </div>
@@ -71,8 +87,9 @@ const Contact = () => {
       <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
         <div className="container">
           <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
-            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</Link></li>
-            <li style={{ color: '#bbbbbb' }}>Contact Us</li>
+            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Home</Link></li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Contact Us</li>
           </ul>
         </div>
       </div>
@@ -90,86 +107,201 @@ const Contact = () => {
                 height: '100%'
               }}>
                 <h2 className="m-b10 title-head" style={{ color: '#ffffff', fontSize: '2rem', fontWeight: '700', marginBottom: '30px' }}>
-                  Contact <span style={{ color: '#4c1864' }}>Information</span>
+                  Contact <span style={{ color: '#e6b3ff' }}>Information</span>
                 </h2>
                 <div className="widget widget_getintuch">
-                  <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                    <li style={{ 
-                      display: 'flex', 
-                      alignItems: 'flex-start', 
-                      marginBottom: '25px',
-                      padding: '15px',
-                      backgroundColor: '#1e1e1e',
-                      borderRadius: '12px',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateX(5px)';
-                      e.currentTarget.style.backgroundColor = '#2a2a2a';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.backgroundColor = '#1e1e1e';
+                  {/* Location Section */}
+                  <div style={{ 
+                    marginBottom: '20px',
+                    backgroundColor: '#1e1e1e',
+                    borderRadius: '12px',
+                    border: '1px solid #333',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateX(5px)';
+                    e.currentTarget.style.backgroundColor = '#2a2a2a';
+                    e.currentTarget.style.borderColor = '#4c1864';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateX(0)';
+                    e.currentTarget.style.backgroundColor = '#1e1e1e';
+                    e.currentTarget.style.borderColor = '#333';
+                  }}>
+                    <div style={{ 
+                      display: 'flex',
+                      minHeight: '80px'
                     }}>
-                      <i className="ti-location-pin" style={{ 
-                        color: '#4c1864', 
-                        fontSize: '20px', 
-                        marginRight: '15px',
-                        marginTop: '2px'
-                      }}></i>
-                      <span style={{ color: '#bbbbbb', lineHeight: '1.6' }}>
-                        Plot no 58, P&T Colony, Kotwal Nagar, Pratap Nagar, Nagpur, Maharashtra 440022
-                      </span>
-                    </li>
-                    <li style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      marginBottom: '25px',
-                      padding: '15px',
-                      backgroundColor: '#1e1e1e',
-                      borderRadius: '12px',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateX(5px)';
-                      e.currentTarget.style.backgroundColor = '#2a2a2a';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.backgroundColor = '#1e1e1e';
+                      {/* Left Section - Icon */}
+                      <div style={{ 
+                        width: '20%',
+                        backgroundColor: '#2a2a2a',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRight: '2px solid #333',
+                        position: 'relative'
+                      }}>
+                        <i className="ti-location-pin" style={{ 
+                          color: '#e6b3ff', 
+                          fontSize: '28px',
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)'
+                        }}></i>
+                      </div>
+                      
+                      {/* Right Section - Content */}
+                      <div style={{ 
+                        width: '80%',
+                        padding: '15px'
+                      }}>
+                        <h4 style={{ 
+                          color: '#ffffff', 
+                          margin: '0 0 8px 0', 
+                          fontSize: '16px',
+                          fontWeight: '600'
+                        }}>Our Location</h4>
+                        <div style={{ 
+                          color: '#bbbbbb', 
+                          lineHeight: '1.6',
+                          fontSize: '14px'
+                        }}>
+                          Plot no 58, P&T Colony, Kotwal Nagar, Pratap Nagar, Nagpur, Maharashtra 440022
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Phone Section */}
+                  <div style={{ 
+                    marginBottom: '20px',
+                    backgroundColor: '#1e1e1e',
+                    borderRadius: '12px',
+                    border: '1px solid #333',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateX(5px)';
+                    e.currentTarget.style.backgroundColor = '#2a2a2a';
+                    e.currentTarget.style.borderColor = '#4c1864';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateX(0)';
+                    e.currentTarget.style.backgroundColor = '#1e1e1e';
+                    e.currentTarget.style.borderColor = '#333';
+                  }}>
+                    <div style={{ 
+                      display: 'flex',
+                      minHeight: '80px'
                     }}>
-                      <i className="ti-mobile" style={{ 
-                        color: '#4c1864', 
-                        fontSize: '20px', 
-                        marginRight: '15px'
-                      }}></i>
-                      <span style={{ color: '#bbbbbb' }}>092841 84049</span>
-                    </li>
-                    <li style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      marginBottom: '25px',
-                      padding: '15px',
-                      backgroundColor: '#1e1e1e',
-                      borderRadius: '12px',
-                      transition: 'all 0.3s ease'
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = 'translateX(5px)';
-                      e.currentTarget.style.backgroundColor = '#2a2a2a';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = 'translateX(0)';
-                      e.currentTarget.style.backgroundColor = '#1e1e1e';
+                      {/* Left Section - Icon */}
+                      <div style={{ 
+                        width: '20%',
+                        backgroundColor: '#2a2a2a',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRight: '2px solid #333',
+                        position: 'relative'
+                      }}>
+                        <i className="ti-mobile" style={{ 
+                          color: '#e6b3ff', 
+                          fontSize: '28px',
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)'
+                        }}></i>
+                      </div>
+                      
+                      {/* Right Section - Content */}
+                      <div style={{ 
+                        width: '80%',
+                        padding: '15px'
+                      }}>
+                        <h4 style={{ 
+                          color: '#ffffff', 
+                          margin: '0 0 8px 0', 
+                          fontSize: '16px',
+                          fontWeight: '600'
+                        }}>Phone Number</h4>
+                        <div style={{ 
+                          color: '#bbbbbb',
+                          fontSize: '14px'
+                        }}>
+                          092841 84049
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Email Section */}
+                  <div style={{ 
+                    marginBottom: '20px',
+                    backgroundColor: '#1e1e1e',
+                    borderRadius: '12px',
+                    border: '1px solid #333',
+                    transition: 'all 0.3s ease',
+                    overflow: 'hidden'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateX(5px)';
+                    e.currentTarget.style.backgroundColor = '#2a2a2a';
+                    e.currentTarget.style.borderColor = '#4c1864';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateX(0)';
+                    e.currentTarget.style.backgroundColor = '#1e1e1e';
+                    e.currentTarget.style.borderColor = '#333';
+                  }}>
+                    <div style={{ 
+                      display: 'flex',
+                      minHeight: '80px'
                     }}>
-                      <i className="ti-email" style={{ 
-                        color: '#4c1864', 
-                        fontSize: '20px', 
-                        marginRight: '15px'
-                      }}></i>
-                      <span style={{ color: '#bbbbbb' }}>info@instaiq.in</span>
-                    </li>
-                  </ul>
+                      {/* Left Section - Icon */}
+                      <div style={{ 
+                        width: '20%',
+                        backgroundColor: '#2a2a2a',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRight: '2px solid #333',
+                        position: 'relative'
+                      }}>
+                        <i className="ti-email" style={{ 
+                          color: '#e6b3ff', 
+                          fontSize: '28px',
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)'
+                        }}></i>
+                      </div>
+                      
+                      {/* Right Section - Content */}
+                      <div style={{ 
+                        width: '80%',
+                        padding: '15px'
+                      }}>
+                        <h4 style={{ 
+                          color: '#ffffff', 
+                          margin: '0 0 8px 0', 
+                          fontSize: '16px',
+                          fontWeight: '600'
+                        }}>Email Address</h4>
+                        <div style={{ 
+                          color: '#bbbbbb',
+                          fontSize: '14px'
+                        }}>
+                          info@instaiq.in
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <h5 className="m-t0 m-b20" style={{ color: '#ffffff', fontSize: '1.2rem', fontWeight: '600', marginTop: '30px', marginBottom: '20px' }}>Follow Us</h5>
                 <ul className="list-inline contact-social-bx" style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', gap: '15px' }}>
@@ -203,7 +335,26 @@ const Contact = () => {
                   <li>
                     <a
                       href="https://www.instagram.com/insta_iq_crt/"
-                      className="btn outline radius-xl"
+                      style={{
+                        display: 'inline-block',
+                        width: '45px',
+                        height: '45px',
+                        backgroundColor: '#4c1864',
+                        color: '#ffffff',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        lineHeight: '45px',
+                        transition: 'all 0.3s ease',
+                        textDecoration: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#3f189a';
+                        e.target.style.transform = 'translateY(-3px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#4c1864';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
                     >
                       <i className="fa fa-instagram"></i>
                     </a>
@@ -211,7 +362,26 @@ const Contact = () => {
                   <li>
                     <a
                       href="https://www.youtube.com/@INSTA_iQ"
-                      className="btn outline radius-xl"
+                      style={{
+                        display: 'inline-block',
+                        width: '45px',
+                        height: '45px',
+                        backgroundColor: '#4c1864',
+                        color: '#ffffff',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        lineHeight: '45px',
+                        transition: 'all 0.3s ease',
+                        textDecoration: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#3f189a';
+                        e.target.style.transform = 'translateY(-3px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#4c1864';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
                     >
                       <i className="fa fa-youtube"></i>
                     </a>
@@ -219,7 +389,26 @@ const Contact = () => {
                   <li>
                     <a
                       href="https://www.linkedin.com/company/instaiqcrt/"
-                      className="btn outline radius-xl"
+                      style={{
+                        display: 'inline-block',
+                        width: '45px',
+                        height: '45px',
+                        backgroundColor: '#4c1864',
+                        color: '#ffffff',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        lineHeight: '45px',
+                        transition: 'all 0.3s ease',
+                        textDecoration: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#3f189a';
+                        e.target.style.transform = 'translateY(-3px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#4c1864';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
                     >
                       <i className="fa fa-linkedin"></i>
                     </a>
@@ -227,7 +416,26 @@ const Contact = () => {
                   <li>
                     <a
                       href="https://instaiq.ongraphy.com/"
-                      className="btn outline radius-xl"
+                      style={{
+                        display: 'inline-block',
+                        width: '45px',
+                        height: '45px',
+                        backgroundColor: '#4c1864',
+                        color: '#ffffff',
+                        borderRadius: '50%',
+                        textAlign: 'center',
+                        lineHeight: '45px',
+                        transition: 'all 0.3s ease',
+                        textDecoration: 'none'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.target.style.backgroundColor = '#3f189a';
+                        e.target.style.transform = 'translateY(-3px)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.target.style.backgroundColor = '#4c1864';
+                        e.target.style.transform = 'translateY(0)';
+                      }}
                     >
                       <i className="fa fa-google-plus"></i>
                     </a>

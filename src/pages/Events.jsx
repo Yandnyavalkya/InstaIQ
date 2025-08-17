@@ -99,8 +99,24 @@ const Events = () => {
       {/* Banner */}
       <div className="page-banner ovbl-dark" style={{ backgroundImage: "url(assets/images/banner/banner2.jpg)" }}>
         <div className="container">
-          <div className="page-banner-entry">
-            <h1 className="text-white">Events</h1>
+          <div className="page-banner-entry text-center" style={{ padding: '80px 0' }}>
+            <h1 className="text-white" style={{ 
+              fontSize: '3.5rem', 
+              fontWeight: '700', 
+              marginBottom: '20px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+            }}>
+              Our Events
+            </h1>
+            <p style={{ 
+              color: '#e6b3ff', 
+              fontSize: '1.2rem', 
+              maxWidth: '600px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Join our interactive workshops, webinars, and training sessions to enhance your skills and knowledge
+            </p>
           </div>
         </div>
       </div>
@@ -109,8 +125,9 @@ const Events = () => {
       <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
         <div className="container">
           <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
-            <li><a href="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</a></li>
-            <li style={{ color: '#bbbbbb' }}>Events</li>
+            <li><a href="/" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Home</a></li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Events</li>
           </ul>
         </div>
       </div>
@@ -224,7 +241,7 @@ const Events = () => {
                       display: 'flex', 
                       flexDirection: 'column', 
                       justifyContent: 'space-between', 
-                      background: '#2a2a2a', 
+                      backgroundColor: '#2a2a2a', 
                       borderRadius: 16, 
                       boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)', 
                       width: '100%',
@@ -252,7 +269,7 @@ const Events = () => {
                           display: 'block' 
                         }} />
                       </div>
-                      <div className="info-bx text-center" style={{ padding: 24, background: '#2a2a2a' }}>
+                      <div className="info-bx text-center" style={{ padding: 24, backgroundColor: '#2a2a2a' }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 15 }}>
                           <div className="event-time" style={{ 
                             background: '#4c1864', 

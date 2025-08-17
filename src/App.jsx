@@ -19,6 +19,9 @@ import Contact from "./pages/Contact";
 import BlogDetails1 from "./pages/BlogDetails1";
 import BlogDetails2 from "./pages/BlogDetails2";
 import BlogDetails3 from "./pages/BlogDetails3";
+import BlogDetails4 from "./pages/BlogDetails4";
+import BlogDetails5 from "./pages/BlogDetails5";
+import BlogDetails6 from "./pages/BlogDetails6";
 import CourseDetails from "./pages/CourseDetails";
 import Checkout from "./pages/Checkout";
 import FAQ from "./pages/FAQ";
@@ -55,6 +58,9 @@ function App() {
           <Route path="blog-details1" element={<BlogDetails1 />} />
           <Route path="blog-details2" element={<BlogDetails2 />} />
           <Route path="blog-details3" element={<BlogDetails3 />} />
+          <Route path="blog-details4" element={<BlogDetails4 />} />
+          <Route path="blog-details5" element={<BlogDetails5 />} />
+          <Route path="blog-details6" element={<BlogDetails6 />} />
           <Route path="course-details/:id" element={<CourseDetails />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="events" element={<Events />} />

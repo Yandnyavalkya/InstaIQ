@@ -37,11 +37,11 @@ const AdminDashboard = () => {
       changeType: "positive"
     },
     {
-      title: "Total Events",
-      value: stats.totalEvents || 0,
-      icon: "fa fa-calendar",
+      title: "New Users",
+      value: stats.newUsers || 0,
+      icon: "fa fa-user-plus",
       color: "#ffc107",
-      change: `${stats.upcomingEvents || 0} upcoming`,
+      change: `${stats.activeUsers || 0} active`,
       changeType: "positive"
     },
     {
@@ -277,70 +277,72 @@ const AdminDashboard = () => {
         border: '1px solid #eee'
       }}>
         <h3 style={{ margin: '0 0 20px 0', color: '#333' }}>Quick Actions</h3>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
-                      <Link to="/admin/course-management" style={{
-              background: '#28a745',
-              color: 'white',
-              border: 'none',
-              padding: '15px',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '14px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              textDecoration: 'none'
-            }}>
-            <i className="fa fa-plus" style={{ marginRight: '8px' }}></i>
-            Add New Course
-          </Link>
-          <Link to="/admin/event-management" style={{
-            background: '#ffc107',
-            color: 'white',
-            border: 'none',
-            padding: '15px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            textDecoration: 'none'
-          }}>
-            <i className="fa fa-calendar-plus" style={{ marginRight: '8px' }}></i>
-            Create Event
-          </Link>
-          <button style={{
-            background: '#17a2b8',
-            color: 'white',
-            border: 'none',
-            padding: '15px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <i className="fa fa-user-plus" style={{ marginRight: '8px' }}></i>
-            Add User
-          </button>
-          <button style={{
-            background: '#6c757d',
-            color: 'white',
-            border: 'none',
-            padding: '15px',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center'
-          }}>
-            <i className="fa fa-cog" style={{ marginRight: '8px' }}></i>
-            Settings
-          </button>
-        </div>
+                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '15px' }}>
+           <Link to="/admin/courses" style={{
+             background: '#28a745',
+             color: 'white',
+             border: 'none',
+             padding: '15px',
+             borderRadius: '8px',
+             cursor: 'pointer',
+             fontSize: '14px',
+             display: 'flex',
+             alignItems: 'center',
+             justifyContent: 'center',
+             textDecoration: 'none'
+           }}>
+             <i className="fa fa-plus" style={{ marginRight: '8px' }}></i>
+             Add New Course
+           </Link>
+           <Link to="/admin/events" style={{
+             background: '#ffc107',
+             color: 'white',
+             border: 'none',
+             padding: '15px',
+             borderRadius: '8px',
+             cursor: 'pointer',
+             fontSize: '14px',
+             display: 'flex',
+             alignItems: 'center',
+             justifyContent: 'center',
+             textDecoration: 'none'
+           }}>
+             <i className="fa fa-calendar-plus" style={{ marginRight: '8px' }}></i>
+             Create Event
+           </Link>
+           <Link to="/admin/users" style={{
+             background: '#17a2b8',
+             color: 'white',
+             border: 'none',
+             padding: '15px',
+             borderRadius: '8px',
+             cursor: 'pointer',
+             fontSize: '14px',
+             display: 'flex',
+             alignItems: 'center',
+             justifyContent: 'center',
+             textDecoration: 'none'
+           }}>
+             <i className="fa fa-user-plus" style={{ marginRight: '8px' }}></i>
+             Add User
+           </Link>
+           <Link to="/admin/settings" style={{
+             background: '#6c757d',
+             color: 'white',
+             border: 'none',
+             padding: '15px',
+             borderRadius: '8px',
+             cursor: 'pointer',
+             fontSize: '14px',
+             display: 'flex',
+             alignItems: 'center',
+             justifyContent: 'center',
+             textDecoration: 'none'
+           }}>
+             <i className="fa fa-cog" style={{ marginRight: '8px' }}></i>
+             Settings
+           </Link>
+         </div>
       </div>
     </div>
   );

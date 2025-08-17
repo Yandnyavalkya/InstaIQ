@@ -261,8 +261,24 @@ const Courses = () => {
         style={{ backgroundImage: "url(assets/images/banner/banner3.jpg)" }}
       >
         <div className="container">
-          <div className="page-banner-entry">
-            <h1 className="text-white">Our Courses</h1>
+          <div className="page-banner-entry text-center" style={{ padding: '80px 0' }}>
+            <h1 className="text-white" style={{ 
+              fontSize: '3.5rem', 
+              fontWeight: '700', 
+              marginBottom: '20px',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
+            }}>
+              Our Courses
+            </h1>
+            <p style={{ 
+              color: '#e6b3ff', 
+              fontSize: '1.2rem', 
+              maxWidth: '600px', 
+              margin: '0 auto',
+              lineHeight: '1.6'
+            }}>
+              Discover comprehensive training programs designed to enhance your skills and boost your career prospects
+            </p>
           </div>
         </div>
       </div>
@@ -271,8 +287,9 @@ const Courses = () => {
       <div className="breadcrumb-row" style={{ backgroundColor: '#1e1e1e', borderBottom: '1px solid #333' }}>
         <div className="container">
           <ul className="list-inline" style={{ margin: 0, padding: '15px 0' }}>
-            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none' }}>Home</Link></li>
-            <li style={{ color: '#bbbbbb' }}>Courses</li>
+            <li><Link to="/" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Home</Link></li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
+            <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Courses</li>
           </ul>
         </div>
       </div>
@@ -383,7 +400,7 @@ const Courses = () => {
                       <div className="col-md-6 col-lg-4 col-sm-6 m-b30" key={course._id}>
                         <div className="cours-bx d-flex flex-column h-100" style={{
                           minHeight: 400,
-                          background: '#253248',
+                          backgroundColor: '#2a2a2a',
                           borderRadius: '16px',
                           boxShadow: '0 8px 25px rgba(0, 0, 0, 0.2)',
                           overflow: 'hidden',
@@ -399,7 +416,7 @@ const Courses = () => {
                           e.currentTarget.style.transform = 'translateY(0)';
                           e.currentTarget.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.2)';
                         }}>
-                          <div style={{ background: '#253248' }}>
+                          <div style={{ backgroundColor: '#2a2a2a' }}>
                             <div style={{ position: "relative" }}>
                               <img
                                 src={course.imageUrl || course.img || "/assets/images/courses/course1.jpg"}
@@ -449,7 +466,7 @@ const Courses = () => {
                                 </span>
                               )}
                             </div>
-                            <div className="card-body" style={{ padding: '24px', flexGrow: 1, background: '#253248' }}>
+                            <div className="card-body" style={{ padding: '24px', flexGrow: 1, backgroundColor: '#2a2a2a' }}>
                               <h5 className="card-title" style={{ 
                                 fontWeight: 600, 
                                 fontSize: 18, 

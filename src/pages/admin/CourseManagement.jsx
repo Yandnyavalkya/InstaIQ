@@ -16,7 +16,7 @@ const CourseManagement = () => {
     category: "",
     instructor: "Insta Education",
     imageUrl: "",
-    status: "active"
+    status: "upcoming"
   });
 
   // No need for sample data or useEffect as data comes from context
@@ -56,7 +56,7 @@ const CourseManagement = () => {
       category: "",
       instructor: "Insta Education",
       imageUrl: "",
-      status: "active"
+      status: "upcoming"
     });
   };
 
@@ -75,7 +75,7 @@ const CourseManagement = () => {
   const handleStatusToggle = async (courseId) => {
     const course = courses.find(c => c._id === courseId);
     if (course) {
-      const newStatus = course.status === 'active' ? 'inactive' : 'active';
+      const newStatus = course.status === 'active' ? 'upcoming' : 'active';
       await updateCourse(courseId, { status: newStatus });
     }
   };
@@ -171,7 +171,7 @@ const CourseManagement = () => {
             >
               <option value="all">All Courses</option>
               <option value="active">Active</option>
-              <option value="inactive">Inactive</option>
+              <option value="upcoming">Upcoming/Coming Soon</option>
             </select>
           </div>
           <div>
@@ -199,7 +199,7 @@ const CourseManagement = () => {
               <tr style={{ borderBottom: '2px solid #eee' }}>
                 <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Course</th>
                 <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Instructor</th>
-                <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Price</th>
+
                 <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Enrollments</th>
                 <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Rating</th>
                 <th style={{ textAlign: 'left', padding: '15px 0', color: '#333', fontWeight: 'bold' }}>Status</th>
@@ -233,9 +233,7 @@ const CourseManagement = () => {
                     </div>
                   </td>
                   <td style={{ padding: '15px 0', color: '#333' }}>{course.instructor}</td>
-                  <td style={{ padding: '15px 0', color: '#333', fontWeight: 'bold' }}>
-                    {course.price === 0 ? "Free" : `₹${course.price.toLocaleString()}`}
-                  </td>
+
                   <td style={{ padding: '15px 0', color: '#333' }}>{course.enrollments || 0}</td>
                   <td style={{ padding: '15px 0' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -251,10 +249,10 @@ const CourseManagement = () => {
                       borderRadius: '20px',
                       fontSize: '12px',
                       fontWeight: 'bold',
-                      background: course.status === 'active' ? '#d4edda' : '#f8d7da',
-                      color: course.status === 'active' ? '#155724' : '#721c24'
+                      background: course.status === 'active' ? '#d4edda' : '#fff3cd',
+                      color: course.status === 'active' ? '#155724' : '#856404'
                     }}>
-                      {course.status}
+                      {course.status === 'upcoming' ? 'Upcoming/Coming Soon' : course.status}
                     </span>
                   </td>
                   <td style={{ padding: '15px 0' }}>
@@ -284,8 +282,9 @@ const CourseManagement = () => {
                           cursor: 'pointer',
                           fontSize: '12px'
                         }}
+                        title={course.status === 'active' ? 'Set as Upcoming' : 'Set as Active'}
                       >
-                        <i className={`fa fa-${course.status === 'active' ? 'pause' : 'play'}`}></i>
+                        <i className={`fa fa-${course.status === 'active' ? 'clock-o' : 'play'}`}></i>
                       </button>
                       <button
                         onClick={() => handleDelete(course._id)}
@@ -349,7 +348,7 @@ const CourseManagement = () => {
                     category: "",
                     instructor: "Insta Education",
                     imageUrl: "",
-                    status: "active"
+                    status: "upcoming"
                   });
                 }}
                 style={{
@@ -492,7 +491,7 @@ const CourseManagement = () => {
                     }}
                   >
                     <option value="active">Active</option>
-                    <option value="inactive">Inactive</option>
+                    <option value="upcoming">Upcoming/Coming Soon</option>
                   </select>
                 </div>
 

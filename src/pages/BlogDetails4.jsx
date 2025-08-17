@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BlogDetails3 = () => (
+const BlogDetails4 = () => (
   <div className="page-content">
     {/* Enhanced Page Heading Box */}
     <div className="page-banner ovbl-dark" style={{ 
@@ -18,7 +18,7 @@ const BlogDetails3 = () => (
             marginBottom: '20px',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
           }}>
-            Capgemini Recruitment Process
+            Aptitude Test Preparation Strategies
           </h1>
           <p style={{ 
             color: '#e6b3ff', 
@@ -27,7 +27,7 @@ const BlogDetails3 = () => (
             margin: '0 auto',
             lineHeight: '1.6'
           }}>
-            A comprehensive guide to understanding Capgemini's multi-stage recruitment process
+            Master the art of aptitude test preparation with proven strategies and time management techniques
           </p>
         </div>
       </div>
@@ -41,7 +41,7 @@ const BlogDetails3 = () => (
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
           <li><Link to="/blog" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Blog</Link></li>
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
-          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Capgemini Recruitment Process</li>
+          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Aptitude Test Preparation Strategies</li>
         </ul>
       </div>
     </div>
@@ -74,7 +74,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     textTransform: 'uppercase'
                   }}>
-                    Recruitment
+                    Aptitude
                   </div>
 
                   {/* Meta Information */}
@@ -91,7 +91,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-calendar" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        May 31, 2024
+                        May 15, 2024
                       </span>
                     </li>
                     <li>
@@ -103,7 +103,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-clock-o" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        6 min read
+                        10 min read
                       </span>
                     </li>
                   </ul>
@@ -116,7 +116,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.3',
                     marginBottom: '30px'
                   }}>
-                    Capgemini Recruitment Process Overview
+                    Aptitude Test Preparation Strategies
                   </h2>
                 </div>
 
@@ -128,7 +128,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '30px'
                   }}>
-                    Capgemini, a global leader in consulting and technology services, follows a structured and multi-stage recruitment process designed to assess both technical and behavioral competencies. Understanding this process is crucial for candidates aiming to join this prestigious organization.
+                    Aptitude tests are a crucial component of most recruitment processes, testing your logical reasoning, numerical ability, and verbal skills. Success in these tests requires not just knowledge but also strategic preparation and time management skills.
                   </p>
 
                   <h4 style={{ 
@@ -138,7 +138,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    1. Online Assessment
+                    Understanding Aptitude Test Structure
                   </h4>
                   <p style={{ 
                     color: '#bbbbbb', 
@@ -146,7 +146,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '20px'
                   }}>
-                    This round includes sections such as:
+                    Most aptitude tests consist of three main sections:
                   </p>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -155,11 +155,9 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Quantitative Aptitude</li>
-                    <li style={{ marginBottom: '10px' }}>Logical Reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>English Communication</li>
-                    <li style={{ marginBottom: '10px' }}>Pseudo-code (basic programming logic)</li>
-                    <li style={{ marginBottom: '10px' }}>Game-Based Aptitude (newly introduced)</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Quantitative Aptitude:</strong> Number series, percentages, profit & loss, time & work</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Logical Reasoning:</strong> Syllogisms, blood relations, coding-decoding, puzzles</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Verbal Ability:</strong> Reading comprehension, grammar, vocabulary, verbal reasoning</li>
                   </ul>
 
                   <h4 style={{ 
@@ -169,43 +167,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    2. Technical Interview
-                  </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '20px'
-                  }}>
-                    This round tests knowledge in programming languages, data structures, OOP concepts, and real-world problem-solving capabilities. Projects mentioned in resumes are also discussed in detail.
-                  </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    3. HR Interview
-                  </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '30px'
-                  }}>
-                    It focuses on your communication skills, confidence, motivation, willingness to relocate, career goals, and cultural fit.
-                  </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    Eligibility Criteria
+                    Effective Preparation Strategies
                   </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -214,10 +176,11 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Minimum 60% in 10th, 12th, and graduation</li>
-                    <li style={{ marginBottom: '10px' }}>No current backlogs</li>
-                    <li style={{ marginBottom: '10px' }}>Gap of not more than 1 year in education</li>
-                    <li style={{ marginBottom: '10px' }}>Strong communication skills</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Start Early:</strong> Begin preparation at least 2-3 months before the test</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Practice Daily:</strong> Solve 20-30 questions daily from each section</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Mock Tests:</strong> Take full-length mock tests weekly to assess progress</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Time Management:</strong> Learn to solve questions within time constraints</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Weak Areas:</strong> Identify and focus on your weak areas</li>
                   </ul>
 
                   <h4 style={{ 
@@ -227,7 +190,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    Tips for Success
+                    Time Management Techniques
                   </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -236,11 +199,107 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Focus on problem-solving and basic coding practice</li>
-                    <li style={{ marginBottom: '10px' }}>Strengthen verbal ability and logic-based reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>Practice with game-based aptitude mock tests</li>
-                    <li style={{ marginBottom: '10px' }}>Prepare well for behavioral questions</li>
-                    <li style={{ marginBottom: '10px' }}>Research about Capgemini's culture and values</li>
+                    <li style={{ marginBottom: '10px' }}>Allocate specific time for each section based on your strengths</li>
+                    <li style={{ marginBottom: '10px' }}>Skip difficult questions initially and return to them later</li>
+                    <li style={{ marginBottom: '10px' }}>Use elimination method for multiple-choice questions</li>
+                    <li style={{ marginBottom: '10px' }}>Practice mental math to save time on calculations</li>
+                    <li style={{ marginBottom: '10px' }}>Keep 5-10 minutes buffer for review</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Section-wise Preparation Tips
+                  </h4>
+                  
+                  <h5 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600',
+                    marginBottom: '15px',
+                    marginTop: '30px'
+                  }}>
+                    Quantitative Aptitude
+                  </h5>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '20px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Master basic mathematical concepts and formulas</li>
+                    <li style={{ marginBottom: '10px' }}>Practice shortcut methods for faster calculations</li>
+                    <li style={{ marginBottom: '10px' }}>Focus on topics like percentages, ratios, and averages</li>
+                  </ul>
+
+                  <h5 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600',
+                    marginBottom: '15px',
+                    marginTop: '30px'
+                  }}>
+                    Logical Reasoning
+                  </h5>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '20px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Practice different types of reasoning questions</li>
+                    <li style={{ marginBottom: '10px' }}>Learn to identify patterns and sequences</li>
+                    <li style={{ marginBottom: '10px' }}>Work on analytical thinking skills</li>
+                  </ul>
+
+                  <h5 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600',
+                    marginBottom: '15px',
+                    marginTop: '30px'
+                  }}>
+                    Verbal Ability
+                  </h5>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Read newspapers and articles regularly</li>
+                    <li style={{ marginBottom: '10px' }}>Build vocabulary through word lists and context</li>
+                    <li style={{ marginBottom: '10px' }}>Practice reading comprehension with time limits</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Common Mistakes to Avoid
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Spending too much time on difficult questions</li>
+                    <li style={{ marginBottom: '10px' }}>Not reading questions carefully</li>
+                    <li style={{ marginBottom: '10px' }}>Neglecting any particular section</li>
+                    <li style={{ marginBottom: '10px' }}>Not practicing under timed conditions</li>
+                    <li style={{ marginBottom: '10px' }}>Ignoring mock test analysis</li>
                   </ul>
 
                   {/* Call to Action */}
@@ -257,7 +316,7 @@ const BlogDetails3 = () => (
                       fontWeight: '600',
                       marginBottom: '15px'
                     }}>
-                      Ready to Ace Capgemini?
+                      Ready to Master Aptitude Tests?
                     </h4>
                     <p style={{ 
                       color: '#bbbbbb', 
@@ -265,7 +324,7 @@ const BlogDetails3 = () => (
                       lineHeight: '1.6',
                       marginBottom: '20px'
                     }}>
-                      At INSTA iQ, we offer complete placement readiness programs tailored to help students ace companies like Capgemini. Our expert guidance covers all aspects of the recruitment process.
+                      Join INSTA iQ's comprehensive aptitude preparation program. Our expert trainers provide personalized guidance, extensive practice material, and regular mock tests to help you excel in any aptitude test.
                     </p>
                     <Link to="/courses" style={{
                       display: 'inline-flex',
@@ -372,7 +431,7 @@ const BlogDetails3 = () => (
                 </div>
 
                 <div style={{ marginBottom: '25px' }}>
-                  <Link to="/blog-details4" style={{
+                  <Link to="/blog-details3" style={{
                     color: '#ffffff',
                     textDecoration: 'none',
                     fontSize: '16px',
@@ -393,7 +452,7 @@ const BlogDetails3 = () => (
                     e.target.style.backgroundColor = '#1e1e1e';
                     e.target.style.borderColor = '#444';
                   }}>
-                    Aptitude Test Preparation Strategies
+                    Capgemini Recruitment Process
                   </Link>
                 </div>
 
@@ -434,4 +493,4 @@ const BlogDetails3 = () => (
   </div>
 );
 
-export default BlogDetails3; 
+export default BlogDetails4;

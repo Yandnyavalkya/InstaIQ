@@ -436,7 +436,7 @@ const CourseDetails = () => {
               </div>
               <div className="col-lg-4 col-md-12 col-sm-12">
                 <div className="course-sidebar">
-                  <div className="widget" style={{ backgroundColor: '#253248', padding: '30px', borderRadius: '16px', marginBottom: '30px', boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)', border: '1px solid #444' }}>
+                  <div className="widget" style={{ backgroundColor: '#2a2a2a', padding: '30px', borderRadius: '16px', marginBottom: '30px', boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)', border: '1px solid #444' }}>
                     <h5 className="widget-title" style={{ color: '#ffffff', fontSize: '1.5rem', fontWeight: '700', marginBottom: '20px' }}>Course Info</h5>
                     <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
                       <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '12px 0', borderBottom: '1px solid #444' }}>

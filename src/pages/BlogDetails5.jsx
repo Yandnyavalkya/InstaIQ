@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BlogDetails3 = () => (
+const BlogDetails5 = () => (
   <div className="page-content">
     {/* Enhanced Page Heading Box */}
     <div className="page-banner ovbl-dark" style={{ 
@@ -18,7 +18,7 @@ const BlogDetails3 = () => (
             marginBottom: '20px',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
           }}>
-            Capgemini Recruitment Process
+            Top 10 Companies Hiring Freshers in 2024
           </h1>
           <p style={{ 
             color: '#e6b3ff', 
@@ -27,7 +27,7 @@ const BlogDetails3 = () => (
             margin: '0 auto',
             lineHeight: '1.6'
           }}>
-            A comprehensive guide to understanding Capgemini's multi-stage recruitment process
+            Discover the leading companies actively hiring fresh graduates with detailed information about their recruitment processes
           </p>
         </div>
       </div>
@@ -41,7 +41,7 @@ const BlogDetails3 = () => (
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
           <li><Link to="/blog" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Blog</Link></li>
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
-          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Capgemini Recruitment Process</li>
+          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Top 10 Companies Hiring Freshers in 2024</li>
         </ul>
       </div>
     </div>
@@ -74,7 +74,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     textTransform: 'uppercase'
                   }}>
-                    Recruitment
+                    Placement
                   </div>
 
                   {/* Meta Information */}
@@ -91,7 +91,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-calendar" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        May 31, 2024
+                        April 28, 2024
                       </span>
                     </li>
                     <li>
@@ -103,7 +103,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-clock-o" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        6 min read
+                        7 min read
                       </span>
                     </li>
                   </ul>
@@ -116,7 +116,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.3',
                     marginBottom: '30px'
                   }}>
-                    Capgemini Recruitment Process Overview
+                    Top 10 Companies Hiring Freshers in 2024
                   </h2>
                 </div>
 
@@ -128,7 +128,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '30px'
                   }}>
-                    Capgemini, a global leader in consulting and technology services, follows a structured and multi-stage recruitment process designed to assess both technical and behavioral competencies. Understanding this process is crucial for candidates aiming to join this prestigious organization.
+                    The job market for freshers in 2024 is showing promising signs of recovery and growth. Many top companies are actively hiring fresh graduates across various domains. Here's a comprehensive guide to the top 10 companies that are leading the hiring spree for freshers in 2024.
                   </p>
 
                   <h4 style={{ 
@@ -138,16 +138,8 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    1. Online Assessment
+                    1. Tata Consultancy Services (TCS)
                   </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '20px'
-                  }}>
-                    This round includes sections such as:
-                  </p>
                   <ul style={{ 
                     color: '#bbbbbb', 
                     fontSize: '16px', 
@@ -155,11 +147,10 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Quantitative Aptitude</li>
-                    <li style={{ marginBottom: '10px' }}>Logical Reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>English Communication</li>
-                    <li style={{ marginBottom: '10px' }}>Pseudo-code (basic programming logic)</li>
-                    <li style={{ marginBottom: '10px' }}>Game-Based Aptitude (newly introduced)</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> TCS NQT (National Qualifier Test)</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.36 LPA - 7.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Software Engineer, System Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA, M.Sc</li>
                   </ul>
 
                   <h4 style={{ 
@@ -169,43 +160,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    2. Technical Interview
-                  </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '20px'
-                  }}>
-                    This round tests knowledge in programming languages, data structures, OOP concepts, and real-world problem-solving capabilities. Projects mentioned in resumes are also discussed in detail.
-                  </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    3. HR Interview
-                  </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '30px'
-                  }}>
-                    It focuses on your communication skills, confidence, motivation, willingness to relocate, career goals, and cultural fit.
-                  </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    Eligibility Criteria
+                    2. Infosys
                   </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -214,10 +169,10 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Minimum 60% in 10th, 12th, and graduation</li>
-                    <li style={{ marginBottom: '10px' }}>No current backlogs</li>
-                    <li style={{ marginBottom: '10px' }}>Gap of not more than 1 year in education</li>
-                    <li style={{ marginBottom: '10px' }}>Strong communication skills</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Infosys SP and DSE</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.6 LPA - 9.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Systems Engineer, Digital Specialist</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA, M.Sc</li>
                   </ul>
 
                   <h4 style={{ 
@@ -227,7 +182,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    Tips for Success
+                    3. Wipro
                   </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -236,11 +191,187 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Focus on problem-solving and basic coding practice</li>
-                    <li style={{ marginBottom: '10px' }}>Strengthen verbal ability and logic-based reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>Practice with game-based aptitude mock tests</li>
-                    <li style={{ marginBottom: '10px' }}>Prepare well for behavioral questions</li>
-                    <li style={{ marginBottom: '10px' }}>Research about Capgemini's culture and values</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Wipro Elite NTH</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.5 LPA - 6.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Project Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    4. HCL Technologies
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> HCL Graduate Engineer Trainee</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.25 LPA - 4.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Graduate Engineer Trainee</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    5. Cognizant
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Cognizant GenC</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 4.5 LPA - 6.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Programmer Analyst</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    6. Capgemini
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Capgemini Recruitment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 4.5 LPA - 7.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Software Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    7. Accenture
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Accenture Recruitment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 4.5 LPA - 8.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Associate Software Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    8. Tech Mahindra
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Tech Mahindra NTH</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.25 LPA - 5.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Associate Software Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    9. L&T Infotech
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> LTI Recruitment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.5 LPA - 6.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Graduate Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    10. Mindtree
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}><strong>Hiring Process:</strong> Mindtree Recruitment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Package:</strong> 3.5 LPA - 6.5 LPA</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Positions:</strong> Software Engineer</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Eligibility:</strong> B.Tech/BE, MCA</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Key Preparation Tips
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Stay updated with company-specific recruitment processes</li>
+                    <li style={{ marginBottom: '10px' }}>Focus on aptitude, reasoning, and technical skills</li>
+                    <li style={{ marginBottom: '10px' }}>Practice coding problems regularly</li>
+                    <li style={{ marginBottom: '10px' }}>Improve communication and soft skills</li>
+                    <li style={{ marginBottom: '10px' }}>Build a strong resume with relevant projects</li>
                   </ul>
 
                   {/* Call to Action */}
@@ -257,7 +388,7 @@ const BlogDetails3 = () => (
                       fontWeight: '600',
                       marginBottom: '15px'
                     }}>
-                      Ready to Ace Capgemini?
+                      Ready to Land Your Dream Job?
                     </h4>
                     <p style={{ 
                       color: '#bbbbbb', 
@@ -265,7 +396,7 @@ const BlogDetails3 = () => (
                       lineHeight: '1.6',
                       marginBottom: '20px'
                     }}>
-                      At INSTA iQ, we offer complete placement readiness programs tailored to help students ace companies like Capgemini. Our expert guidance covers all aspects of the recruitment process.
+                      INSTA iQ provides comprehensive placement preparation programs designed to help you crack interviews at top companies. Our expert guidance covers all aspects from aptitude to technical skills.
                     </p>
                     <Link to="/courses" style={{
                       display: 'inline-flex',
@@ -372,7 +503,7 @@ const BlogDetails3 = () => (
                 </div>
 
                 <div style={{ marginBottom: '25px' }}>
-                  <Link to="/blog-details4" style={{
+                  <Link to="/blog-details3" style={{
                     color: '#ffffff',
                     textDecoration: 'none',
                     fontSize: '16px',
@@ -393,7 +524,7 @@ const BlogDetails3 = () => (
                     e.target.style.backgroundColor = '#1e1e1e';
                     e.target.style.borderColor = '#444';
                   }}>
-                    Aptitude Test Preparation Strategies
+                    Capgemini Recruitment Process
                   </Link>
                 </div>
 
@@ -434,4 +565,4 @@ const BlogDetails3 = () => (
   </div>
 );
 
-export default BlogDetails3; 
+export default BlogDetails5;

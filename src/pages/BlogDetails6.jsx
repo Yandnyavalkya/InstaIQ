@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const BlogDetails3 = () => (
+const BlogDetails6 = () => (
   <div className="page-content">
     {/* Enhanced Page Heading Box */}
     <div className="page-banner ovbl-dark" style={{ 
@@ -18,7 +18,7 @@ const BlogDetails3 = () => (
             marginBottom: '20px',
             textShadow: '2px 2px 4px rgba(0,0,0,0.5)'
           }}>
-            Capgemini Recruitment Process
+            Interview Preparation Guide for IT Companies
           </h1>
           <p style={{ 
             color: '#e6b3ff', 
@@ -27,7 +27,7 @@ const BlogDetails3 = () => (
             margin: '0 auto',
             lineHeight: '1.6'
           }}>
-            A comprehensive guide to understanding Capgemini's multi-stage recruitment process
+            Comprehensive guide covering technical interviews, behavioral questions, and common interview patterns
           </p>
         </div>
       </div>
@@ -41,7 +41,7 @@ const BlogDetails3 = () => (
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
           <li><Link to="/blog" style={{ color: '#4c1864', textDecoration: 'none', fontWeight: '500' }}>Blog</Link></li>
           <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>/</li>
-          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Capgemini Recruitment Process</li>
+          <li style={{ color: '#bbbbbb', marginLeft: '10px' }}>Interview Preparation Guide for IT Companies</li>
         </ul>
       </div>
     </div>
@@ -74,7 +74,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     textTransform: 'uppercase'
                   }}>
-                    Recruitment
+                    Interview
                   </div>
 
                   {/* Meta Information */}
@@ -91,7 +91,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-calendar" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        May 31, 2024
+                        April 10, 2024
                       </span>
                     </li>
                     <li>
@@ -103,7 +103,7 @@ const BlogDetails3 = () => (
                     <li>
                       <span style={{ display: 'flex', alignItems: 'center' }}>
                         <i className="fa fa-clock-o" style={{ marginRight: '8px', color: '#ffffff' }}></i>
-                        6 min read
+                        12 min read
                       </span>
                     </li>
                   </ul>
@@ -116,7 +116,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.3',
                     marginBottom: '30px'
                   }}>
-                    Capgemini Recruitment Process Overview
+                    Interview Preparation Guide for IT Companies
                   </h2>
                 </div>
 
@@ -128,7 +128,7 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '30px'
                   }}>
-                    Capgemini, a global leader in consulting and technology services, follows a structured and multi-stage recruitment process designed to assess both technical and behavioral competencies. Understanding this process is crucial for candidates aiming to join this prestigious organization.
+                    Technical interviews in IT companies can be challenging and require thorough preparation. This comprehensive guide will help you understand the interview process, prepare effectively, and increase your chances of success in IT company interviews.
                   </p>
 
                   <h4 style={{ 
@@ -138,7 +138,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    1. Online Assessment
+                    Understanding the Interview Process
                   </h4>
                   <p style={{ 
                     color: '#bbbbbb', 
@@ -146,20 +146,74 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '20px'
                   }}>
-                    This round includes sections such as:
+                    Most IT companies follow a structured interview process:
                   </p>
-                  <ul style={{ 
+                  <ol style={{ 
                     color: '#bbbbbb', 
                     fontSize: '16px', 
                     lineHeight: '1.8',
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Quantitative Aptitude</li>
-                    <li style={{ marginBottom: '10px' }}>Logical Reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>English Communication</li>
-                    <li style={{ marginBottom: '10px' }}>Pseudo-code (basic programming logic)</li>
-                    <li style={{ marginBottom: '10px' }}>Game-Based Aptitude (newly introduced)</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Aptitude/Online Test:</strong> Initial screening round</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Technical Interview:</strong> Core technical skills assessment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>HR Interview:</strong> Behavioral and cultural fit assessment</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Final Round:</strong> Senior management or team lead interview</li>
+                  </ol>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Technical Interview Preparation
+                  </h4>
+                  
+                  <h5 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600',
+                    marginBottom: '15px',
+                    marginTop: '30px'
+                  }}>
+                    Core Programming Concepts
+                  </h5>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '20px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Data Structures (Arrays, Linked Lists, Stacks, Queues, Trees, Graphs)</li>
+                    <li style={{ marginBottom: '10px' }}>Algorithms (Sorting, Searching, Dynamic Programming)</li>
+                    <li style={{ marginBottom: '10px' }}>Object-Oriented Programming concepts</li>
+                    <li style={{ marginBottom: '10px' }}>Database concepts and SQL queries</li>
+                    <li style={{ marginBottom: '10px' }}>Operating System fundamentals</li>
+                  </ul>
+
+                  <h5 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.2rem', 
+                    fontWeight: '600',
+                    marginBottom: '15px',
+                    marginTop: '30px'
+                  }}>
+                    Programming Languages
+                  </h5>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '20px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Master at least one programming language thoroughly</li>
+                    <li style={{ marginBottom: '10px' }}>Common languages: Java, Python, C++, JavaScript</li>
+                    <li style={{ marginBottom: '10px' }}>Practice coding problems on platforms like LeetCode, HackerRank</li>
+                    <li style={{ marginBottom: '10px' }}>Understand time and space complexity</li>
                   </ul>
 
                   <h4 style={{ 
@@ -169,7 +223,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    2. Technical Interview
+                    Behavioral Interview Preparation
                   </h4>
                   <p style={{ 
                     color: '#bbbbbb', 
@@ -177,36 +231,8 @@ const BlogDetails3 = () => (
                     lineHeight: '1.8',
                     marginBottom: '20px'
                   }}>
-                    This round tests knowledge in programming languages, data structures, OOP concepts, and real-world problem-solving capabilities. Projects mentioned in resumes are also discussed in detail.
+                    Behavioral questions assess your soft skills and past experiences:
                   </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    3. HR Interview
-                  </h4>
-                  <p style={{ 
-                    color: '#bbbbbb', 
-                    fontSize: '16px', 
-                    lineHeight: '1.8',
-                    marginBottom: '30px'
-                  }}>
-                    It focuses on your communication skills, confidence, motivation, willingness to relocate, career goals, and cultural fit.
-                  </p>
-
-                  <h4 style={{ 
-                    color: '#ffffff', 
-                    fontSize: '1.5rem', 
-                    fontWeight: '600',
-                    marginBottom: '20px',
-                    marginTop: '40px'
-                  }}>
-                    Eligibility Criteria
-                  </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
                     fontSize: '16px', 
@@ -214,10 +240,11 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Minimum 60% in 10th, 12th, and graduation</li>
-                    <li style={{ marginBottom: '10px' }}>No current backlogs</li>
-                    <li style={{ marginBottom: '10px' }}>Gap of not more than 1 year in education</li>
-                    <li style={{ marginBottom: '10px' }}>Strong communication skills</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Tell me about yourself:</strong> Prepare a concise 2-minute introduction</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Why this company?</strong> Research the company thoroughly</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Strengths and weaknesses:</strong> Be honest and show self-awareness</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Teamwork examples:</strong> Prepare specific examples from projects</li>
+                    <li style={{ marginBottom: '10px' }}><strong>Problem-solving scenarios:</strong> Use STAR method (Situation, Task, Action, Result)</li>
                   </ul>
 
                   <h4 style={{ 
@@ -227,7 +254,7 @@ const BlogDetails3 = () => (
                     marginBottom: '20px',
                     marginTop: '40px'
                   }}>
-                    Tips for Success
+                    Common Technical Questions
                   </h4>
                   <ul style={{ 
                     color: '#bbbbbb', 
@@ -236,11 +263,83 @@ const BlogDetails3 = () => (
                     marginBottom: '30px',
                     paddingLeft: '20px'
                   }}>
-                    <li style={{ marginBottom: '10px' }}>Focus on problem-solving and basic coding practice</li>
-                    <li style={{ marginBottom: '10px' }}>Strengthen verbal ability and logic-based reasoning</li>
-                    <li style={{ marginBottom: '10px' }}>Practice with game-based aptitude mock tests</li>
-                    <li style={{ marginBottom: '10px' }}>Prepare well for behavioral questions</li>
-                    <li style={{ marginBottom: '10px' }}>Research about Capgemini's culture and values</li>
+                    <li style={{ marginBottom: '10px' }}>Reverse a string/array</li>
+                    <li style={{ marginBottom: '10px' }}>Find the missing number in an array</li>
+                    <li style={{ marginBottom: '10px' }}>Check if a string is palindrome</li>
+                    <li style={{ marginBottom: '10px' }}>Implement stack using queue</li>
+                    <li style={{ marginBottom: '10px' }}>Find the longest common subsequence</li>
+                    <li style={{ marginBottom: '10px' }}>Design patterns and their applications</li>
+                    <li style={{ marginBottom: '10px' }}>Database normalization concepts</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Pre-Interview Checklist
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Research the company's technology stack and recent projects</li>
+                    <li style={{ marginBottom: '10px' }}>Review your resume and be ready to explain every point</li>
+                    <li style={{ marginBottom: '10px' }}>Prepare questions to ask the interviewer</li>
+                    <li style={{ marginBottom: '10px' }}>Dress appropriately and arrive on time</li>
+                    <li style={{ marginBottom: '10px' }}>Bring copies of your resume and portfolio</li>
+                    <li style={{ marginBottom: '10px' }}>Test your internet connection for virtual interviews</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Interview Day Tips
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Stay calm and confident throughout the interview</li>
+                    <li style={{ marginBottom: '10px' }}>Think aloud while solving technical problems</li>
+                    <li style={{ marginBottom: '10px' }}>Ask clarifying questions before starting to code</li>
+                    <li style={{ marginBottom: '10px' }}>Write clean, readable code with proper comments</li>
+                    <li style={{ marginBottom: '10px' }}>Be honest about what you don't know</li>
+                    <li style={{ marginBottom: '10px' }}>Show enthusiasm and genuine interest in the role</li>
+                  </ul>
+
+                  <h4 style={{ 
+                    color: '#ffffff', 
+                    fontSize: '1.5rem', 
+                    fontWeight: '600',
+                    marginBottom: '20px',
+                    marginTop: '40px'
+                  }}>
+                    Post-Interview Follow-up
+                  </h4>
+                  <ul style={{ 
+                    color: '#bbbbbb', 
+                    fontSize: '16px', 
+                    lineHeight: '1.8',
+                    marginBottom: '30px',
+                    paddingLeft: '20px'
+                  }}>
+                    <li style={{ marginBottom: '10px' }}>Send a thank-you email within 24 hours</li>
+                    <li style={{ marginBottom: '10px' }}>Reflect on the interview and note areas for improvement</li>
+                    <li style={{ marginBottom: '10px' }}>Follow up on the timeline for next steps</li>
+                    <li style={{ marginBottom: '10px' }}>Continue preparing for other opportunities</li>
                   </ul>
 
                   {/* Call to Action */}
@@ -257,7 +356,7 @@ const BlogDetails3 = () => (
                       fontWeight: '600',
                       marginBottom: '15px'
                     }}>
-                      Ready to Ace Capgemini?
+                      Ready to Ace Your IT Interview?
                     </h4>
                     <p style={{ 
                       color: '#bbbbbb', 
@@ -265,7 +364,7 @@ const BlogDetails3 = () => (
                       lineHeight: '1.6',
                       marginBottom: '20px'
                     }}>
-                      At INSTA iQ, we offer complete placement readiness programs tailored to help students ace companies like Capgemini. Our expert guidance covers all aspects of the recruitment process.
+                      INSTA iQ offers comprehensive interview preparation programs including mock interviews, technical skill assessment, and personalized coaching to help you succeed in IT company interviews.
                     </p>
                     <Link to="/courses" style={{
                       display: 'inline-flex',
@@ -372,7 +471,7 @@ const BlogDetails3 = () => (
                 </div>
 
                 <div style={{ marginBottom: '25px' }}>
-                  <Link to="/blog-details4" style={{
+                  <Link to="/blog-details3" style={{
                     color: '#ffffff',
                     textDecoration: 'none',
                     fontSize: '16px',
@@ -393,7 +492,7 @@ const BlogDetails3 = () => (
                     e.target.style.backgroundColor = '#1e1e1e';
                     e.target.style.borderColor = '#444';
                   }}>
-                    Aptitude Test Preparation Strategies
+                    Capgemini Recruitment Process
                   </Link>
                 </div>
 
@@ -434,4 +533,4 @@ const BlogDetails3 = () => (
   </div>
 );
 
-export default BlogDetails3; 
+export default BlogDetails6;
