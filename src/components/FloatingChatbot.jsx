@@ -137,7 +137,7 @@ const FloatingChatbot = () => {
             </div>
           </div>
           
-          {/* Right side - Sparkle Icon */}
+          {/* Right side - Chat Icon */}
           <div style={{
             width: '24px',
             height: '24px',
@@ -147,7 +147,7 @@ const FloatingChatbot = () => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <i className="fa fa-star" style={{ 
+            <i className="fa fa-comments" style={{ 
               color: '#ffffff', 
               fontSize: '12px',
               textShadow: '0 0 4px rgba(255,255,255,0.5)'
