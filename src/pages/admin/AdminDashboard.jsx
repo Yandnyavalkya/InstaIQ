@@ -37,11 +37,19 @@ const AdminDashboard = () => {
       changeType: "positive"
     },
     {
-      title: "New Users",
-      value: stats.newUsers || 0,
-      icon: "fa fa-user-plus",
-      color: "#ffc107",
-      change: `${stats.activeUsers || 0} active`,
+      title: "Client Testimonials",
+      value: stats.totalClientTestimonials || 0,
+      icon: "fa fa-comments",
+      color: "#17a2b8",
+      change: `${stats.publishedClientTestimonials || 0} published`,
+      changeType: "positive"
+    },
+    {
+      title: "Student Testimonials",
+      value: stats.totalStudentTestimonials || 0,
+      icon: "fa fa-graduation-cap",
+      color: "#6f42c1",
+      change: `${stats.publishedStudentTestimonials || 0} published`,
       changeType: "positive"
     },
     {

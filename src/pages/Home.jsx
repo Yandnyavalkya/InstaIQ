@@ -92,7 +92,12 @@ const popularCoursesData = [
 
 const Home = () => {
   const navigate = useNavigate();
-  const { courses: adminCourses, events: adminEvents } = useAdmin();
+  const { 
+    courses: adminCourses, 
+    events: adminEvents, 
+    clientTestimonials: adminClientTestimonials, 
+    studentTestimonials: adminStudentTestimonials 
+  } = useAdmin();
   const [courses, setCourses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -106,7 +111,11 @@ const Home = () => {
         border-radius: 16px !important;
         border: 1px solid #444 !important;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
-        background-color: #253248 !important;
+        background-color: #2a2a2a !important;
+        height: 320px !important;
+        min-height: 320px !important;
+        max-height: 320px !important;
+        overflow: hidden !important;
       }
       .testimonial-bx.sliding {
         transform: translateY(-20px) !important;
@@ -118,10 +127,34 @@ const Home = () => {
         display: none !important;
       }
       
-      /* Ensure card background color */
+      /* Ensure card background color and consistent sizing */
       .client-testimonial-carousel .testimonial-bx,
       .student-testimonial-carousel .testimonial-bx {
-        background-color: #253248 !important;
+        background-color: #2a2a2a !important;
+        height: 320px !important;
+        min-height: 320px !important;
+        max-height: 320px !important;
+      }
+      
+      /* Fix carousel item sizing */
+      .client-testimonial-carousel .owl-item,
+      .student-testimonial-carousel .owl-item {
+        height: 320px !important;
+      }
+      
+      /* Ensure content doesn't overflow */
+      .testimonial-content {
+        overflow: hidden !important;
+        max-height: 200px !important;
+      }
+      
+      /* Prevent text overflow */
+      .testimonial-content p {
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 6 !important;
+        -webkit-box-orient: vertical !important;
       }
     `;
     document.head.appendChild(style);
@@ -203,6 +236,7 @@ const Home = () => {
             navSpeed: 1000,
             paginationSpeed: 1000,
             slideSpeed: 1000,
+            autoHeight: false,
             responsive: {
               0: {
                 items: 1
@@ -226,6 +260,7 @@ const Home = () => {
             navSpeed: 1000,
             paginationSpeed: 1000,
             slideSpeed: 1000,
+            autoHeight: false,
             responsive: {
               0: {
                 items: 1
@@ -284,96 +319,9 @@ const Home = () => {
 
 
 
-     // Testimonial data
-   const clientTestimonials = [
-     {
-       id: 1,
-       name: "Sarah Johnson",
-       role: "HR Manager, TechCorp",
-       image: "assets/images/testimonials/pic1.jpg",
-       content: "InstaIQ has transformed our hiring process. The quality of candidates we receive now is exceptional. Their aptitude training programs are industry-leading."
-     },
-     {
-       id: 2,
-       name: "Michael Chen",
-       role: "Director, Innovation Labs",
-       image: "assets/images/testimonials/pic2.jpg",
-       content: "We've been partnering with InstaIQ for over 2 years. Their students consistently demonstrate strong problem-solving skills and technical aptitude."
-     },
-     {
-       id: 3,
-       name: "Emily Rodriguez",
-       role: "CEO, StartupXYZ",
-       image: "assets/images/testimonials/pic3.jpg",
-       content: "The candidates from InstaIQ are well-prepared and ready to contribute from day one. Their training methodology is truly effective."
-     },
-     {
-       id: 4,
-       name: "David Wilson",
-       role: "CTO, Digital Solutions",
-       image: "assets/images/testimonials/pic1.jpg",
-       content: "The technical aptitude of InstaIQ graduates is outstanding. They bring immediate value to our development teams."
-     },
-     {
-       id: 5,
-       name: "Lisa Thompson",
-       role: "VP Engineering, TechFlow",
-       image: "assets/images/testimonials/pic2.jpg",
-       content: "InstaIQ's training methodology is revolutionary. Their students have exceptional problem-solving abilities."
-     },
-     {
-       id: 6,
-       name: "Robert Kim",
-       role: "Head of Talent, InnovateCorp",
-       image: "assets/images/testimonials/pic3.jpg",
-       content: "We've seen a 40% improvement in candidate quality since partnering with InstaIQ. Their programs are game-changing."
-     }
-   ];
-
-     const studentTestimonials = [
-     {
-       id: 1,
-       name: "Rahul Sharma",
-       role: "Placed at Google",
-       image: "assets/images/testimonials/pic4.jpg",
-       content: "InstaIQ's mock tests and practice questions were exactly what I needed. The structured approach helped me crack my dream job at Google!"
-     },
-     {
-       id: 2,
-       name: "Priya Patel",
-       role: "Placed at Microsoft",
-       image: "assets/images/testimonials/pic5.jpg",
-       content: "The aptitude training at InstaIQ is world-class. The instructors are amazing and the question bank is comprehensive. Highly recommended!"
-     },
-     {
-       id: 3,
-       name: "Amit Kumar",
-       role: "Placed at Amazon",
-       image: "assets/images/testimonials/pic6.jpg",
-       content: "From struggling with aptitude tests to acing them - InstaIQ made it possible. The personalized guidance and practice material are excellent."
-     },
-     {
-       id: 4,
-       name: "Neha Singh",
-       role: "Placed at Apple",
-       image: "assets/images/testimonials/pic4.jpg",
-       content: "InstaIQ's systematic approach to aptitude preparation was exactly what I needed. The practice tests are incredibly realistic."
-     },
-     {
-       id: 5,
-       name: "Vikram Mehta",
-       role: "Placed at Netflix",
-       image: "assets/images/testimonials/pic5.jpg",
-       content: "The quality of questions and explanations at InstaIQ is unmatched. It helped me build strong analytical skills."
-     },
-     {
-       id: 6,
-       name: "Anjali Desai",
-       role: "Placed at Meta",
-       image: "assets/images/testimonials/pic6.jpg",
-       content: "InstaIQ's personalized learning path made all the difference. I went from average to exceptional in just 3 months."
-     }
-   ];
+     // Testimonial data - Use admin context data
+   const clientTestimonials = adminClientTestimonials?.filter(t => t.status === 'published') || [];
+   const studentTestimonials = adminStudentTestimonials?.filter(t => t.status === 'published') || [];
 
   
 
@@ -880,11 +828,11 @@ const Home = () => {
                   {clientTestimonials.map((testimonial, idx) => (
                     <div className="item" key={idx}>
                       <div className="testimonial-bx" style={{ 
-                        backgroundColor: '#253248', 
+                        backgroundColor: '#2a2a2a', 
                         borderRadius: '16px', 
                         padding: '25px', 
                         border: '1px solid #444',
-                        height: '280px',
+                        height: '320px',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
                         transition: 'all 0.3s ease'
                       }}
@@ -902,13 +850,13 @@ const Home = () => {
                           <img 
                             src={testimonial.image} 
                             alt="Client" 
-                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
+                            style={{ width: '50px', height: '70px', borderRadius: '8px', objectFit: 'cover', marginRight: '15px' }} 
                           />
                           <div>
                             <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
                               {testimonial.name}
                             </h5>
-                            <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {testimonial.role}</p>
+                            <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {testimonial.role} at {testimonial.company}</p>
                           </div>
                         </div>
                         <div className="testimonial-content">
@@ -926,16 +874,16 @@ const Home = () => {
             {/* Student Feedback Vertical Carousel */}
             <div className="col-md-6">
               <div className="testimonial-section">
-                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '30px' }}>Student Feedback</h3>
+                <h3 className="text-white text-center" style={{ fontSize: '24px', fontWeight: '600', marginBottom: '30px' }}>Students Testimonials</h3>
                 <div className="student-testimonial-carousel owl-carousel col-12 p-lr0">
                   {studentTestimonials.map((testimonial, idx) => (
                     <div className="item" key={idx}>
                       <div className="testimonial-bx" style={{ 
-                        backgroundColor: '#253248', 
+                        backgroundColor: '#2a2a2a', 
                         borderRadius: '16px', 
                         padding: '25px', 
                         border: '1px solid #444',
-                        height: '280px',
+                        height: '320px',
                         boxShadow: '0 8px 25px rgba(0,0,0,0.3)',
                         transition: 'all 0.3s ease'
                       }}
@@ -949,17 +897,18 @@ const Home = () => {
                         e.currentTarget.style.boxShadow = '0 8px 25px rgba(0,0,0,0.3)';
                         e.currentTarget.style.border = '1px solid #444';
                       }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '15px' }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '15px' }}>
                           <img 
                             src={testimonial.image} 
                             alt="Student" 
-                            style={{ width: '60px', height: '60px', borderRadius: '50%', objectFit: 'cover', marginRight: '15px' }} 
+                            style={{ width: '50px', height: '70px', borderRadius: '8px', objectFit: 'cover', marginRight: '15px', flexShrink: 0 }} 
                           />
-                          <div>
-                            <h5 className="name text-white" style={{ fontSize: '18px', fontWeight: '600', margin: 0, color: '#ffffff' }}>
+                          <div style={{ flex: 1 }}>
+                            <h5 className="name text-white" style={{ fontSize: '16px', fontWeight: '600', margin: '0 0 5px 0', color: '#ffffff', lineHeight: '1.3' }}>
                               {testimonial.name}
                             </h5>
-                            <p style={{ margin: 0, fontSize: '14px', color: '#ffffff' }}>- {testimonial.role}</p>
+                            <p style={{ margin: '0 0 3px 0', fontSize: '13px', color: '#e6b3ff', fontWeight: '500' }}>- {testimonial.role}</p>
+                            <p style={{ margin: 0, fontSize: '11px', color: '#bbbbbb', lineHeight: '1.3' }}>{testimonial.course}</p>
                           </div>
                         </div>
                         <div className="testimonial-content">

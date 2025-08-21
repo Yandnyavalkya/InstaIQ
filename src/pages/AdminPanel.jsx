@@ -5,6 +5,7 @@ import CourseManagement from "./admin/CourseManagement";
 import EventManagement from "./admin/EventManagement";
 import UserManagement from "./admin/UserManagement";
 import OrderManagement from "./admin/OrderManagement";
+import TestimonialsManagement from "./admin/TestimonialsManagement";
 import AdminProfile from "./admin/AdminProfile";
 import Settings from "./admin/Settings";
 import BackToTop from "../components/BackToTop";
@@ -52,6 +53,7 @@ const AdminPanel = () => {
     { path: "/admin", icon: "fas fa-tachometer-alt", label: "Dashboard", component: AdminDashboard },
     { path: "/admin/courses", icon: "fas fa-book", label: "Course Management", component: CourseManagement },
     { path: "/admin/events", icon: "fas fa-calendar-alt", label: "Event Management", component: EventManagement },
+    { path: "/admin/testimonials", icon: "fas fa-comments", label: "Testimonials", component: TestimonialsManagement },
     { path: "/admin/users", icon: "fas fa-users", label: "User Management", component: UserManagement },
     { path: "/admin/orders", icon: "fas fa-shopping-cart", label: "Order Management", component: OrderManagement },
     { path: "/admin/settings", icon: "fas fa-cog", label: "Settings", component: Settings },
@@ -342,6 +344,7 @@ const AdminPanel = () => {
             <Route path="/" element={<AdminDashboard />} />
             <Route path="courses" element={<CourseManagement />} />
             <Route path="events" element={<EventManagement />} />
+            <Route path="testimonials" element={<TestimonialsManagement />} />
             <Route path="users" element={<UserManagement />} />
             <Route path="orders" element={<OrderManagement />} />
             <Route path="profile" element={<AdminProfile />} />

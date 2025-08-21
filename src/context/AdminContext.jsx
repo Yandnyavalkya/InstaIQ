@@ -232,11 +232,108 @@ const initialEvents = [
   }
 ];
 
+// Initial testimonials data
+const initialClientTestimonials = [
+  {
+    _id: "client_1",
+    name: "Sarah Johnson",
+    role: "HR Manager",
+    company: "TechCorp",
+    content: "InstaIQ has transformed our hiring process. The quality of candidates we receive now is exceptional. Their aptitude training programs are industry-leading.",
+    image: "assets/images/testimonials/pic1.jpg",
+    type: "client",
+    status: "published",
+    createdAt: "2024-01-01"
+  },
+  {
+    _id: "client_2",
+    name: "Michael Chen",
+    role: "Director",
+    company: "Innovation Labs",
+    content: "We've been partnering with InstaIQ for over 2 years. Their students consistently demonstrate strong problem-solving skills and technical aptitude.",
+    image: "assets/images/testimonials/pic2.jpg",
+    type: "client",
+    status: "published",
+    createdAt: "2024-01-05"
+  },
+  {
+    _id: "client_3",
+    name: "Emily Rodriguez",
+    role: "CEO",
+    company: "StartupXYZ",
+    content: "The candidates from InstaIQ are well-prepared and ready to contribute from day one. Their training methodology is truly effective.",
+    image: "assets/images/testimonials/pic3.jpg",
+    type: "client",
+    status: "published",
+    createdAt: "2024-01-10"
+  }
+];
+
+const initialStudentTestimonials = [
+  {
+    _id: "student_1",
+    name: "MISS KIRTI JAISWAL",
+    role: "SAINT OBAIN",
+    course: "MBA - SRI BALAJI UNIVERSITY, PUNE",
+    content: "The CRT program and continuous counselling significantly shaped my career path, making me proud and thankful for the opportunity to be placed with the skills and confidence I gained.",
+    image: "assets/images/testimonials/students/miss kirti jaiswal.png",
+    type: "student",
+    status: "published",
+    createdAt: "2024-01-01"
+  },
+  {
+    _id: "student_2",
+    name: "MISS FAIZA KAN",
+    role: "ADANI GROUP",
+    course: "MBA - SRI BALAJI UNIVERSITY, PUNE",
+    content: "I thank the team for providing the right guidance and preparation through the CRT program and counselling, which helped me achieve placement. I express gratitude for their constant support and motivation.",
+    image: "assets/images/testimonials/students/miss faiza kan.png",
+    type: "student",
+    status: "published",
+    createdAt: "2024-01-05"
+  },
+  {
+    _id: "student_3",
+    name: "MR VEDANT NANDANWAR",
+    role: "TCS IGNITE",
+    course: "B.VOC - ST VINCENT PALLOTI COE, NAGPUR",
+    content: "The structured approach, comprehensive material, and regular practice tests helped me build a strong foundation in problem-solving and logical reasoning. The trainers' clear explanations, shortcuts, and constant motivation boosted my confidence, enabling me to successfully clear the TCS placement process.",
+    image: "assets/images/testimonials/students/mr vedant nandanwar.png",
+    type: "student",
+    status: "published",
+    createdAt: "2024-01-10"
+  },
+  {
+    _id: "student_4",
+    name: "MR. NIKIL TAMRAKAR",
+    role: "P360",
+    course: "ENGINEERING - YCCE, NAGPUR",
+    content: "The crucial role of Aptitude training in my success cannot be overstated. It improved my logical thinking and self-belief. I thank the trainers for their support and guidance, which led to my placement at P360.",
+    image: "assets/images/testimonials/students/mr nikil tamrakar.png",
+    type: "student",
+    status: "published",
+    createdAt: "2024-01-12"
+  },
+  {
+    _id: "student_5",
+    name: "MR. ANKUR KUMAR",
+    role: "ACCENTURE",
+    course: "ENGINEERING - COE, BANDA, UTTAR PRADESH",
+    content: "I am thankful for the training that significantly improved my aptitude and communication skills, calling it very helpful in my placement journey. Thank you insta education.",
+    image: "assets/images/testimonials/students/mr ankur kumar.png",
+    type: "student",
+    status: "published",
+    createdAt: "2024-01-15"
+  }
+];
+
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || "http://localhost:5000/api";
 
 export const AdminProvider = ({ children }) => {
   const [courses, setCourses] = useState(initialCourses);
   const [events, setEvents] = useState(initialEvents);
+  const [clientTestimonials, setClientTestimonials] = useState(initialClientTestimonials);
+  const [studentTestimonials, setStudentTestimonials] = useState(initialStudentTestimonials);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -349,6 +446,55 @@ export const AdminProvider = ({ children }) => {
     return { success: true };
   };
 
+  // Testimonials management functions
+  const addClientTestimonial = (testimonialData) => {
+    const newTestimonial = {
+      _id: `client_${Date.now()}`,
+      ...testimonialData,
+      type: "client",
+      status: testimonialData.status || "published",
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    setClientTestimonials(prev => [...prev, newTestimonial]);
+    return { success: true, testimonial: newTestimonial };
+  };
+
+  const updateClientTestimonial = (testimonialId, updatedData) => {
+    setClientTestimonials(prev => prev.map(testimonial => 
+      testimonial._id === testimonialId ? { ...testimonial, ...updatedData } : testimonial
+    ));
+    return { success: true };
+  };
+
+  const deleteClientTestimonial = (testimonialId) => {
+    setClientTestimonials(prev => prev.filter(testimonial => testimonial._id !== testimonialId));
+    return { success: true };
+  };
+
+  const addStudentTestimonial = (testimonialData) => {
+    const newTestimonial = {
+      _id: `student_${Date.now()}`,
+      ...testimonialData,
+      type: "student",
+      status: testimonialData.status || "published",
+      createdAt: new Date().toISOString().split('T')[0]
+    };
+    setStudentTestimonials(prev => [...prev, newTestimonial]);
+    return { success: true, testimonial: newTestimonial };
+  };
+
+  const updateStudentTestimonial = (testimonialId, updatedData) => {
+    setStudentTestimonials(prev => prev.map(testimonial => 
+      testimonial._id === testimonialId ? { ...testimonial, ...updatedData } : testimonial
+    ));
+    return { success: true };
+  };
+
+  const deleteStudentTestimonial = (testimonialId) => {
+    setStudentTestimonials(prev => prev.filter(testimonial => testimonial._id !== testimonialId));
+    return { success: true };
+  };
+
   // Get statistics for dashboard
   const getStats = () => {
     return {
@@ -356,6 +502,10 @@ export const AdminProvider = ({ children }) => {
       activeCourses: courses.filter(c => c.status === 'active').length,
       totalEvents: events.length,
       upcomingEvents: events.filter(e => e.status === 'upcoming').length,
+      totalClientTestimonials: clientTestimonials.length,
+      totalStudentTestimonials: studentTestimonials.length,
+      publishedClientTestimonials: clientTestimonials.filter(t => t.status === 'published').length,
+      publishedStudentTestimonials: studentTestimonials.filter(t => t.status === 'published').length,
       totalEnrollments: courses.reduce((sum, course) => sum + (course.enrollments || 0), 0),
       totalRevenue: courses.reduce((sum, course) => sum + (course.price * (course.enrollments || 0)), 0),
       averageRating: courses.reduce((sum, course) => sum + (course.rating || 0), 0) / courses.length || 0
@@ -365,6 +515,8 @@ export const AdminProvider = ({ children }) => {
   const value = {
     courses,
     events,
+    clientTestimonials,
+    studentTestimonials,
     loading,
     error,
     addCourse,
@@ -373,6 +525,12 @@ export const AdminProvider = ({ children }) => {
     addEvent,
     updateEvent,
     deleteEvent,
+    addClientTestimonial,
+    updateClientTestimonial,
+    deleteClientTestimonial,
+    addStudentTestimonial,
+    updateStudentTestimonial,
+    deleteStudentTestimonial,
     getStats,
     refreshCourses: fetchCoursesData
   };
