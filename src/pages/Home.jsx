@@ -55,7 +55,7 @@ export const allEvents = [
     title: "Communication Assessment",
     time: "7:00am 8:00am",
     location: "Nagpur , India",
-    desc: "A dedicated assessment module offering comprehensive evaluation of communication skills, verbal ability, and presentation techniques, designed to be engaging, time-efficient, and progressively challenging for daily practice."
+    desc: "Enhance your speaking, listening, and presentation skills with our Communication Assessment event. This interactive session helps you identify strengths, improve clarity, and build confidence in expressing ideas effectively whether in interviews, group discussions, or professional settings."
   }
 ];
 
@@ -678,10 +678,7 @@ const Home = () => {
                           fontSize: '14px', 
                           lineHeight: '1.6',
                           margin: 0,
-                          display: '-webkit-box',
-                          WebkitLineClamp: 3,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden'
+                          overflow: 'visible'
                         }}>
                           {event.description || event.desc}
                         </p>
